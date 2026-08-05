@@ -57,10 +57,31 @@ class NativeScene(BaseModel):
     name: str
 
 
+OCCUPIED = "Occupied"
+UNOCCUPIED = "Unoccupied"
+UNKNOWN = "Unknown"
+
+
+class OccupancySensor(BaseModel):
+    """An occupancy group.
+
+    On RA3 these are per-area: every sensor in a room rolls up into one status
+    for that room, which is what the processor reports over LEAP.
+    """
+
+    id: str
+    name: str
+    area_id: Optional[str] = None
+    area_name: str = "Unassigned"
+    status: str = UNKNOWN
+    sensor_count: int = 1
+
+
 class Inventory(BaseModel):
     areas: List[Area] = Field(default_factory=list)
     devices: List[Device] = Field(default_factory=list)
     native_scenes: List[NativeScene] = Field(default_factory=list)
+    occupancy: List[OccupancySensor] = Field(default_factory=list)
     connected: bool = False
     demo: bool = False
 
@@ -113,6 +134,24 @@ class Schedule(BaseModel):
     last_fired: Optional[str] = None
 
 
+class Automation(BaseModel):
+    """Fire a scene when a room becomes occupied or vacant.
+
+    This runs in the app, alongside whatever the processor already does with
+    the same sensor. It does not replace or edit the sensor's own programming.
+    """
+
+    id: str = ""
+    name: str
+    enabled: bool = True
+    sensor_id: str
+    occupied_scene_id: Optional[str] = None
+    vacant_scene_id: Optional[str] = None
+    # "always", or "dark" to run only between sunset and sunrise.
+    when: Literal["always", "dark"] = "always"
+    last_triggered: Optional[str] = None
+
+
 class Layout(BaseModel):
     """User customisation of the control interface."""
 
@@ -120,3 +159,6 @@ class Layout(BaseModel):
     hidden_devices: List[str] = Field(default_factory=list)
     favorite_devices: List[str] = Field(default_factory=list)
     display_names: Dict[str, str] = Field(default_factory=dict)
+    # The level a light goes to when tapped on in this app. Overrides the
+    # processor's programmed default, which LEAP cannot change.
+    default_levels: Dict[str, int] = Field(default_factory=dict)

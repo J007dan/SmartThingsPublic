@@ -23,16 +23,21 @@ from typing import Callable, Dict, List, Optional
 
 from .config import Settings
 from .models import (
+    OCCUPIED,
+    UNKNOWN,
+    UNOCCUPIED,
     Area,
     Capabilities,
     Device,
     Inventory,
     NativeScene,
+    OccupancySensor,
 )
 
 _LOG = logging.getLogger(__name__)
 
 ChangeCallback = Callable[[Device], None]
+OccupancyCallback = Callable[[OccupancySensor], None]
 
 # LEAP ControlType / DeviceType values that support slat tilt.
 _TILT_TYPES = {"ShadeWithTilt", "Blind", "TiltOnlyBlind", "VenetianBlind"}
@@ -45,8 +50,10 @@ class Bridge:
         self.devices: Dict[str, Device] = {}
         self.areas: Dict[str, Area] = {}
         self.native_scenes: Dict[str, NativeScene] = {}
+        self.occupancy: Dict[str, OccupancySensor] = {}
         self.connected = False
         self._listeners: List[ChangeCallback] = []
+        self._occupancy_listeners: List[OccupancyCallback] = []
 
     # -- change fan-out ----------------------------------------------------
     def subscribe(self, callback: ChangeCallback) -> Callable[[], None]:
@@ -58,12 +65,28 @@ class Bridge:
 
         return unsubscribe
 
+    def subscribe_occupancy(self, callback: OccupancyCallback) -> Callable[[], None]:
+        self._occupancy_listeners.append(callback)
+
+        def unsubscribe() -> None:
+            if callback in self._occupancy_listeners:
+                self._occupancy_listeners.remove(callback)
+
+        return unsubscribe
+
     def _emit(self, device: Device) -> None:
         for callback in list(self._listeners):
             try:
                 callback(device)
             except Exception:  # a bad listener must not break the bridge
                 _LOG.exception("device change listener failed")
+
+    def _emit_occupancy(self, sensor: OccupancySensor) -> None:
+        for callback in list(self._occupancy_listeners):
+            try:
+                callback(sensor)
+            except Exception:
+                _LOG.exception("occupancy listener failed")
 
     # -- lifecycle ---------------------------------------------------------
     async def start(self) -> None:
@@ -87,6 +110,7 @@ class Bridge:
             native_scenes=sorted(
                 self.native_scenes.values(), key=lambda s: s.name.lower()
             ),
+            occupancy=sorted(self.occupancy.values(), key=lambda s: s.name.lower()),
             connected=self.connected,
             demo=self.is_demo,
         )
@@ -184,6 +208,20 @@ class LeapBridge(Bridge):
             for scene_id, scene in bridge.scenes.items()
         }
 
+        # On RA3 an occupancy group is an area: every sensor in a room rolls
+        # up into a single status.
+        self.occupancy = {}
+        for group_id, group in bridge.occupancy_groups.items():
+            area = self.areas.get(group.get("area") or group_id)
+            self.occupancy[group_id] = OccupancySensor(
+                id=group_id,
+                name=group.get("name") or f"{area.name if area else 'Unknown'} Occupancy",
+                area_id=area.id if area else None,
+                area_name=area.name if area else "Unassigned",
+                status=group.get("status", UNKNOWN),
+                sensor_count=len(group.get("sensors", [])) or 1,
+            )
+
     def _to_device(self, raw: dict, domain: str) -> Device:
         leap_type = raw.get("type", "")
         kind, capabilities = _classify(leap_type, domain)
@@ -220,6 +258,22 @@ class LeapBridge(Bridge):
         assert bridge is not None
         for device_id in self.devices:
             bridge.add_subscriber(device_id, self._make_handler(device_id))
+        for group_id in self.occupancy:
+            bridge.add_occupancy_subscriber(group_id, self._make_occupancy_handler(group_id))
+
+    def _make_occupancy_handler(self, group_id: str) -> Callable[[], None]:
+        def handler() -> None:
+            group = self._bridge.occupancy_groups.get(group_id) if self._bridge else None
+            sensor = self.occupancy.get(group_id)
+            if group is None or sensor is None:
+                return
+            status = group.get("status", UNKNOWN)
+            if status == sensor.status:
+                return  # only react to real transitions
+            sensor.status = status
+            self._emit_occupancy(sensor)
+
+        return handler
 
     def _make_handler(self, device_id: str) -> Callable[[], None]:
         def handler() -> None:
@@ -330,7 +384,30 @@ class DemoBridge(Bridge):
             scene_id = f"v{index}"
             self.native_scenes[scene_id] = NativeScene(id=scene_id, name=name)
 
+        # Occupancy groups are per-area on RA3, so key them by area id.
+        for area_name in ("Kitchen", "Office", "Primary Bedroom"):
+            area = next(a for a in self.areas.values() if a.name == area_name)
+            self.occupancy[area.id] = OccupancySensor(
+                id=area.id,
+                name=f"{area.name} Occupancy",
+                area_id=area.id,
+                area_name=area.name,
+                status=UNOCCUPIED,
+            )
+
         self.connected = True
+
+    def set_occupancy(self, sensor_id: str, status: str) -> None:
+        """Simulate motion. Drives the same path as a real sensor report."""
+        sensor = self.occupancy.get(sensor_id)
+        if sensor is None:
+            raise KeyError(sensor_id)
+        if status not in (OCCUPIED, UNOCCUPIED, UNKNOWN):
+            raise ValueError(f"unknown occupancy status: {status}")
+        if sensor.status == status:
+            return
+        sensor.status = status
+        self._emit_occupancy(sensor)
 
     async def start(self) -> None:
         self.connected = True

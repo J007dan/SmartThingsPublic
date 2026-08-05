@@ -15,8 +15,8 @@ from pydantic import BaseModel, Field
 
 from .bridge import Bridge, create_bridge
 from .config import Settings, load_settings
-from .engine import ScheduleRunner, SceneRunner
-from .models import Device, Layout, Scene, SceneStep, Schedule
+from .engine import AutomationRunner, ScheduleRunner, SceneRunner
+from .models import Automation, Device, Layout, OccupancySensor, Scene, SceneStep, Schedule
 from .store import Store
 
 _LOG = logging.getLogger(__name__)
@@ -77,6 +77,12 @@ class Broadcaster:
         except asyncio.QueueFull:
             _LOG.warning("broadcast queue full, dropping a device update")
 
+    def publish_occupancy(self, sensor: OccupancySensor) -> None:
+        try:
+            self._queue.put_nowait({"type": "occupancy", "sensor": sensor.model_dump()})
+        except asyncio.QueueFull:
+            _LOG.warning("broadcast queue full, dropping an occupancy update")
+
     async def _drain(self) -> None:
         while True:
             message = await self._queue.get()
@@ -104,14 +110,31 @@ def create_app(settings: Optional[Settings] = None, bridge: Optional[Bridge] = N
             settings.longitude,
             settings.timezone,
         )
+        app.state.automations = AutomationRunner(
+            app.state.store,
+            app.state.scenes,
+            settings.latitude,
+            settings.longitude,
+            app.state.schedules.tz,
+        )
         app.state.broadcaster = Broadcaster()
         app.state.broadcaster.start()
         app.state.unsubscribe = app.state.bridge.subscribe(app.state.broadcaster.publish)
+        # Occupancy reports drive both the UI and the automation rules.
+        app.state.unsubscribe_occupancy = app.state.bridge.subscribe_occupancy(
+            app.state.broadcaster.publish_occupancy
+        )
+        app.state.unsubscribe_automations = app.state.bridge.subscribe_occupancy(
+            app.state.automations.on_occupancy
+        )
         app.state.schedules.start()
         try:
             yield
         finally:
             app.state.unsubscribe()
+            app.state.unsubscribe_occupancy()
+            app.state.unsubscribe_automations()
+            await app.state.automations.drain()
             await app.state.schedules.stop()
             await app.state.broadcaster.stop()
             await app.state.bridge.stop()
@@ -132,6 +155,7 @@ def create_app(settings: Optional[Settings] = None, bridge: Optional[Bridge] = N
             "inventory": get_bridge().inventory().model_dump(),
             "scenes": [s.model_dump() for s in store.list_scenes()],
             "schedules": [s.model_dump() for s in store.list_schedules()],
+            "automations": [a.model_dump() for a in store.list_automations()],
             "layout": store.layout.model_dump(),
             "upcoming": app.state.schedules.upcoming(),
             "settings": {
@@ -263,6 +287,52 @@ def create_app(settings: Optional[Settings] = None, bridge: Optional[Bridge] = N
         if not get_store().delete_schedule(schedule_id):
             raise HTTPException(status_code=404, detail="unknown schedule")
         return {"ok": True}
+
+    # -- occupancy automations --------------------------------------------
+    @app.get("/api/automations")
+    async def list_automations():
+        return [a.model_dump() for a in get_store().list_automations()]
+
+    @app.post("/api/automations")
+    async def save_automation(automation: Automation):
+        bridge = get_bridge()
+        if automation.sensor_id not in bridge.occupancy:
+            raise HTTPException(status_code=400, detail="unknown occupancy sensor")
+        store = get_store()
+        for scene_id in (automation.occupied_scene_id, automation.vacant_scene_id):
+            if scene_id and scene_id not in store.scenes:
+                raise HTTPException(status_code=400, detail="automation references an unknown scene")
+        if not automation.occupied_scene_id and not automation.vacant_scene_id:
+            raise HTTPException(status_code=400, detail="set a scene for occupied, vacant, or both")
+        return store.upsert_automation(automation).model_dump()
+
+    @app.delete("/api/automations/{automation_id}")
+    async def delete_automation(automation_id: str):
+        if not get_store().delete_automation(automation_id):
+            raise HTTPException(status_code=404, detail="unknown automation")
+        return {"ok": True}
+
+    @app.post("/api/occupancy/{sensor_id}/simulate")
+    async def simulate_occupancy(sensor_id: str, body: dict):
+        """Drive a sensor by hand. Demo backend only -- for testing rules."""
+        bridge = get_bridge()
+        if not bridge.is_demo:
+            raise HTTPException(
+                status_code=400,
+                detail="occupancy can only be simulated against the demo backend",
+            )
+        if sensor_id not in bridge.occupancy:
+            raise HTTPException(status_code=404, detail="unknown occupancy sensor")
+        runner = app.state.automations
+        runner.last_fired = []
+        try:
+            # This emits exactly as a real sensor report would, so the rules
+            # run through the normal subscriber path rather than a shortcut.
+            bridge.set_occupancy(sensor_id, body.get("status", ""))
+        except ValueError as exc:
+            raise HTTPException(status_code=400, detail=str(exc))
+        await runner.drain()
+        return {"ok": True, "fired": runner.last_fired}
 
     # -- layout -----------------------------------------------------------
     @app.put("/api/layout")

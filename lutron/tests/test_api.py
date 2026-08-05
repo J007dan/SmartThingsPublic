@@ -204,6 +204,7 @@ def test_layout_round_trips(client):
         "hidden_devices": ["5"],
         "favorite_devices": ["1"],
         "display_names": {"1": "Kitchen Cans"},
+        "default_levels": {"1": 65},
     }
     assert client.put("/api/layout", json=layout).status_code == 200
     assert client.get("/api/state").json()["layout"] == layout
@@ -248,3 +249,195 @@ def test_programming_survives_a_restart(settings):
     with TestClient(create_app(settings)) as second:
         assert [s["name"] for s in second.get("/api/scenes").json()] == ["Persisted"]
         assert [s["name"] for s in second.get("/api/schedules").json()] == ["Nightly"]
+
+
+# ------------------------------------------------------ occupancy sensors
+def a_sensor(client):
+    return client.get("/api/state").json()["inventory"]["occupancy"][0]
+
+
+def test_occupancy_sensors_are_discovered(client):
+    sensors = client.get("/api/state").json()["inventory"]["occupancy"]
+    assert len(sensors) > 0
+    assert all(s["area_name"] for s in sensors)
+    assert all(s["status"] in ("Occupied", "Unoccupied", "Unknown") for s in sensors)
+
+
+def test_motion_triggers_the_configured_scene(client):
+    """The headline case: walk into a room, the light comes on."""
+    device = a_device(client)
+    scene = client.post(
+        "/api/scenes",
+        json={
+            "name": "Hall night light",
+            "steps": [{"device_id": device["id"], "action": "level", "level": 20}],
+        },
+    ).json()
+    sensor = a_sensor(client)
+    client.post(
+        "/api/automations",
+        json={"name": "Motion", "sensor_id": sensor["id"], "occupied_scene_id": scene["id"]},
+    )
+
+    response = client.post(
+        f"/api/occupancy/{sensor['id']}/simulate", json={"status": "Occupied"}
+    )
+
+    assert response.status_code == 200
+    assert len(response.json()["fired"]) == 1
+    after = next(
+        d for d in client.get("/api/state").json()["inventory"]["devices"] if d["id"] == device["id"]
+    )
+    assert after["level"] == 20
+
+
+def test_vacancy_can_fire_a_separate_scene(client):
+    device = a_device(client)
+    on_scene = client.post(
+        "/api/scenes",
+        json={"name": "On", "steps": [{"device_id": device["id"], "action": "level", "level": 80}]},
+    ).json()
+    off_scene = client.post(
+        "/api/scenes",
+        json={"name": "Off", "steps": [{"device_id": device["id"], "action": "level", "level": 0}]},
+    ).json()
+    sensor = a_sensor(client)
+    client.post(
+        "/api/automations",
+        json={
+            "name": "Both edges",
+            "sensor_id": sensor["id"],
+            "occupied_scene_id": on_scene["id"],
+            "vacant_scene_id": off_scene["id"],
+        },
+    )
+
+    client.post(f"/api/occupancy/{sensor['id']}/simulate", json={"status": "Occupied"})
+    levels = client.get("/api/state").json()["inventory"]["devices"]
+    assert next(d for d in levels if d["id"] == device["id"])["level"] == 80
+
+    client.post(f"/api/occupancy/{sensor['id']}/simulate", json={"status": "Unoccupied"})
+    levels = client.get("/api/state").json()["inventory"]["devices"]
+    assert next(d for d in levels if d["id"] == device["id"])["level"] == 0
+
+
+def test_disabled_automation_does_not_fire(client):
+    scene = client.post("/api/scenes", json={"name": "S", "steps": []}).json()
+    sensor = a_sensor(client)
+    client.post(
+        "/api/automations",
+        json={
+            "name": "Off duty",
+            "sensor_id": sensor["id"],
+            "occupied_scene_id": scene["id"],
+            "enabled": False,
+        },
+    )
+
+    response = client.post(f"/api/occupancy/{sensor['id']}/simulate", json={"status": "Occupied"})
+    assert response.json()["fired"] == []
+
+
+def test_automation_only_fires_for_its_own_sensor(client):
+    scene = client.post("/api/scenes", json={"name": "S", "steps": []}).json()
+    sensors = client.get("/api/state").json()["inventory"]["occupancy"]
+    client.post(
+        "/api/automations",
+        json={"name": "Kitchen only", "sensor_id": sensors[0]["id"], "occupied_scene_id": scene["id"]},
+    )
+
+    other = client.post(
+        f"/api/occupancy/{sensors[1]['id']}/simulate", json={"status": "Occupied"}
+    )
+    assert other.json()["fired"] == []
+
+
+def test_repeated_occupied_reports_do_not_refire(client):
+    """A sensor re-reporting the same state is not a new transition."""
+    scene = client.post("/api/scenes", json={"name": "S", "steps": []}).json()
+    sensor = a_sensor(client)
+    client.post(
+        "/api/automations",
+        json={"name": "Motion", "sensor_id": sensor["id"], "occupied_scene_id": scene["id"]},
+    )
+
+    first = client.post(f"/api/occupancy/{sensor['id']}/simulate", json={"status": "Occupied"})
+    second = client.post(f"/api/occupancy/{sensor['id']}/simulate", json={"status": "Occupied"})
+
+    assert len(first.json()["fired"]) == 1
+    assert second.json()["fired"] == []
+
+
+def test_automation_validation(client):
+    scene = client.post("/api/scenes", json={"name": "S", "steps": []}).json()
+    sensor = a_sensor(client)
+
+    unknown_sensor = client.post(
+        "/api/automations",
+        json={"name": "X", "sensor_id": "ghost", "occupied_scene_id": scene["id"]},
+    )
+    assert unknown_sensor.status_code == 400
+
+    unknown_scene = client.post(
+        "/api/automations",
+        json={"name": "X", "sensor_id": sensor["id"], "occupied_scene_id": "ghost"},
+    )
+    assert unknown_scene.status_code == 400
+
+    no_scenes = client.post("/api/automations", json={"name": "X", "sensor_id": sensor["id"]})
+    assert no_scenes.status_code == 400
+
+
+def test_deleting_a_scene_clears_it_from_automations(client):
+    on_scene = client.post("/api/scenes", json={"name": "On", "steps": []}).json()
+    off_scene = client.post("/api/scenes", json={"name": "Off", "steps": []}).json()
+    sensor = a_sensor(client)
+    client.post(
+        "/api/automations",
+        json={
+            "name": "Both",
+            "sensor_id": sensor["id"],
+            "occupied_scene_id": on_scene["id"],
+            "vacant_scene_id": off_scene["id"],
+        },
+    )
+
+    # Removing one edge leaves the rule alive with the other edge intact.
+    client.delete(f"/api/scenes/{on_scene['id']}")
+    automations = client.get("/api/automations").json()
+    assert len(automations) == 1
+    assert automations[0]["occupied_scene_id"] is None
+    assert automations[0]["vacant_scene_id"] == off_scene["id"]
+
+    # Removing the last edge drops the now-meaningless rule.
+    client.delete(f"/api/scenes/{off_scene['id']}")
+    assert client.get("/api/automations").json() == []
+
+
+def test_automation_delete(client):
+    scene = client.post("/api/scenes", json={"name": "S", "steps": []}).json()
+    sensor = a_sensor(client)
+    automation = client.post(
+        "/api/automations",
+        json={"name": "Motion", "sensor_id": sensor["id"], "occupied_scene_id": scene["id"]},
+    ).json()
+
+    assert client.delete(f"/api/automations/{automation['id']}").status_code == 200
+    assert client.get("/api/automations").json() == []
+    assert client.delete(f"/api/automations/{automation['id']}").status_code == 404
+
+
+def test_occupancy_change_is_broadcast(client):
+    sensor = a_sensor(client)
+    with client.websocket_connect("/ws") as socket:
+        socket.receive_json()  # snapshot
+        client.post(f"/api/occupancy/{sensor['id']}/simulate", json={"status": "Occupied"})
+        message = socket.receive_json()
+        assert message["type"] == "occupancy"
+        assert message["sensor"]["status"] == "Occupied"
+
+
+def test_bad_occupancy_status_rejected(client):
+    sensor = a_sensor(client)
+    response = client.post(f"/api/occupancy/{sensor['id']}/simulate", json={"status": "Dancing"})
+    assert response.status_code == 400

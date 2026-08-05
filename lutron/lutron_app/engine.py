@@ -16,7 +16,7 @@ from typing import List, Optional
 from zoneinfo import ZoneInfo
 
 from .bridge import Bridge
-from .models import Scene, SceneStep, Schedule, Trigger
+from .models import OCCUPIED, UNOCCUPIED, OccupancySensor, Scene, SceneStep, Schedule, Trigger
 from .store import Store
 
 _LOG = logging.getLogger(__name__)
@@ -103,6 +103,19 @@ def next_fire_time(
     if base is None:
         return None
     return base + timedelta(minutes=trigger.offset_minutes)
+
+
+def is_dark(now: datetime, latitude: float, longitude: float, tz: ZoneInfo) -> bool:
+    """True between sunset and sunrise, for motion rules that should only run at night."""
+    try:
+        events = solar_times(now.date(), latitude, longitude, tz)
+    except Exception as exc:
+        _LOG.warning("could not compute solar times: %s", exc)
+        return False
+    sunrise, sunset = events.get("sunrise"), events.get("sunset")
+    if sunrise is None or sunset is None:
+        return False
+    return now >= sunset or now <= sunrise
 
 
 def is_due(
@@ -219,3 +232,93 @@ class ScheduleRunner:
                     break
             results.append({"id": schedule.id, "next": when.isoformat() if when else None})
         return results
+
+
+class AutomationRunner:
+    """Fires scenes in response to occupancy sensor reports.
+
+    The processor may already do something with the same sensor -- whatever
+    the installer programmed in Designer. This runs alongside that; it does not
+    replace it. If a sensor already turns a room's lights on natively, adding a
+    rule here means two things acting on one event.
+    """
+
+    def __init__(
+        self,
+        store: Store,
+        scenes: SceneRunner,
+        latitude: float,
+        longitude: float,
+        tz: ZoneInfo,
+    ):
+        self.store = store
+        self.scenes = scenes
+        self.latitude = latitude
+        self.longitude = longitude
+        self.tz = tz
+        self._pending: List[asyncio.Task] = []
+        # Ids fired by the most recent subscriber-driven run, so callers that
+        # trigger a sensor can report what happened without running it twice.
+        self.last_fired: List[str] = []
+
+    def matching(self, sensor_id: str) -> List:
+        return [
+            a
+            for a in self.store.automations.values()
+            if a.enabled and a.sensor_id == sensor_id
+        ]
+
+    async def handle(self, sensor: OccupancySensor, now: Optional[datetime] = None) -> List[str]:
+        """Run any automation bound to this sensor. Returns the ids that fired."""
+        now = now or datetime.now(self.tz)
+        fired = []
+
+        for automation in self.matching(sensor.id):
+            if automation.when == "dark" and not is_dark(now, self.latitude, self.longitude, self.tz):
+                _LOG.debug("skipping %s: not dark yet", automation.name)
+                continue
+
+            if sensor.status == OCCUPIED:
+                scene_id = automation.occupied_scene_id
+            elif sensor.status == UNOCCUPIED:
+                scene_id = automation.vacant_scene_id
+            else:
+                continue
+
+            if not scene_id:
+                continue
+            scene = self.store.scenes.get(scene_id)
+            if scene is None:
+                _LOG.warning("automation %s points at a missing scene", automation.name)
+                continue
+
+            _LOG.info(
+                "%s: %s is %s -> scene %s",
+                automation.name,
+                sensor.name,
+                sensor.status.lower(),
+                scene.name,
+            )
+            await self.scenes.apply(scene)
+            self.store.mark_automation_triggered(automation.id, now.isoformat(timespec="seconds"))
+            fired.append(automation.id)
+
+        return fired
+
+    def on_occupancy(self, sensor: OccupancySensor) -> None:
+        """Sync callback for the bridge; schedules the async work."""
+        task = asyncio.create_task(self._run(sensor))
+        self._pending.append(task)
+        task.add_done_callback(lambda t: self._pending.remove(t) if t in self._pending else None)
+
+    async def _run(self, sensor: OccupancySensor) -> None:
+        try:
+            self.last_fired = await self.handle(sensor)
+        except Exception:
+            _LOG.exception("occupancy automation failed for %s", sensor.name)
+            self.last_fired = []
+
+    async def drain(self) -> None:
+        """Wait for in-flight automations. Used on shutdown and in tests."""
+        if self._pending:
+            await asyncio.gather(*list(self._pending), return_exceptions=True)

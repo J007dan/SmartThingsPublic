@@ -59,6 +59,32 @@
         <div id="schedule-list" class="list"></div>
       </div>
 
+      <div class="panel" id="occupancy-panel">
+        <div class="panel-head">
+          <h2>Motion</h2>
+          <div class="panel-actions">
+            <button class="btn btn-primary" id="new-automation">New rule</button>
+          </div>
+        </div>
+        <p class="hint">
+          Fire a scene when a room becomes occupied or vacant. These rules run in
+          this app, <em>alongside</em> whatever your installer already programmed
+          the same sensor to do &mdash; they do not replace it.
+        </p>
+        <div id="sensor-list" class="chips"></div>
+        <div id="automation-list" class="list" style="margin-top: 14px;"></div>
+      </div>
+
+      <div class="panel" id="defaults-panel">
+        <div class="panel-head"><h2>Default on-levels</h2></div>
+        <p class="hint">
+          The level a light goes to when you tap it on <em>in this app</em>. Use
+          this to sidestep a processor default you don't like. It does not change
+          what the wall keypads do &mdash; that lives in Designer.
+        </p>
+        <div id="defaults-list" class="list"></div>
+      </div>
+
       <div class="panel" id="native-panel">
         <div class="panel-head"><h2>Processor scenes</h2></div>
         <p class="hint">
@@ -134,6 +160,44 @@
       </div>
       <label class="field field-inline">
         <input type="checkbox" id="schedule-enabled" checked>
+        <span>Enabled</span>
+      </label>
+      <menu class="dialog-actions">
+        <button class="btn" value="cancel" formnovalidate>Cancel</button>
+        <button class="btn btn-primary" value="save">Save</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <!-- Motion rule editor -->
+  <dialog id="automation-dialog" class="dialog">
+    <form method="dialog" id="automation-form">
+      <h3 id="automation-dialog-title">New motion rule</h3>
+      <label class="field">
+        <span>Name</span>
+        <input type="text" id="automation-name" required maxlength="40" placeholder="Kitchen at night">
+      </label>
+      <label class="field">
+        <span>Sensor</span>
+        <select id="automation-sensor" required></select>
+      </label>
+      <label class="field">
+        <span>When the room becomes occupied</span>
+        <select id="automation-occupied"><option value="">Do nothing</option></select>
+      </label>
+      <label class="field">
+        <span>When the room becomes vacant</span>
+        <select id="automation-vacant"><option value="">Do nothing</option></select>
+      </label>
+      <label class="field">
+        <span>Only run</span>
+        <select id="automation-when">
+          <option value="always">Any time</option>
+          <option value="dark">Between sunset and sunrise</option>
+        </select>
+      </label>
+      <label class="field field-inline">
+        <input type="checkbox" id="automation-enabled" checked>
         <span>Enabled</span>
       </label>
       <menu class="dialog-actions">

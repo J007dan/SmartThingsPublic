@@ -16,11 +16,21 @@ const state = {
   devices: new Map(),
   areas: [],
   nativeScenes: [],
+  occupancy: [],
   scenes: [],
   schedules: [],
+  automations: [],
   upcoming: [],
+  layout: { default_levels: {} },
   demo: false,
 };
+
+// The level a light goes to when tapped on. Overrides whatever the processor
+// was programmed to default to, which LEAP cannot change.
+function defaultLevelFor(deviceId) {
+  const configured = state.layout.default_levels?.[deviceId];
+  return Number.isFinite(configured) ? configured : 100;
+}
 
 // device id -> { row, fill, value, wrapper, tilt, seg }
 const nodes = new Map();
@@ -65,10 +75,13 @@ async function loadState() {
   const data = await api("/api/state");
   state.areas = data.inventory.areas;
   state.nativeScenes = data.inventory.native_scenes;
+  state.occupancy = data.inventory.occupancy || [];
   state.demo = data.inventory.demo;
   state.devices = new Map(data.inventory.devices.map((d) => [d.id, d]));
   state.scenes = data.scenes;
   state.schedules = data.schedules;
+  state.automations = data.automations || [];
+  state.layout = data.layout || { default_levels: {} };
   state.upcoming = data.upcoming;
 
   setStatus(data.inventory.demo ? "demo" : data.inventory.connected ? "live" : "down");
@@ -146,6 +159,7 @@ function buildDevice(device) {
   const wrapper = document.createElement("div");
   wrapper.className = "device";
   wrapper.dataset.kind = device.kind;
+  wrapper.dataset.deviceId = device.id;
 
   const row = document.createElement("div");
   row.className = "level-row";
@@ -314,8 +328,8 @@ function attachLevelControl(row, device) {
       // Let the processor's own report win again after a moment.
       setTimeout(() => dragging.delete(device.id), 400);
     } else {
-      // A tap toggles.
-      const level = current.level > 0 ? 0 : 100;
+      // A tap toggles, on to this light's configured default.
+      const level = current.level > 0 ? 0 : defaultLevelFor(device.id);
       current.level = level;
       paintDevice(current);
       send(level, 1);
@@ -398,6 +412,9 @@ function renderSceneBar() {
 function renderProgram() {
   renderSceneList();
   renderScheduleList();
+  renderSensorList();
+  renderAutomationList();
+  renderDefaultsList();
   renderNativeList();
 }
 
@@ -533,6 +550,171 @@ function renderScheduleList() {
     );
 
     item.append(main, actions);
+    list.append(item);
+  }
+}
+
+function renderSensorList() {
+  const list = $("#sensor-list");
+  list.innerHTML = "";
+  if (!state.occupancy.length) {
+    list.innerHTML = '<p class="empty">No occupancy sensors found on this system.</p>';
+    return;
+  }
+  for (const sensor of state.occupancy) {
+    const chip = document.createElement("span");
+    chip.className = "scene-chip";
+    chip.dataset.sensorId = sensor.id;
+    const dot = document.createElement("span");
+    dot.className = "status " + (sensor.status === "Occupied" ? "is-live" : "is-down");
+    dot.style.marginBottom = "0";
+    const label = document.createElement("span");
+    label.textContent = `${sensor.area_name} · ${sensor.status.toLowerCase()}`;
+    chip.append(dot, label);
+
+    // In demo mode the chip doubles as a way to fake motion and watch a rule run.
+    if (state.demo) {
+      chip.style.cursor = "pointer";
+      chip.title = "Simulate motion";
+      chip.addEventListener("click", async () => {
+        const next = sensor.status === "Occupied" ? "Unoccupied" : "Occupied";
+        try {
+          const result = await api(`/api/occupancy/${sensor.id}/simulate`, {
+            method: "POST",
+            body: JSON.stringify({ status: next }),
+          });
+          toast(
+            result.fired.length
+              ? `${sensor.area_name} ${next.toLowerCase()} — rule fired`
+              : `${sensor.area_name} ${next.toLowerCase()}`
+          );
+          await loadState();
+        } catch (error) {
+          fail(error);
+        }
+      });
+    }
+    list.append(chip);
+  }
+}
+
+function describeAutomation(automation) {
+  const sensor = state.occupancy.find((s) => s.id === automation.sensor_id);
+  const nameOf = (id) => state.scenes.find((s) => s.id === id)?.name;
+  const parts = [sensor ? sensor.area_name : "(missing sensor)"];
+  if (automation.occupied_scene_id) parts.push(`occupied → ${nameOf(automation.occupied_scene_id)}`);
+  if (automation.vacant_scene_id) parts.push(`vacant → ${nameOf(automation.vacant_scene_id)}`);
+  if (automation.when === "dark") parts.push("only after dark");
+  if (automation.last_triggered) {
+    parts.push(`last ${new Date(automation.last_triggered).toLocaleString([], {
+      weekday: "short", hour: "numeric", minute: "2-digit",
+    })}`);
+  }
+  return parts.join(" · ");
+}
+
+function renderAutomationList() {
+  const list = $("#automation-list");
+  list.innerHTML = "";
+  if (!state.automations.length) {
+    list.innerHTML = '<p class="empty">No motion rules yet.</p>';
+    return;
+  }
+  for (const automation of state.automations) {
+    const item = document.createElement("div");
+    item.className = "item";
+
+    const main = document.createElement("div");
+    main.className = "item-main";
+    const name = document.createElement("div");
+    name.className = "item-name";
+    name.textContent = automation.name + (automation.enabled ? "" : "  (off)");
+    const sub = document.createElement("div");
+    sub.className = "item-sub";
+    sub.textContent = describeAutomation(automation);
+    main.append(name, sub);
+
+    const actions = document.createElement("div");
+    actions.className = "item-actions";
+    actions.append(
+      button(automation.enabled ? "Disable" : "Enable", async () => {
+        try {
+          await api("/api/automations", {
+            method: "POST",
+            body: JSON.stringify({ ...automation, enabled: !automation.enabled }),
+          });
+          await loadState();
+        } catch (error) {
+          fail(error);
+        }
+      }),
+      button("Edit", () => openAutomationDialog(automation)),
+      button("Delete", async () => {
+        if (!confirm(`Delete the rule "${automation.name}"?`)) return;
+        try {
+          await api(`/api/automations/${automation.id}`, { method: "DELETE" });
+          await loadState();
+          toast("Rule deleted");
+        } catch (error) {
+          fail(error);
+        }
+      }, "btn-danger")
+    );
+
+    item.append(main, actions);
+    list.append(item);
+  }
+}
+
+/* Per-light default on-level. */
+function renderDefaultsList() {
+  const list = $("#defaults-list");
+  list.innerHTML = "";
+  const dimmable = [...state.devices.values()].filter((d) => d.capabilities.dimmable && d.kind === "light");
+  if (!dimmable.length) {
+    list.innerHTML = '<p class="empty">No dimmable lights found.</p>';
+    return;
+  }
+
+  for (const device of dimmable) {
+    const item = document.createElement("div");
+    item.className = "item";
+
+    const main = document.createElement("div");
+    main.className = "item-main";
+    const name = document.createElement("div");
+    name.className = "item-name";
+    name.textContent = `${device.area_name} · ${device.name}`;
+    main.append(name);
+
+    const range = document.createElement("input");
+    range.type = "range";
+    range.min = 1;
+    range.max = 100;
+    range.value = defaultLevelFor(device.id);
+    range.style.width = "120px";
+    range.style.accentColor = "var(--accent)";
+
+    const val = document.createElement("span");
+    val.className = "step-val";
+    val.textContent = `${range.value}%`;
+
+    range.addEventListener("input", () => { val.textContent = `${range.value}%`; });
+    range.addEventListener("change", async () => {
+      const layout = {
+        ...state.layout,
+        default_levels: { ...state.layout.default_levels, [device.id]: Number(range.value) },
+      };
+      try {
+        await api("/api/layout", { method: "PUT", body: JSON.stringify(layout) });
+        state.layout = layout;
+        toast(`${device.name} defaults to ${range.value}%`);
+      } catch (error) {
+        fail(error);
+      }
+    });
+
+    item.append(main, range, val);
     list.append(item);
   }
 }
@@ -791,6 +973,80 @@ $("#schedule-form").addEventListener("submit", async (event) => {
   }
 });
 
+/* -------------------------------------------------- automation dialog */
+let editingAutomation = null;
+
+function fillSceneOptions(select, selected, emptyLabel) {
+  select.innerHTML = `<option value="">${emptyLabel}</option>`;
+  for (const scene of state.scenes) {
+    const option = document.createElement("option");
+    option.value = scene.id;
+    option.textContent = scene.name;
+    select.append(option);
+  }
+  select.value = selected || "";
+}
+
+function openAutomationDialog(automation) {
+  if (!state.occupancy.length) {
+    toast("No occupancy sensors on this system", true);
+    return;
+  }
+  if (!state.scenes.length) {
+    toast("Create a scene first", true);
+    return;
+  }
+  editingAutomation = automation || null;
+  $("#automation-dialog-title").textContent = automation ? "Edit motion rule" : "New motion rule";
+  $("#automation-name").value = automation?.name || "";
+
+  const sensorSelect = $("#automation-sensor");
+  sensorSelect.innerHTML = "";
+  for (const sensor of state.occupancy) {
+    const option = document.createElement("option");
+    option.value = sensor.id;
+    option.textContent = sensor.name;
+    sensorSelect.append(option);
+  }
+  sensorSelect.value = automation?.sensor_id || state.occupancy[0].id;
+
+  fillSceneOptions($("#automation-occupied"), automation?.occupied_scene_id, "Do nothing");
+  fillSceneOptions($("#automation-vacant"), automation?.vacant_scene_id, "Do nothing");
+  $("#automation-when").value = automation?.when || "always";
+  $("#automation-enabled").checked = automation ? automation.enabled : true;
+  $("#automation-dialog").showModal();
+}
+
+$("#new-automation").addEventListener("click", () => openAutomationDialog(null));
+
+$("#automation-form").addEventListener("submit", async (event) => {
+  if (event.submitter?.value !== "save") return;
+  event.preventDefault();
+  const payload = {
+    id: editingAutomation?.id || "",
+    name: $("#automation-name").value.trim(),
+    enabled: $("#automation-enabled").checked,
+    sensor_id: $("#automation-sensor").value,
+    occupied_scene_id: $("#automation-occupied").value || null,
+    vacant_scene_id: $("#automation-vacant").value || null,
+    when: $("#automation-when").value,
+    last_triggered: editingAutomation?.last_triggered || null,
+  };
+  if (!payload.name) return;
+  if (!payload.occupied_scene_id && !payload.vacant_scene_id) {
+    toast("Pick a scene for occupied, vacant, or both", true);
+    return;
+  }
+  try {
+    await api("/api/automations", { method: "POST", body: JSON.stringify(payload) });
+    $("#automation-dialog").close();
+    await loadState();
+    toast("Rule saved");
+  } catch (error) {
+    fail(error);
+  }
+});
+
 /* ----------------------------------------------------------------- tabs */
 for (const tab of document.querySelectorAll(".tab")) {
   tab.addEventListener("click", () => {
@@ -815,6 +1071,12 @@ function connectSocket() {
       if (dragging.has(incoming.id)) return;
       state.devices.set(incoming.id, incoming);
       paintDevice(incoming);
+    } else if (message.type === "occupancy") {
+      const incoming = message.sensor;
+      const index = state.occupancy.findIndex((s) => s.id === incoming.id);
+      if (index >= 0) state.occupancy[index] = incoming;
+      else state.occupancy.push(incoming);
+      renderSensorList();
     } else if (message.type === "snapshot") {
       for (const device of message.inventory.devices) {
         if (dragging.has(device.id)) continue;

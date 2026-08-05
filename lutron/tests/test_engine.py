@@ -7,8 +7,15 @@ from zoneinfo import ZoneInfo
 import pytest
 
 from lutron_app.bridge import DemoBridge
-from lutron_app.engine import SceneRunner, ScheduleRunner, is_due, next_fire_time
-from lutron_app.models import Scene, SceneStep, Schedule, Trigger
+from lutron_app.engine import (
+    AutomationRunner,
+    SceneRunner,
+    ScheduleRunner,
+    is_dark,
+    is_due,
+    next_fire_time,
+)
+from lutron_app.models import Automation, Scene, SceneStep, Schedule, Trigger
 from lutron_app.store import Store
 
 TZ = ZoneInfo("America/New_York")
@@ -188,3 +195,99 @@ def test_runner_survives_a_dangling_scene_reference(tmp_path, bridge):
 def test_unknown_timezone_falls_back_to_utc(tmp_path, bridge):
     runner = ScheduleRunner(Store(tmp_path / "p.json"), SceneRunner(bridge), LAT, LON, "Mars/Olympus")
     assert runner.tz == ZoneInfo("UTC")
+
+
+# ------------------------------------------------- occupancy automations
+def test_is_dark_at_midnight_and_light_at_noon():
+    assert is_dark(datetime(2026, 6, 21, 0, 30, tzinfo=TZ), LAT, LON, TZ)
+    assert not is_dark(datetime(2026, 6, 21, 12, 0, tzinfo=TZ), LAT, LON, TZ)
+
+
+def test_is_dark_after_sunset():
+    # Midsummer: 9pm is past sunset in eastern Pennsylvania, 7pm is not.
+    assert is_dark(datetime(2026, 6, 21, 21, 30, tzinfo=TZ), LAT, LON, TZ)
+    assert not is_dark(datetime(2026, 6, 21, 19, 0, tzinfo=TZ), LAT, LON, TZ)
+
+
+def automation_runner(store, bridge):
+    return AutomationRunner(store, SceneRunner(bridge), LAT, LON, TZ)
+
+
+def test_dark_only_rule_is_skipped_in_daylight(tmp_path, bridge):
+    """The classic motion-light mistake: firing at noon."""
+    store = Store(tmp_path / "p.json")
+    light = first_of(bridge, "light")
+    scene = store.upsert_scene(
+        Scene(name="Night light", steps=[SceneStep(device_id=light.id, action="level", level=15)])
+    )
+    sensor = next(iter(bridge.occupancy.values()))
+    store.upsert_automation(
+        Automation(name="Motion", sensor_id=sensor.id, occupied_scene_id=scene.id, when="dark")
+    )
+    sensor.status = "Occupied"
+    runner = automation_runner(store, bridge)
+
+    noon = asyncio.run(runner.handle(sensor, datetime(2026, 6, 21, 12, 0, tzinfo=TZ)))
+    assert noon == []
+    assert bridge.devices[light.id].level == 0
+
+    night = asyncio.run(runner.handle(sensor, datetime(2026, 6, 21, 23, 0, tzinfo=TZ)))
+    assert len(night) == 1
+    assert bridge.devices[light.id].level == 15
+
+
+def test_always_rule_fires_regardless_of_time(tmp_path, bridge):
+    store = Store(tmp_path / "p.json")
+    light = first_of(bridge, "light")
+    scene = store.upsert_scene(
+        Scene(name="On", steps=[SceneStep(device_id=light.id, action="level", level=90)])
+    )
+    sensor = next(iter(bridge.occupancy.values()))
+    store.upsert_automation(
+        Automation(name="Motion", sensor_id=sensor.id, occupied_scene_id=scene.id, when="always")
+    )
+    sensor.status = "Occupied"
+
+    fired = asyncio.run(
+        automation_runner(store, bridge).handle(sensor, datetime(2026, 6, 21, 12, 0, tzinfo=TZ))
+    )
+    assert len(fired) == 1
+    assert bridge.devices[light.id].level == 90
+
+
+def test_automation_records_when_it_last_triggered(tmp_path, bridge):
+    store = Store(tmp_path / "p.json")
+    scene = store.upsert_scene(Scene(name="S", steps=[]))
+    sensor = next(iter(bridge.occupancy.values()))
+    automation = store.upsert_automation(
+        Automation(name="Motion", sensor_id=sensor.id, occupied_scene_id=scene.id)
+    )
+    sensor.status = "Occupied"
+
+    asyncio.run(automation_runner(store, bridge).handle(sensor, datetime(2026, 1, 5, 8, 0, tzinfo=TZ)))
+
+    assert store.automations[automation.id].last_triggered.startswith("2026-01-05T08:00")
+
+
+def test_unknown_occupancy_status_fires_nothing(tmp_path, bridge):
+    store = Store(tmp_path / "p.json")
+    scene = store.upsert_scene(Scene(name="S", steps=[]))
+    sensor = next(iter(bridge.occupancy.values()))
+    store.upsert_automation(
+        Automation(name="Motion", sensor_id=sensor.id, occupied_scene_id=scene.id)
+    )
+    sensor.status = "Unknown"
+
+    assert asyncio.run(automation_runner(store, bridge).handle(sensor)) == []
+
+
+def test_demo_bridge_only_emits_on_transition(bridge):
+    seen = []
+    bridge.subscribe_occupancy(lambda s: seen.append(s.status))
+    sensor_id = next(iter(bridge.occupancy))
+
+    bridge.set_occupancy(sensor_id, "Occupied")
+    bridge.set_occupancy(sensor_id, "Occupied")
+    bridge.set_occupancy(sensor_id, "Unoccupied")
+
+    assert seen == ["Occupied", "Unoccupied"]
