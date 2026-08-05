@@ -1,0 +1,29 @@
+; systemd unit for running the app on a Raspberry Pi, NAS, or mini PC.
+;
+;   sudo cp deploy/lutron-app.service /etc/systemd/system/
+;   sudo systemctl enable --now lutron-app
+;
+; Adjust User and the two paths to match your install.
+
+[Unit]
+Description=Lutron RA3 control and programming app
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/lutron
+ExecStart=/home/pi/lutron/.venv/bin/python -m lutron_app serve
+Restart=always
+RestartSec=5
+
+; The app only ever needs its own data directory.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=read-only
+ReadWritePaths=/home/pi/.config/lutron_app
+
+[Install]
+WantedBy=multi-user.target

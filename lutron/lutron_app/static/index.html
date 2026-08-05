@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0e1013">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Home</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <h1 id="title">Home</h1>
+      <span id="status" class="status" title="connection status"></span>
+    </div>
+    <nav class="tabs" role="tablist">
+      <button class="tab is-active" data-tab="control" role="tab">Control</button>
+      <button class="tab" data-tab="program" role="tab">Program</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ------------------------------ CONTROL ------------------------------ -->
+    <section id="view-control" class="view is-active">
+      <div id="scene-bar" class="scene-bar"></div>
+      <div id="rooms" class="rooms"></div>
+    </section>
+
+    <!-- ------------------------------ PROGRAM ------------------------------ -->
+    <section id="view-program" class="view">
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Scenes</h2>
+          <div class="panel-actions">
+            <button class="btn" id="capture-scene">Capture current</button>
+            <button class="btn btn-primary" id="new-scene">New scene</button>
+          </div>
+        </div>
+        <p class="hint">
+          Scenes live in this app and drive the processor over LEAP. Create as many
+          as you like &mdash; unlike the Lutron app, there is no limit and no
+          Designer visit required.
+        </p>
+        <div id="scene-list" class="list"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Schedules</h2>
+          <div class="panel-actions">
+            <button class="btn btn-primary" id="new-schedule">New schedule</button>
+          </div>
+        </div>
+        <p class="hint">
+          Fire any scene at a fixed time, or relative to sunrise/sunset with an offset.
+        </p>
+        <div id="schedule-list" class="list"></div>
+      </div>
+
+      <div class="panel" id="native-panel">
+        <div class="panel-head"><h2>Processor scenes</h2></div>
+        <p class="hint">
+          Scenes and phantom buttons programmed into the processor itself with Lutron
+          Designer. This app can trigger them but cannot create or edit them &mdash;
+          LEAP has no write-configuration API.
+        </p>
+        <div id="native-list" class="chips"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Scene editor -->
+  <dialog id="scene-dialog" class="dialog">
+    <form method="dialog" id="scene-form">
+      <h3 id="scene-dialog-title">New scene</h3>
+      <label class="field">
+        <span>Name</span>
+        <input type="text" id="scene-name" required maxlength="40" placeholder="Movie night">
+      </label>
+      <label class="field field-inline">
+        <span>Icon</span>
+        <input type="text" id="scene-icon" maxlength="2" value="✨" class="icon-input">
+      </label>
+      <label class="field">
+        <span>Also trigger a processor scene (optional)</span>
+        <select id="scene-native"><option value="">None</option></select>
+      </label>
+      <div class="field">
+        <span>Levels</span>
+        <p class="hint hint-tight">Only the loads you switch on are included in the scene.</p>
+        <div id="scene-steps" class="steps"></div>
+      </div>
+      <menu class="dialog-actions">
+        <button class="btn" value="cancel" formnovalidate>Cancel</button>
+        <button class="btn btn-primary" id="scene-save" value="save">Save</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <!-- Schedule editor -->
+  <dialog id="schedule-dialog" class="dialog">
+    <form method="dialog" id="schedule-form">
+      <h3 id="schedule-dialog-title">New schedule</h3>
+      <label class="field">
+        <span>Name</span>
+        <input type="text" id="schedule-name" required maxlength="40" placeholder="Evening lights">
+      </label>
+      <label class="field">
+        <span>Scene</span>
+        <select id="schedule-scene" required></select>
+      </label>
+      <label class="field">
+        <span>Trigger</span>
+        <select id="schedule-trigger">
+          <option value="time">At a set time</option>
+          <option value="sunrise">Sunrise</option>
+          <option value="sunset">Sunset</option>
+        </select>
+      </label>
+      <label class="field" id="time-field">
+        <span>Time</span>
+        <input type="time" id="schedule-time" value="18:00">
+      </label>
+      <label class="field" id="offset-field" hidden>
+        <span>Offset (minutes, negative is before)</span>
+        <input type="number" id="schedule-offset" value="0" min="-720" max="720" step="5">
+      </label>
+      <div class="field">
+        <span>Days</span>
+        <div class="days" id="schedule-days"></div>
+        <p class="hint hint-tight">No days selected means every day.</p>
+      </div>
+      <label class="field field-inline">
+        <input type="checkbox" id="schedule-enabled" checked>
+        <span>Enabled</span>
+      </label>
+      <menu class="dialog-actions">
+        <button class="btn" value="cancel" formnovalidate>Cancel</button>
+        <button class="btn btn-primary" value="save">Save</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
