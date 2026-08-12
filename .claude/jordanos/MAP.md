@@ -61,9 +61,12 @@ Root: **JordanOS** — `1FOU0cOGnP0HJzMTfTAH8aP-2khUncNjz`
 
 ## Automation
 
-Two Routines write here on a schedule (America/Los_Angeles):
-- **JordanOS Nightly Capture** — 9:00 PM daily → new doc in Daily/Captain's Log
-- **JordanOS Weekly Review** — Sunday 5:00 PM → new doc in JordanOS root
+Two Routines write here on a schedule. Times assume America/Los_Angeles; cron is stored in UTC.
 
-Both run as fresh sessions with the Google Drive connector. They create dated docs; they never edit
-existing ones (connector limitation).
+| Routine | Trigger ID | Cron (UTC) | Local | Writes to |
+|---|---|---|---|---|
+| JordanOS Nightly Capture | `trig_017Ha3bwMNCNg8XgXJoATfKC` | `0 4 * * *` | 9:00 PM daily | Daily/Captain's Log |
+| JordanOS Weekly Review | `trig_01QvqwocYYxq6fRTHLkLo35a` | `0 0 * * 1` | Sun 5:00 PM | JordanOS root |
+
+Both fire fresh sessions. They create dated docs; they never edit existing ones (connector
+limitation), so register updates flow through the weekly review's FOLD-IN QUEUE.
