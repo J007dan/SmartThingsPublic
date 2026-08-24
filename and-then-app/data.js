@@ -478,14 +478,61 @@ const ANCHOR_BASE = {
   lesson: "In every comparable case the announced percentage was a negotiating position rather than a forecast. Five of six came down; the one that did not, Brazil, was hollowed out by exclusions first and then collapsed on a court ruling. The number to watch is never the headline rate. It is the effective rate on the covered basket."
 };
 
-/* Every dated call the app has made. Misses stay published. */
+/* Every dated call the app has made. Misses stay published.
+   Each call carries a probability and a resolution rule fixed at publication,
+   so a miss cannot be argued into a hit afterwards. */
 const LEDGER = {
-  note: "A prediction the app can quietly delete is worth nothing. Every call is listed here with the date it was made and the date it comes due. Misses are kept, labelled, and left in place.",
+  note: "A prediction the app can quietly delete is worth nothing. Every call is listed here with the probability attached to it, the rule that decides it, and the date it comes due. Misses are kept, labelled, and left in place.",
+  rules: [
+    "No call is published without a number. \u201CLikely\u201D is not a forecast.",
+    "The resolution rule is fixed when the call is made and is never rewritten afterwards.",
+    "A call is never edited after publication. A change of mind is a new call, dated.",
+    "Scoring is reported by confidence band, never as a win rate. Getting 90% of calls right while claiming 60% confidence is not skill, it is timidity."
+  ],
+  bands: [[50, 59], [60, 69], [70, 79], [80, 89], [90, 100]],
   open: [
-    { subject: "FCC robotics Covered List", claim: "Named Conditional Approvals for major robotics incumbents will be published, following the drone and router precedents.", made: "24 August 2026", by: "31 October 2026" },
-    { subject: "Canada 50% tariffs", claim: "The 50% Section 338 rate will no longer apply across the full original $20 billion basket — most likely narrowed by product exclusions rather than repealed.", made: "24 August 2026", by: "30 November 2026" },
-    { subject: "Fauci contempt referral", claim: "The Justice Department will not have filed contempt charges on the Senate referral.", made: "24 August 2026", by: "8 November 2026" },
-    { subject: "Mail-in voting application", claim: "The order’s DHS-list and Postal Service mechanism will not be operative for the midterms, whether or not the Court rules for the administration.", made: "24 August 2026", by: "3 November 2026" }
+    {
+      subject: "FCC robotics Covered List",
+      claim: "Named Conditional Approvals for major robotics incumbents will be published, following the drone and router precedents.",
+      confidence: 70,
+      hit: "At least one Conditional Approval naming a foreign-produced advanced robotic device or its manufacturer is published on or before the due date.",
+      miss: "No such approval has appeared by the due date.",
+      source: "FCC Covered List page and OET Conditional Approval announcements",
+      made: "24 August 2026",
+      by: "31 October 2026"
+    },
+    {
+      subject: "Canada 50% tariffs",
+      claim: "The 50% Section 338 rate will no longer apply across the full original $20 billion basket \u2014 most likely narrowed by product exclusions rather than repealed.",
+      confidence: 75,
+      hit: "By the due date any one of: the rate is cut or suspended; the covered-goods list is narrowed by exclusion; or a settlement removes it for part of the basket.",
+      miss: "The same 50% still applies to the same basket, unchanged, on the due date.",
+      caveat: "Counting scope erosion as a hit makes this rule broad, and that is deliberate \u2014 erosion is the predicted mechanism. It is written down now precisely so it cannot be claimed after the fact.",
+      source: "Federal Register exclusion notices and the covered-goods annex",
+      made: "24 August 2026",
+      by: "30 November 2026"
+    },
+    {
+      subject: "Fauci contempt referral",
+      claim: "The Justice Department will not have filed contempt charges on the Senate referral.",
+      confidence: 80,
+      hit: "No criminal contempt charge has been filed by the due date.",
+      miss: "A charge is filed on or before the due date.",
+      caveat: "The historical base rate for congressional contempt referrals would justify a higher number. It is held at 80% because this department has already charged a former FBI director, so the usual inertia is a weaker guide than normal.",
+      source: "Federal court dockets and Justice Department announcements",
+      made: "24 August 2026",
+      by: "8 November 2026"
+    },
+    {
+      subject: "Mail-in voting application",
+      claim: "The order\u2019s DHS-list and Postal Service mechanism will not be operative for the midterms, whether or not the Court rules for the administration.",
+      confidence: 85,
+      hit: "On election day the DHS citizenship list plus Postal Service screening is not being used to decide mail-ballot eligibility in any state.",
+      miss: "It is in use in one or more states.",
+      source: "State election administration reporting and Postal Service filings",
+      made: "24 August 2026",
+      by: "3 November 2026"
+    }
   ],
   scored: []
 };

@@ -410,6 +410,11 @@
     color: var(--ink-mute); display: flex; gap: .9rem; flex-wrap: wrap;
   }
   .led-dates b { color: var(--ink-soft); font-weight: 500; }
+  .led-item.is-hit { border-left-color: var(--teal); }
+  .led-item.is-miss { border-left-color: var(--ember); }
+  .led-status.s-hit { background: var(--teal-dim); color: var(--teal); }
+  .led-status.s-miss { background: var(--ember-dim); color: var(--ember); }
+  .led-what { font-size: .8rem; line-height: 1.5; color: var(--ink-soft); margin: .4rem 0 0; }
   .led-empty {
     padding: .9rem 1rem; border: 1px dashed var(--edge); border-radius: 3px;
     font-size: .84rem; line-height: 1.55; color: var(--ink-mute); font-style: italic;
@@ -418,6 +423,60 @@
     font-family: var(--mono); font-size: .62rem; letter-spacing: .08em; text-transform: uppercase;
     color: var(--ink-mute); margin: 1.2rem 0 .5rem;
   }
+
+
+  /* ---- calibration ---- */
+  .cal { margin-top: 1.4rem; }
+  .cal-h {
+    font-family: var(--mono); font-size: .62rem; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--ink-mute); margin-bottom: .5rem;
+  }
+  .cal-wrap { overflow-x: auto; }
+  table.cal-t { border-collapse: collapse; width: 100%; min-width: 292px; font-variant-numeric: tabular-nums; }
+  table.cal-t th {
+    text-align: right; font-family: var(--mono); font-size: .57rem; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--ink-mute); font-weight: 400;
+    padding: 0 0 .4rem .5rem; border-bottom: 1px solid var(--edge); white-space: nowrap;
+  }
+  table.cal-t th:first-child, table.cal-t td:first-child { text-align: left; padding-left: 0; }
+  table.cal-t td {
+    text-align: right; padding: .42rem 0 .42rem .5rem; font-size: .78rem;
+    color: var(--ink-soft); border-bottom: 1px solid var(--edge-soft); white-space: nowrap;
+  }
+  table.cal-t td:first-child { font-family: var(--mono); font-size: .72rem; color: var(--ink); }
+  table.cal-t tr.empty td { color: var(--ink-mute); }
+  table.cal-t td b { color: var(--ink); font-weight: 600; }
+  .cal-brier {
+    display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap;
+    margin-top: .9rem; padding: .7rem .8rem; background: var(--surface);
+    border: 1px solid var(--edge-soft); border-radius: 3px;
+  }
+  .cal-brier .n { font-family: var(--display); font-size: 1.5rem; color: var(--ink); line-height: 1; }
+  .cal-brier .k {
+    font-family: var(--mono); font-size: .58rem; letter-spacing: .07em;
+    text-transform: uppercase; color: var(--ink-mute);
+  }
+  .cal-brier .d { font-size: .78rem; color: var(--ink-soft); line-height: 1.45; flex: 1 1 12rem; }
+  .cal-note { margin-top: .8rem; font-size: .81rem; line-height: 1.55; color: var(--ink-mute); font-style: italic; }
+  .rules { list-style: none; margin: 0 0 1.2rem; padding: 0; display: flex; flex-direction: column; gap: .42rem; }
+  .rules li {
+    font-size: .82rem; line-height: 1.5; color: var(--ink-soft);
+    padding-left: .85rem; position: relative;
+  }
+  .rules li::before { content: ""; position: absolute; left: 0; top: .55em; width: 4px; height: 4px; border-radius: 50%; background: var(--ink-mute); }
+  .conf {
+    font-family: var(--mono); font-size: .62rem; letter-spacing: .05em; font-weight: 500;
+    padding: .16rem .4rem; border-radius: 2px; background: var(--ground-deep);
+    border: 1px solid var(--edge); color: var(--ink); white-space: nowrap;
+  }
+  .resolve { margin-top: .55rem; padding-top: .5rem; border-top: 1px dashed var(--edge); }
+  .resolve div { display: flex; gap: .5rem; margin-bottom: .25rem; }
+  .resolve .rk {
+    font-family: var(--mono); font-size: .55rem; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--ink-mute); flex: 0 0 2.6rem; padding-top: .15rem;
+  }
+  .resolve .rv { font-size: .78rem; line-height: 1.45; color: var(--ink-soft); }
+  .resolve .caveat { font-size: .78rem; line-height: 1.45; color: var(--ink-mute); font-style: italic; margin-top: .3rem; }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
@@ -520,10 +579,27 @@
     <h3>The ledger</h3>
     <p id="led-note"></p>
     <div class="led-tally" id="led-tally"></div>
+    <ul class="rules" id="led-rules"></ul>
     <div class="led-sub">Open calls</div>
     <div id="led-open"></div>
     <div class="led-sub">Scored</div>
     <div id="led-scored"></div>
+
+    <div class="cal">
+      <div class="cal-h">Calibration</div>
+      <div class="cal-wrap">
+        <table class="cal-t">
+          <thead><tr><th>Band</th><th>Open</th><th>Due</th><th>Said</th><th>Actual</th></tr></thead>
+          <tbody id="cal-body"></tbody>
+        </table>
+      </div>
+      <div class="cal-brier">
+        <span class="n" id="brier">—</span>
+        <span class="k">Brier</span>
+        <span class="d" id="brier-d"></span>
+      </div>
+      <p class="cal-note" id="cal-note"></p>
+    </div>
   </section>
 
   <section class="coda">
@@ -1062,14 +1138,61 @@ const ANCHOR_BASE = {
   lesson: "In every comparable case the announced percentage was a negotiating position rather than a forecast. Five of six came down; the one that did not, Brazil, was hollowed out by exclusions first and then collapsed on a court ruling. The number to watch is never the headline rate. It is the effective rate on the covered basket."
 };
 
-/* Every dated call the app has made. Misses stay published. */
+/* Every dated call the app has made. Misses stay published.
+   Each call carries a probability and a resolution rule fixed at publication,
+   so a miss cannot be argued into a hit afterwards. */
 const LEDGER = {
-  note: "A prediction the app can quietly delete is worth nothing. Every call is listed here with the date it was made and the date it comes due. Misses are kept, labelled, and left in place.",
+  note: "A prediction the app can quietly delete is worth nothing. Every call is listed here with the probability attached to it, the rule that decides it, and the date it comes due. Misses are kept, labelled, and left in place.",
+  rules: [
+    "No call is published without a number. \u201CLikely\u201D is not a forecast.",
+    "The resolution rule is fixed when the call is made and is never rewritten afterwards.",
+    "A call is never edited after publication. A change of mind is a new call, dated.",
+    "Scoring is reported by confidence band, never as a win rate. Getting 90% of calls right while claiming 60% confidence is not skill, it is timidity."
+  ],
+  bands: [[50, 59], [60, 69], [70, 79], [80, 89], [90, 100]],
   open: [
-    { subject: "FCC robotics Covered List", claim: "Named Conditional Approvals for major robotics incumbents will be published, following the drone and router precedents.", made: "24 August 2026", by: "31 October 2026" },
-    { subject: "Canada 50% tariffs", claim: "The 50% Section 338 rate will no longer apply across the full original $20 billion basket — most likely narrowed by product exclusions rather than repealed.", made: "24 August 2026", by: "30 November 2026" },
-    { subject: "Fauci contempt referral", claim: "The Justice Department will not have filed contempt charges on the Senate referral.", made: "24 August 2026", by: "8 November 2026" },
-    { subject: "Mail-in voting application", claim: "The order’s DHS-list and Postal Service mechanism will not be operative for the midterms, whether or not the Court rules for the administration.", made: "24 August 2026", by: "3 November 2026" }
+    {
+      subject: "FCC robotics Covered List",
+      claim: "Named Conditional Approvals for major robotics incumbents will be published, following the drone and router precedents.",
+      confidence: 70,
+      hit: "At least one Conditional Approval naming a foreign-produced advanced robotic device or its manufacturer is published on or before the due date.",
+      miss: "No such approval has appeared by the due date.",
+      source: "FCC Covered List page and OET Conditional Approval announcements",
+      made: "24 August 2026",
+      by: "31 October 2026"
+    },
+    {
+      subject: "Canada 50% tariffs",
+      claim: "The 50% Section 338 rate will no longer apply across the full original $20 billion basket \u2014 most likely narrowed by product exclusions rather than repealed.",
+      confidence: 75,
+      hit: "By the due date any one of: the rate is cut or suspended; the covered-goods list is narrowed by exclusion; or a settlement removes it for part of the basket.",
+      miss: "The same 50% still applies to the same basket, unchanged, on the due date.",
+      caveat: "Counting scope erosion as a hit makes this rule broad, and that is deliberate \u2014 erosion is the predicted mechanism. It is written down now precisely so it cannot be claimed after the fact.",
+      source: "Federal Register exclusion notices and the covered-goods annex",
+      made: "24 August 2026",
+      by: "30 November 2026"
+    },
+    {
+      subject: "Fauci contempt referral",
+      claim: "The Justice Department will not have filed contempt charges on the Senate referral.",
+      confidence: 80,
+      hit: "No criminal contempt charge has been filed by the due date.",
+      miss: "A charge is filed on or before the due date.",
+      caveat: "The historical base rate for congressional contempt referrals would justify a higher number. It is held at 80% because this department has already charged a former FBI director, so the usual inertia is a weaker guide than normal.",
+      source: "Federal court dockets and Justice Department announcements",
+      made: "24 August 2026",
+      by: "8 November 2026"
+    },
+    {
+      subject: "Mail-in voting application",
+      claim: "The order\u2019s DHS-list and Postal Service mechanism will not be operative for the midterms, whether or not the Court rules for the administration.",
+      confidence: 85,
+      hit: "On election day the DHS citizenship list plus Postal Service screening is not being used to decide mail-ballot eligibility in any state.",
+      miss: "It is in use in one or more states.",
+      source: "State election administration reporting and Postal Service filings",
+      made: "24 August 2026",
+      by: "3 November 2026"
+    }
   ],
   scored: []
 };
@@ -1205,9 +1328,47 @@ const LEDGER = {
       '<div class="anchor-lesson">' + esc(ANCHOR_BASE.lesson) + "</div></div>";
   }
 
+  function renderCalibration() {
+    const scored = LEDGER.scored;
+    document.getElementById("cal-body").innerHTML = LEDGER.bands.map(([lo, hi]) => {
+      const inBand = (c) => c.confidence >= lo && c.confidence <= hi;
+      const open = LEDGER.open.filter(inBand);
+      const done = scored.filter(inBand);
+      const said = open.concat(done);
+      const avg = said.length ? Math.round(said.reduce((a, c) => a + c.confidence, 0) / said.length) + "%" : "—";
+      const actual = done.length
+        ? Math.round((done.filter((c) => c.result === "hit").length / done.length) * 100) + "%"
+        : "—";
+      const empty = said.length ? "" : ' class="empty"';
+      return "<tr" + empty + "><td>" + lo + "–" + hi + "%</td><td>" + (open.length || "—") +
+        "</td><td>" + (done.length || "—") + "</td><td>" + avg + "</td><td>" +
+        (done.length ? "<b>" + actual + "</b>" : actual) + "</td></tr>";
+    }).join("");
+
+    const brierEl = document.getElementById("brier");
+    const dEl = document.getElementById("brier-d");
+    if (scored.length) {
+      const b = scored.reduce((a, c) => {
+        const p = c.confidence / 100, o = c.result === "hit" ? 1 : 0;
+        return a + (p - o) * (p - o);
+      }, 0) / scored.length;
+      brierEl.textContent = b.toFixed(3);
+      dEl.textContent = "Mean squared error across " + scored.length + " resolved call" +
+        (scored.length === 1 ? "" : "s") + ". Lower is better; 0.25 is what always saying 50% would score.";
+    } else {
+      brierEl.textContent = "—";
+      dEl.textContent = "Mean squared error between the stated probability and what happened. Nothing has resolved, so there is no score. For reference, always saying 50% scores 0.25.";
+    }
+
+    document.getElementById("cal-note").textContent = scored.length
+      ? "Said versus Actual is the whole point. A band claiming 70% that lands 95% of the time is as badly calibrated as one that lands 45%."
+      : "No call has come due. The first resolves on 31 October 2026. Until then this table is structure, not evidence — it is published empty so the buckets cannot be drawn around the results later.";
+  }
+
   function renderLedger() {
     if (typeof LEDGER === "undefined") return;
     document.getElementById("led-note").textContent = LEDGER.note;
+    document.getElementById("led-rules").innerHTML = LEDGER.rules.map((r) => "<li>" + esc(r) + "</li>").join("");
     document.getElementById("led-tally").innerHTML =
       '<span class="t-open">' + LEDGER.open.length + " open</span>" +
       "<span>" + LEDGER.scored.filter((x) => x.result === "hit").length + " hit</span>" +
@@ -1215,16 +1376,25 @@ const LEDGER = {
 
     document.getElementById("led-open").innerHTML = LEDGER.open.map((c) =>
       '<div class="led-item"><div class="led-top"><span class="led-subject">' + esc(c.subject) +
-      '</span><span class="led-status">Open</span></div>' +
+      '</span><span class="conf">' + c.confidence + '% confident</span></div>' +
       '<p class="led-claim">' + esc(c.claim) + "</p>" +
+      '<div class="resolve">' +
+        '<div><span class="rk">Hit</span><span class="rv">' + esc(c.hit) + "</span></div>" +
+        '<div><span class="rk">Miss</span><span class="rv">' + esc(c.miss) + "</span></div>" +
+        '<div><span class="rk">Source</span><span class="rv">' + esc(c.source) + "</span></div>" +
+        (c.caveat ? '<p class="caveat">' + esc(c.caveat) + "</p>" : "") +
+      "</div>" +
       '<div class="led-dates"><span>Made <b>' + esc(c.made) + "</b></span><span>Due <b>" + esc(c.by) + "</b></span></div></div>"
     ).join("");
 
     document.getElementById("led-scored").innerHTML = LEDGER.scored.length
       ? LEDGER.scored.map((c) =>
-          '<div class="led-item"><div class="led-top"><span class="led-subject">' + esc(c.subject) +
-          '</span><span class="led-status">' + esc(c.result) + "</span></div>" +
-          '<p class="led-claim">' + esc(c.claim) + "</p></div>").join("")
+          '<div class="led-item ' + (c.result === "hit" ? "is-hit" : "is-miss") + '">' +
+          '<div class="led-top"><span class="led-subject">' + esc(c.subject) +
+          '</span><span class="led-status ' + (c.result === "hit" ? "s-hit" : "s-miss") + '">' +
+          (c.result === "hit" ? "Hit" : "Missed") + " · said " + c.confidence + "%</span></div>" +
+          '<p class="led-claim">' + esc(c.claim) + "</p>" +
+          (c.what ? '<p class="led-what">' + esc(c.what) + "</p>" : "") + "</div>").join("")
       : '<div class="led-empty">Nothing has come due yet. The first call is scored on 31 October 2026. Misses will appear here in the same place, and at the same size, as hits.</div>';
   }
 
@@ -1320,4 +1490,5 @@ const LEDGER = {
   syncPressed();
   render();
   renderLedger();
+  renderCalibration();
 </script>
