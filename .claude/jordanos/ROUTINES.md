@@ -41,8 +41,8 @@ You are the operator of JordanOS, Jordan's structured second brain in Google Dri
 STEP 1 — Load the operating rules.
 Read these Google Drive docs before doing anything else:
 - JordanOS Master Prompt: 1pHK7NzSIq0Hv-y7p9mui-_mD3m0-7FqVV4NG0G_H5TE
-- JordanOS Inbox: 1OwdDKaxJksHZilydbKM5IU7OoDRkUAQhtfSNOe2AHYo
-- JordanOS Current Focus: 14bQbsvH0L6TWsKKTIQO6O-CjVchTcBzPX3i3vCnLZ5o
+- JordanOS Inbox: 1QJdZQV6RJrgO1ueAQk9wVpaFqNVJ034pkOTFNWM6Wh4
+- JordanOS Current Focus: 1QXWCYRdJK9XKkNjLW4otf-0YeLRvc5AGE7jTTqVM2I8
 
 STEP 2 — Gather today's raw material.
 Sources, in priority order:
@@ -87,7 +87,7 @@ You are the operator of JordanOS, Jordan's structured second brain in Google Dri
 
 STEP 1 — Load state. Read these Google Drive docs:
 - Master Prompt: 1pHK7NzSIq0Hv-y7p9mui-_mD3m0-7FqVV4NG0G_H5TE
-- Current Focus: 14bQbsvH0L6TWsKKTIQO6O-CjVchTcBzPX3i3vCnLZ5o
+- Current Focus: 1QXWCYRdJK9XKkNjLW4otf-0YeLRvc5AGE7jTTqVM2I8
 - Weekly Review (prior format reference): 1p-bE9zGIOseouXwm5IteNaGP6pzWy2JFjCwHni8s9fE
 - Decision Log: 14DiDUKjb4cmqOfz3ErnXFoahliu3nMe99-ClTiE5OhE
 - Open Loops Register: 15vZf2YM-ASY7UcKroFjAAY4PxRWQV3TytyA_Y17FB80

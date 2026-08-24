@@ -10,8 +10,8 @@ Root: **JordanOS** — `1FOU0cOGnP0HJzMTfTAH8aP-2khUncNjz`
 |---|---|
 | Master Prompt | `1pHK7NzSIq0Hv-y7p9mui-_mD3m0-7FqVV4NG0G_H5TE` |
 | Index | `1RbxRFxjCCe5EQwqXPGJhLnm6WDhzPtvPiePCWHE2xVs` |
-| Inbox | `1OwdDKaxJksHZilydbKM5IU7OoDRkUAQhtfSNOe2AHYo` |
-| Current Focus | `14bQbsvH0L6TWsKKTIQO6O-CjVchTcBzPX3i3vCnLZ5o` |
+| Inbox | `1QJdZQV6RJrgO1ueAQk9wVpaFqNVJ034pkOTFNWM6Wh4` |
+| Current Focus | `1QXWCYRdJK9XKkNjLW4otf-0YeLRvc5AGE7jTTqVM2I8` |
 | Weekly Review | `1p-bE9zGIOseouXwm5IteNaGP6pzWy2JFjCwHni8s9fE` |
 
 ## Registers (canonical)
@@ -22,7 +22,7 @@ Root: **JordanOS** — `1FOU0cOGnP0HJzMTfTAH8aP-2khUncNjz`
 | Open Loops Register | `15vZf2YM-ASY7UcKroFjAAY4PxRWQV3TytyA_Y17FB80` | Knowledge/OpenLoops |
 | Projects Register | `1Kv3uxYPYthGQuZwTnGhIUX553GDIaSA-YfFD1nnEXFM` | Knowledge/Projects |
 | Timeline Log | `1rBfnxAG2QLa4BPq97-EFHX7xu0pesaGL03XxhzYqv44` | Knowledge/Timeline |
-| Claude Export Seed Entries | `1nVxlaJkktJBRjyTOAhF6hdViNAXl7yW1nhbSGRjf_1Q` | Knowledge/Documents |
+| Claude Export Seed Entries | `1Kb-xeu60ix7pa_lcA-sTc9Mtv2K5jMC9ref7NqKXGEI` | Knowledge/Documents |
 
 ## Folders
 
@@ -82,5 +82,5 @@ file. Verified 2026-08-24.
 
 ## Daily entries
 
-- Captain's Log 2026-08-24 `152aFomgBxtXke_GWkiE4RyRN-1sWdlsnLJb-ctpESBA` — first entry; backfills
+- Captain's Log 2026-08-24 `1fcckRoCWOFCrk99pSRNr5YWAED_clbgJGo62g6MOyFY` — first entry; backfills
   2026-07-09 through 2026-08-24 from Drive evidence only.

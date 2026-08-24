@@ -85,3 +85,14 @@ The Google Drive connector can **create** files but cannot **edit existing** one
 - **Never fabricate entries.** A quiet day gets a short "nothing new" log, not invented content.
   Everything written must trace to a real source: a conversation, a doc, a message, an event.
 - Mark inference as inference. Facts and assumptions get separate sections.
+
+## Credential rule (added 2026-08-24)
+
+**Never write credentials into JordanOS** — passwords, API keys, tokens, account numbers, security
+answers. A password was found stored in plaintext at the end of the Claude Export Seed Entries doc on
+2026-08-24 and removed. Anything written into these documents is readable by every session and every
+tool with Drive access, and it persists in Google Docs revision history after the visible text is
+deleted.
+
+If you encounter a credential in JordanOS: tell Jordan, do not repeat the value back in any document
+or summary, and treat removal plus rotation as the fix — removal alone does not undo exposure.
