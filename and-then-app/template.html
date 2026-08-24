@@ -147,7 +147,7 @@
   .lens button:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
 
   /* ---- standing watches ---- */
-  .watches { margin-top: 1.5rem; border: 1px solid var(--edge); border-radius: 5px; background: var(--surface); overflow: hidden; }
+  .watches { margin-top: 2.4rem; border: 1px solid var(--edge); border-radius: 5px; background: var(--surface); overflow: hidden; }
   .watches-h {
     display: flex; align-items: baseline; justify-content: space-between; gap: .6rem;
     padding: .85rem 1rem; border-bottom: 1px solid var(--edge-soft); background: var(--ground-deep);
@@ -524,6 +524,40 @@
     </div>
   </div>
 
+  <div class="legend">
+    <div><i class="k-noise"></i> Noise then <b>Crickets → Wall-to-wall</b></div>
+    <div><i class="k-then"></i> <em>And then . . .?</em> <b>Nada → Stuck</b></div>
+  </div>
+
+  <main class="stories" id="stories"></main>
+
+  <section class="ledger">
+    <h3>The ledger</h3>
+    <p id="led-note"></p>
+    <div class="led-tally" id="led-tally"></div>
+    <ul class="rules" id="led-rules"></ul>
+    <div class="led-sub">Open calls</div>
+    <div id="led-open"></div>
+    <div class="led-sub">Scored</div>
+    <div id="led-scored"></div>
+
+    <div class="cal">
+      <div class="cal-h">Calibration</div>
+      <div class="cal-wrap">
+        <table class="cal-t">
+          <thead><tr><th>Band</th><th>Open</th><th>Due</th><th>Said</th><th>Actual</th></tr></thead>
+          <tbody id="cal-body"></tbody>
+        </table>
+      </div>
+      <div class="cal-brier">
+        <span class="n" id="brier">—</span>
+        <span class="k">Brier</span>
+        <span class="d" id="brier-d"></span>
+      </div>
+      <p class="cal-note" id="cal-note"></p>
+    </div>
+  </section>
+
   <section class="watches">
     <div class="watches-h">
       <b>Standing watches</b>
@@ -565,40 +599,6 @@
         into exemptions and named approvals within weeks. A dated, falsifiable call on whether
         robotics follows is on the card in the 27 July edition — check by late October 2026.
       </p>
-    </div>
-  </section>
-
-  <div class="legend">
-    <div><i class="k-noise"></i> Noise then <b>Crickets → Wall-to-wall</b></div>
-    <div><i class="k-then"></i> <em>And then . . .?</em> <b>Nada → Stuck</b></div>
-  </div>
-
-  <main class="stories" id="stories"></main>
-
-  <section class="ledger">
-    <h3>The ledger</h3>
-    <p id="led-note"></p>
-    <div class="led-tally" id="led-tally"></div>
-    <ul class="rules" id="led-rules"></ul>
-    <div class="led-sub">Open calls</div>
-    <div id="led-open"></div>
-    <div class="led-sub">Scored</div>
-    <div id="led-scored"></div>
-
-    <div class="cal">
-      <div class="cal-h">Calibration</div>
-      <div class="cal-wrap">
-        <table class="cal-t">
-          <thead><tr><th>Band</th><th>Open</th><th>Due</th><th>Said</th><th>Actual</th></tr></thead>
-          <tbody id="cal-body"></tbody>
-        </table>
-      </div>
-      <div class="cal-brier">
-        <span class="n" id="brier">—</span>
-        <span class="k">Brier</span>
-        <span class="d" id="brier-d"></span>
-      </div>
-      <p class="cal-note" id="cal-note"></p>
     </div>
   </section>
 
