@@ -1,0 +1,96 @@
+{
+  "edition": "2026-08-24",
+  "newsDate": "2026-08-10",
+  "compiledAt": "2026-08-24",
+  "note": "Six things the country got loud about two weeks ago. Here is where each of them actually stands.",
+  "stories": [
+    {
+      "id": "vaccine-executive-order",
+      "kicker": "Public Health",
+      "headline": "Trump orders the childhood vaccine list cut from 18 diseases to 11",
+      "then": "Signed alongside Robert F. Kennedy Jr., the order dropped COVID-19, seasonal flu, hepatitis A, hepatitis B, RSV and rotavirus from the universally recommended schedule, called for MMR to be split into three separate shots, and asked that childhood vaccines be given at separate visits. It routed the decision through an HHS task force instead of the CDC's advisory committee, ACIP.",
+      "noise": 5,
+      "verdict": "grinding",
+      "thenWhat": "Two weeks on, the schedule your pediatrician actually follows has not changed. Injunctions from the earlier round of litigation are still holding the 2025 schedule in place, and the order's real move — described by one trade publication as \"an end run around ACIP\" — sidestepped the court fight rather than winning it. So the fight is now about the mechanism: whether policy can be set by task force at all. Medical groups have published guidance telling clinicians to keep vaccinating on the old schedule. Insurers have not announced coverage changes. Nothing was settled; nothing was reversed. It moved to a slower room.",
+      "sources": [
+        { "label": "NBC News", "url": "https://www.nbcnews.com/health/kids-health/trump-order-fewer-childhood-vaccines-rcna591774" },
+        { "label": "CNN", "url": "https://www.cnn.com/2026/08/10/health/executive-order-vaccines-what-it-means" },
+        { "label": "C&EN", "url": "https://cen.acs.org/policy/childhood-vaccine-schedule-measles-rfk-acip/104/web/2026/08" },
+        { "label": "TIME", "url": "https://time.com/article/2026/08/12/what-trump-executive-order-could-mean-for-childhood-vaccines/" }
+      ]
+    },
+    {
+      "id": "white-house-ballroom",
+      "kicker": "The Courts",
+      "headline": "Appeals court says Trump cannot build his ballroom without Congress",
+      "then": "A 2-1 D.C. Circuit panel ruled that the $400 million ballroom on the site of the demolished East Wing required congressional approval, with Judges Millett and Garcia rebuking the president for altering the building unilaterally. The court stayed its own order for two weeks so the administration could appeal.",
+      "noise": 4,
+      "verdict": "escalated",
+      "thenWhat": "The stay ran out, and on August 21 Chief Justice Roberts put the injunction on hold. Construction is continuing while the case proceeds. This is the one worth remembering, because the two-week-old version of this story — \"court stops Trump\" — is the opposite of where it landed. The ruling everybody shared was a two-week ruling with an expiration date printed on it, and the appellate victory lasted exactly as long as the panel said it would.",
+      "sources": [
+        { "label": "NPR (Aug 7)", "url": "https://www.npr.org/2026/08/07/nx-s1-5925123/white-house-ballroom-appeals-court-congress" },
+        { "label": "NPR (Aug 21)", "url": "https://www.npr.org/2026/08/21/nx-s1-5935417/supreme-court-allows-trumps-ballroom-construction-to-continue-for-now" },
+        { "label": "CNBC", "url": "https://www.cnbc.com/2026/08/21/supreme-court-trump-white-house-ballroom.html" },
+        { "label": "Axios", "url": "https://www.axios.com/2026/08/21/trump-ballroom-construction-supreme-court" }
+      ]
+    },
+    {
+      "id": "tps-south-sudan-burma",
+      "kicker": "Immigration",
+      "headline": "Courts clear the way to end Temporary Protected Status for South Sudan and Burma",
+      "then": "Following the Supreme Court's June 25 ruling on Haiti and Syria, the last legal obstacles fell and the terminations took effect — ending protection for roughly 232 South Sudanese nationals and about 4,000 people from Myanmar, and voiding their work authorization.",
+      "noise": 2,
+      "verdict": "landed",
+      "thenWhat": "It happened, quietly, and it stayed happened. USCIS and E-Verify have published the employer guidance; the work permits are already invalid; removal proceedings are the default for anyone without another status. There is no pending case that would put this back. This is the story on today's page that got the least outrage and had the most finished consequence — about 4,200 people whose legal status ended while the timeline was arguing about a ballroom.",
+      "sources": [
+        { "label": "Al Jazeera", "url": "https://www.aljazeera.com/news/2026/8/8/us-courts-clear-way-for-deportations-of-south-sudan-myanmar-nationals" },
+        { "label": "Fragomen", "url": "https://www.fragomen.com/insights/united-states-uscis-announces-termination-of-tps-for-burma-and-south-sudan-with-tps-work-authorization-no-longer-valid.html" },
+        { "label": "E-Verify", "url": "https://www.e-verify.gov/about-e-verify/whats-new/update-on-termination-of-temporary-protected-status-for-burma-release-3" },
+        { "label": "Democracy Now!", "url": "https://www.democracynow.org/2026/8/10/headlines/federal_judges_terminate_tps_for_immigrants_from_south_sudan_and_burma" }
+      ]
+    },
+    {
+      "id": "military-family-detentions",
+      "kicker": "Immigration",
+      "headline": "Immigration crackdown is detaining spouses and parents of active-duty troops",
+      "then": "Reporting that day described immigration arrests reaching into the immediate families of people currently serving in the U.S. military — including a newlywed detained at Fort Polk while registering as a military spouse.",
+      "noise": 4,
+      "verdict": "grinding",
+      "thenWhat": "The Associated Press count now stands at more than 50 spouses and parents of active-duty service members detained since the start of the term, at least six deported, and at least eight still in federal custody. Individual cases keep resolving one at a time through congressional pressure — a member of Congress makes noise, DHS releases one person — but the releases come with GPS monitoring and removal proceedings that continue anyway. The underlying April 2025 policy that military service \"alone does not exempt aliens from the consequences of violating U.S. immigration laws\" has not been revisited. The outrage moves case by case. The policy does not move.",
+      "sources": [
+        { "label": "AP via PBS NewsHour", "url": "https://www.pbs.org/newshour/nation/ap-report-trumps-immigration-crackdown-has-detained-more-than-50-military-spouses-and-parents" },
+        { "label": "Military.com", "url": "https://www.military.com/trumps-immigration-crackdown-has-detained-more-than-50-military-spouses-and-parents" }
+      ]
+    },
+    {
+      "id": "gaza-fifteen-point-plan",
+      "kicker": "The Middle East",
+      "headline": "Netanyahu publicly rejects Trump's 15-point Gaza plan",
+      "then": "In a rare open break with the administration, the Israeli prime minister rejected the U.S. roadmap and said there would be no military withdrawal until Hamas was \"genuinely\" disarmed.",
+      "noise": 4,
+      "verdict": "grinding",
+      "thenWhat": "Jared Kushner met Hamas official Khalil al-Hayya in Egypt on August 16, then sat with Netanyahu for four hours on August 17. Netanyahu's office called it \"deep and constructive\" and the two sides agreed to stand up two working groups — one on disarmament and demilitarization, one on water and sanitation — and reportedly agreed a U.S. general should oversee the Hamas disarmament process. The week ended with no significant movement on the plan itself. The public rejection turned into private working groups, which is what usually happens, and which is neither the collapse nor the breakthrough it was reported as.",
+      "sources": [
+        { "label": "NPR", "url": "https://www.npr.org/2026/08/16/g-s1-138948/kushner-gaza-hamas-netanyahu-egypt-talks" },
+        { "label": "NBC News", "url": "https://www.nbcnews.com/world/gaza/kushner-netanyahu-hamas-talks-gaza-plan-peace-trump-rcna592871" },
+        { "label": "Euronews", "url": "https://www.euronews.com/2026/08/17/kushners-gaza-peace-plan-talks-end-without-breakthrough" },
+        { "label": "The Hill", "url": "https://thehill.com/homenews/administration/6033416-kushner-netanyahu-gaza-peace-plan/" }
+      ]
+    },
+    {
+      "id": "iran-compensation-demand",
+      "kicker": "The Middle East",
+      "headline": "Trump says Iran would have to pay compensation before any talks",
+      "then": "With the ceasefire from earlier in the year described as in tatters, the president said the U.S. was \"low-keying\" negotiations with Tehran and floated compensation as a precondition for returning to the table.",
+      "noise": 3,
+      "verdict": "nothing-yet",
+      "thenWhat": "Nothing has been announced since. No resumption of direct talks, no compensation framework, no restored ceasefire — and no new strikes between the two governments either. Kushner spent the following week working the region on Gaza rather than Iran. Fourteen days later the precondition that led the coverage has not been mentioned again by either side. If you had spent August 10 arguing about it, you would have been arguing about a sentence.",
+      "sources": [
+        { "label": "CNN (Aug 10)", "url": "https://www.cnn.com/2026/08/10/world/live-news/iran-war-trump" },
+        { "label": "CNN (Aug 16)", "url": "https://www.cnn.com/2026/08/16/world/live-news/iran-war-trump" },
+        { "label": "House of Commons Library", "url": "https://commonslibrary.parliament.uk/research-briefings/cbp-10637/" },
+        { "label": "CRS via Congress.gov", "url": "https://www.congress.gov/crs-product/IN12678" }
+      ]
+    }
+  ]
+}

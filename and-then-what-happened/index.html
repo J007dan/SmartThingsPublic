@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>…And Then What Happened?</title>
+<meta name="description" content="The news from two weeks ago, reported today, with what actually came of it.">
+<meta name="theme-color" content="#f7f4ee" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#131210" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Then What">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="paper">
+  <header class="masthead">
+    <p class="lag">Fourteen days behind — on purpose</p>
+    <h1>…And Then<br><em>What Happened?</em></h1>
+    <p class="rule"></p>
+    <p class="dateline">
+      <span class="today" data-today>&nbsp;</span>
+      <span class="reading">the news of <strong data-newsdate>&nbsp;</strong>, now that we know</span>
+    </p>
+  </header>
+
+  <p class="editor-note" data-note hidden></p>
+
+  <main id="stories" aria-live="polite">
+    <p class="loading" data-loading>Setting the type…</p>
+  </main>
+
+  <nav class="edition-nav" data-nav hidden>
+    <button type="button" data-prev>← Earlier edition</button>
+    <button type="button" data-next>Later edition →</button>
+  </nav>
+
+  <footer class="colophon">
+    <p class="creed">Nothing on this page is breaking. That is the entire idea.</p>
+    <p class="small">Every story here ran fourteen days ago. Every follow-up is what could be
+      verified as of the compile date, with sources attached. Where the answer is
+      “it actually happened,” we say so — the point is to tell the difference, not to
+      promise that everything blows over.</p>
+  </footer>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
