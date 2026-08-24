@@ -1,0 +1,384 @@
+<title>And then …? Identity Routes</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&amp;family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+  :root {
+    --paper:#F4F4F2; --card:#FFFFFF; --ink:#1A1D20; --slate:#5A6578;
+    --accent:#B9381E; --edge:#DEDEDA; --hair:#E8E8E4;
+    --serif:'Playfair Display', Georgia, 'Times New Roman', serif;
+    --sans:'Inter', -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:#141618; --card:#1C1F22; --ink:#ECECE8; --slate:#98A2B3;
+      --accent:#E0563A; --edge:#2C3034; --hair:#24282B;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:#141618; --card:#1C1F22; --ink:#ECECE8; --slate:#98A2B3;
+    --accent:#E0563A; --edge:#2C3034; --hair:#24282B;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--paper); color:var(--ink); font-family:var(--sans); line-height:1.55; -webkit-font-smoothing:antialiased; }
+  .shell { max-width:52rem; margin:0 auto; padding:0 1.25rem 5rem; }
+  header { padding:3.5rem 0 2rem; border-bottom:1px solid var(--edge); }
+  h1 { font-family:var(--serif); font-size:clamp(2rem,6vw,3rem); font-weight:400; margin:0 0 .6rem; letter-spacing:-.02em; }
+  h1 em { font-style:italic; color:var(--slate); }
+  .sub { color:var(--slate); font-size:.95rem; max-width:42rem; margin:0; }
+  .caveat { margin-top:1.5rem; padding:.9rem 1rem; border:1px dashed var(--edge); border-radius:4px; background:var(--card); }
+  .caveat b { display:block; font-size:.64rem; letter-spacing:.09em; text-transform:uppercase; color:var(--slate); margin-bottom:.4rem; }
+  .caveat p { margin:0 0 .5rem; font-size:.84rem; color:var(--slate); }
+  .caveat p:last-child { margin:0; }
+  code { font-family:ui-monospace,Menlo,monospace; font-size:.86em; background:var(--hair); padding:.1em .35em; border-radius:3px; color:var(--ink); }
+  .opt { padding:3rem 0; border-bottom:1px solid var(--edge); }
+  .opt-h { display:flex; align-items:baseline; gap:.85rem; }
+  .num { font-family:var(--serif); font-size:1.05rem; color:var(--accent); font-weight:500; }
+  h2 { font-family:var(--serif); font-size:1.6rem; font-weight:400; margin:0; letter-spacing:-.01em; }
+  .lede { color:var(--slate); font-size:.95rem; margin:.6rem 0 1.4rem; max-width:44rem; }
+  /* the artwork keeps its own ground in both themes — you present a logo on the paper it was drawn for */
+  .board { border:1px solid var(--edge); border-radius:5px; overflow:hidden; background:#F4F4F2; }
+  .board svg { display:block; width:100%; height:auto; }
+  .notes { display:grid; gap:.9rem; margin:1.5rem 0 0; }
+  @media (min-width:34rem) { .notes { grid-template-columns:1fr 1fr; gap:1.1rem 1.8rem; } }
+  .note dt { font-size:.62rem; letter-spacing:.09em; text-transform:uppercase; color:var(--slate); font-weight:600; margin-bottom:.25rem; }
+  .note dd { margin:0; font-size:.88rem; color:var(--ink); }
+  .dark-strip { display:flex; gap:1rem; align-items:center; margin-top:1.5rem; padding:.9rem 1rem; background:var(--card); border:1px solid var(--edge); border-radius:4px; flex-wrap:wrap; }
+  .chip { background:#141618; border-radius:4px; padding:.25rem; flex:0 0 120px; }
+  .chip svg { display:block; width:120px; height:60px; }
+  .dark-strip p { margin:0; font-size:.82rem; color:var(--slate); flex:1 1 16rem; }
+  .rec { padding:3rem 0 0; }
+  .rec h2 { margin-bottom:1rem; }
+  .rec p { font-size:.95rem; margin:0 0 1rem; max-width:44rem; }
+  .rec strong { color:var(--accent); font-weight:600; }
+  .files { margin-top:2rem; padding:1rem 1.1rem; background:var(--card); border:1px solid var(--edge); border-radius:4px; }
+  .files b { display:block; font-size:.62rem; letter-spacing:.09em; text-transform:uppercase; color:var(--slate); margin-bottom:.5rem; }
+  .files ul { margin:0; padding-left:1.1rem; }
+  .files li { font-size:.84rem; color:var(--slate); margin-bottom:.3rem; }
+</style>
+
+<div class="shell">
+  <header>
+    <h1>And then <em>…?</em> — three routes</h1>
+    <p class="sub">Three identity directions for a retrospective news app. Each carries a mark, a wordmark lockup,
+       and small-size proofs. All three use the same palette: newsprint <code>#F4F4F2</code>, editorial charcoal
+       <code>#1A1D20</code>, slate <code>#5A6578</code>, and a single restrained crimson <code>#B9381E</code>
+       reserved for punctuation and the accent tick.</p>
+
+    <div class="caveat">
+      <b>Two production notes</b>
+      <p>The ellipsis in every lockup is drawn as vector circles rather than typed periods, so its rhythm and the
+         gap before the question mark are set optically instead of inherited from font metrics. Each lockup was
+         measured in a browser and centred to within a tenth of a pixel.</p>
+      <p>The SVGs pull Playfair Display and Inter from Google Fonts and fall back to Georgia and Helvetica.
+         Webfonts load when the file is opened directly or inlined in HTML, but are blocked when it is used as an
+         <code>&lt;img&gt;</code> source. For Figma, print, or app-store assets, convert the text to outlines first.</p>
+    </div>
+  </header>
+
+    <section class="opt">
+      <div class="opt-h"><span class="num">01</span><h2>Classic Editorial</h2></div>
+      <p class="lede">The ellipsis set between a newspaper double rule — the section divider every reader recognises without being able to name.</p>
+      <div class="board"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="And then …? — classic editorial logo lockup">
+  <title>And then …? — Classic Editorial</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&amp;family=Inter:wght@400;500;600&amp;display=swap');
+    .o1 { --ink:#1A1D20; --slate:#5A6578; --accent:#B9381E; --paper:#F4F4F2; }
+    .o1 .serif { font-family:'Playfair Display', Georgia, 'Times New Roman', serif; }
+    .o1 .sans  { font-family:'Inter', -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; }
+    .o1 .word  { font-size:76px; font-weight:400; fill:#1A1D20; }
+    .o1 .qm    { font-size:76px; font-weight:500; fill:#B9381E; }
+    .o1 .eyebrow { font-size:12px; font-weight:500; fill:#5A6578; letter-spacing:3.4px; }
+    .o1 .caption { font-size:10px; font-weight:500; fill:#5A6578; letter-spacing:2px; }
+    .o1 .rule-hi { stroke:#1A1D20; stroke-width:2.5; }
+    .o1 .rule-lo { stroke:#1A1D20; stroke-width:1; }
+    .o1 .hair    { stroke:#C9CAC6; stroke-width:1; }
+  </style>
+  <g class="o1">
+    <rect width="800" height="600" fill="#F4F4F2"/>
+
+    <!-- ICON: the ellipsis, set between classic newspaper section rules -->
+    <g id="mark1" transform="translate(400,132)">
+      <line class="rule-hi" x1="-54" y1="-24" x2="54" y2="-24"/>
+      <line class="rule-lo" x1="-54" y1="-17" x2="54" y2="-17"/>
+      <circle cx="-20" cy="2" r="5" fill="#1A1D20"/>
+      <circle cx="0"   cy="2" r="5" fill="#1A1D20"/>
+      <circle cx="20"  cy="2" r="5" fill="#B9381E"/>
+      <line class="rule-lo" x1="-54" y1="22" x2="54" y2="22"/>
+    </g>
+
+        <!-- LOCKUP: ellipsis drawn as circles so its rhythm is set optically, not by font metrics -->
+    <g id="lock1" transform="translate(-12.6,0)">
+      <text id="l1w" class="serif word" x="196" y="300">And then</text>
+      <circle cx="529" cy="294" r="5.4" fill="#1A1D20"/>
+      <circle cx="551" cy="294" r="5.4" fill="#1A1D20"/>
+      <circle cx="573" cy="294" r="5.4" fill="#1A1D20"/>
+      <text id="l1q" class="serif qm" x="594" y="300">?</text>
+    </g>
+
+    <text class="sans eyebrow" x="400" y="374" text-anchor="middle">EST. FOURTEEN DAYS AGO</text>
+
+    <line class="hair" x1="150" y1="428" x2="650" y2="428"/>
+
+    <!-- small-size proofs -->
+    <g transform="translate(178,470)">
+      <g transform="scale(0.44)">
+        <line class="rule-hi" x1="-54" y1="-24" x2="54" y2="-24"/>
+        <line class="rule-lo" x1="-54" y1="-17" x2="54" y2="-17"/>
+        <circle cx="-20" cy="2" r="5" fill="#1A1D20"/><circle cx="0" cy="2" r="5" fill="#1A1D20"/><circle cx="20" cy="2" r="5" fill="#B9381E"/>
+        <line class="rule-lo" x1="-54" y1="22" x2="54" y2="22"/>
+      </g>
+      <text class="sans caption" x="0" y="52" text-anchor="middle">48 PX</text>
+    </g>
+    <g transform="translate(286,470)">
+      <g transform="scale(0.26)">
+        <line class="rule-hi" x1="-54" y1="-24" x2="54" y2="-24"/>
+        <line class="rule-lo" x1="-54" y1="-17" x2="54" y2="-17"/>
+        <circle cx="-20" cy="2" r="5" fill="#1A1D20"/><circle cx="0" cy="2" r="5" fill="#1A1D20"/><circle cx="20" cy="2" r="5" fill="#B9381E"/>
+        <line class="rule-lo" x1="-54" y1="22" x2="54" y2="22"/>
+      </g>
+      <text class="sans caption" x="0" y="52" text-anchor="middle">28 PX</text>
+    </g>
+    <g id="hz1" transform="translate(356,458)">
+      <g transform="scale(0.3)">
+        <line class="rule-hi" x1="-54" y1="-24" x2="54" y2="-24"/>
+        <line class="rule-lo" x1="-54" y1="-17" x2="54" y2="-17"/>
+        <circle cx="-20" cy="2" r="5" fill="#1A1D20"/><circle cx="0" cy="2" r="5" fill="#1A1D20"/><circle cx="20" cy="2" r="5" fill="#B9381E"/>
+        <line class="rule-lo" x1="-54" y1="22" x2="54" y2="22"/>
+      </g>
+      <text id="h1w" class="serif" x="40" y="10" font-size="30" font-weight="400" fill="#1A1D20">And then</text>
+      <circle cx="173" cy="4" r="2.2" fill="#1A1D20"/><circle cx="182" cy="4" r="2.2" fill="#1A1D20"/><circle cx="191" cy="4" r="2.2" fill="#1A1D20"/>
+      <text class="serif" x="199" y="10" font-size="30" font-weight="500" fill="#B9381E">?</text>
+      <text class="sans caption" x="105" y="52" text-anchor="middle">HORIZONTAL LOCKUP</text>
+    </g>
+  </g>
+</svg></div>
+      <dl class="notes"><div class="note"><dt>Mark</dt><dd>Three dots between editorial rules. The third turns crimson: the answer arrives at the end of the wait.</dd></div><div class="note"><dt>Type</dt><dd>Playfair Display carries the wordmark; Inter handles the kicker, tracked wide at 3.4.</dd></div><div class="note"><dt>Strength</dt><dd>Instantly legible as journalism, and the simplest of the three to reproduce in one colour or at 16px.</dd></div><div class="note"><dt>Risk</dt><dd>The most familiar of the three. Reads as authoritative, but less ownable — the rules-and-dots device is common in editorial design.</dd></div></dl>
+      <div class="dark-strip">
+        <div class="chip"><svg viewBox="0 0 120 60" aria-hidden="true"><g transform="translate(60,30) scale(0.42)">
+<line x1="-54" y1="-24" x2="54" y2="-24" stroke="#F4F4F2" stroke-width="2.5"/>
+<line x1="-54" y1="-17" x2="54" y2="-17" stroke="#F4F4F2" stroke-width="1"/>
+<circle cx="-20" cy="2" r="5" fill="#F4F4F2"/><circle cx="0" cy="2" r="5" fill="#F4F4F2"/><circle cx="20" cy="2" r="5" fill="#E0563A"/>
+<line x1="-54" y1="22" x2="54" y2="22" stroke="#F4F4F2" stroke-width="1"/></g></svg></div>
+        <p>On dark, the ink inverts and the accent must lift from <code>#B9381E</code> to about <code>#E0563A</code> — the brief's crimson is too dark to hold against a near-black ground.</p>
+      </div>
+    </section>
+    <section class="opt">
+      <div class="opt-h"><span class="num">02</span><h2>Modern Minimalist & Timeline</h2></div>
+      <p class="lede">Fourteen ticks. Day 0 in charcoal, day 14 in crimson, the twelve days between them receding into grey.</p>
+      <div class="board"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="And then …? — modern timeline logo lockup">
+  <title>And then …? — Modern Minimalist &amp; Timeline</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&amp;family=Inter:wght@400;500;600;700&amp;display=swap');
+    .o2 .serif { font-family:'Playfair Display', Georgia, 'Times New Roman', serif; }
+    .o2 .sans  { font-family:'Inter', -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; }
+    .o2 .word  { font-size:64px; font-weight:600; fill:#1A1D20; letter-spacing:-1.6px; }
+    .o2 .qm    { font-size:60px; font-weight:500; fill:#B9381E; }
+    .o2 .eyebrow { font-size:11px; font-weight:600; fill:#5A6578; letter-spacing:4px; }
+    .o2 .daylab  { font-size:10px; font-weight:600; letter-spacing:1.6px; }
+    .o2 .caption { font-size:10px; font-weight:500; fill:#5A6578; letter-spacing:2px; }
+  </style>
+  <g class="o2">
+    <rect width="800" height="600" fill="#F8F9FA"/>
+
+    <!-- ICON: fourteen ticks. Day 0 charcoal, day 14 crimson, the twelve between recede. -->
+    <g id="mark2" transform="translate(400,138)">
+      <line x1="-130.00" y1="-15" x2="-130.00" y2="15" stroke="#1A1D20" stroke-width="3" stroke-linecap="round"/>
+      <line x1="-110.00" y1="-5.5" x2="-110.00" y2="5.5" stroke="#5A6578" stroke-width="1.6" stroke-linecap="round" opacity="0.45"/>
+      <line x1="-90.00" y1="-5.5" x2="-90.00" y2="5.5" stroke="#5A6578" stroke-width="1.6" stroke-linecap="round" opacity="0.45"/>
+      <line x1="-70.00" y1="-5.5" x2="-70.00" y2="5.5" stroke="#5A6578" stroke-width="1.6" stroke-linecap="round" opacity="0.45"/>
+      <line x1="-50.00" y1="-5.5" x2="-50.00" y2="5.5" stroke="#5A6578" stroke-width="1.6" stroke-linecap="round" opacity="0.45"/>
+      <line x1="-30.00" y1="-5.5" x2="-30.00" y2="5.5" stroke="#5A6578" stroke-width="1.6" stroke-linecap="round" opacity="0.45"/>
+      <line x1="-10.00" y1="-5.5" x2="-10.00" y2="5.5" stroke="#5A6578" stroke-width="1.6" stroke-linecap="round" opacity="0.45"/>
+      <line x1="10.00" y1="-5.5" x2="10.00" y2="5.5" stroke="#5A6578" stroke-width="1.6" stroke-linecap="round" opacity="0.45"/>
+      <line x1="30.00" y1="-5.5" x2="30.00" y2="5.5" stroke="#5A6578" stroke-width="1.6" stroke-linecap="round" opacity="0.45"/>
+      <line x1="50.00" y1="-5.5" x2="50.00" y2="5.5" stroke="#5A6578" stroke-width="1.6" stroke-linecap="round" opacity="0.45"/>
+      <line x1="70.00" y1="-5.5" x2="70.00" y2="5.5" stroke="#5A6578" stroke-width="1.6" stroke-linecap="round" opacity="0.45"/>
+      <line x1="90.00" y1="-5.5" x2="90.00" y2="5.5" stroke="#5A6578" stroke-width="1.6" stroke-linecap="round" opacity="0.45"/>
+      <line x1="110.00" y1="-5.5" x2="110.00" y2="5.5" stroke="#5A6578" stroke-width="1.6" stroke-linecap="round" opacity="0.45"/>
+      <line x1="130.00" y1="-15" x2="130.00" y2="15" stroke="#B9381E" stroke-width="3" stroke-linecap="round"/>
+      <text class="sans daylab" x="-130" y="34" text-anchor="middle" fill="#5A6578">DAY 0</text>
+      <text class="sans daylab" x="130" y="34" text-anchor="middle" fill="#B9381E">DAY 14</text>
+    </g>
+
+    <!-- LOCKUP: geometric sans, with the one serif note reserved for the question mark -->
+    <g id="lock2" transform="translate(0.75,0)">
+      <text id="l2w" class="sans word" x="214" y="290">And then</text>
+      <rect x="502" y="282" width="8" height="8" fill="#5A6578" opacity="0.5"/>
+      <rect x="518" y="282" width="8" height="8" fill="#5A6578" opacity="0.75"/>
+      <rect x="534" y="282" width="8" height="8" fill="#1A1D20"/>
+      <text id="l2q" class="serif qm" x="556" y="290">?</text>
+    </g>
+
+    <text class="sans eyebrow" x="400" y="352" text-anchor="middle">FOURTEEN DAYS LATER</text>
+
+    <line x1="150" y1="416" x2="650" y2="416" stroke="#DFE2E5" stroke-width="1"/>
+
+    <!-- small-size proofs: the mark reduces to three ticks -->
+    <g transform="translate(190,474)">
+      <g>
+        <line x1="-22" y1="-11" x2="-22" y2="11" stroke="#1A1D20" stroke-width="3" stroke-linecap="round"/>
+        <line x1="0" y1="-4" x2="0" y2="4" stroke="#5A6578" stroke-width="2" stroke-linecap="round" opacity="0.45"/>
+        <line x1="22" y1="-11" x2="22" y2="11" stroke="#B9381E" stroke-width="3" stroke-linecap="round"/>
+      </g>
+      <text class="sans caption" x="0" y="46" text-anchor="middle">REDUCED MARK</text>
+    </g>
+    <g transform="translate(316,474)">
+      <g transform="scale(0.5)">
+        <line x1="-22" y1="-11" x2="-22" y2="11" stroke="#1A1D20" stroke-width="4" stroke-linecap="round"/>
+        <line x1="0" y1="-4" x2="0" y2="4" stroke="#5A6578" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+        <line x1="22" y1="-11" x2="22" y2="11" stroke="#B9381E" stroke-width="4" stroke-linecap="round"/>
+      </g>
+      <text class="sans caption" x="0" y="46" text-anchor="middle">24 PX</text>
+    </g>
+    <g id="hz2" transform="translate(396,466)">
+      <g transform="scale(0.62)">
+        <line x1="-22" y1="-11" x2="-22" y2="11" stroke="#1A1D20" stroke-width="4" stroke-linecap="round"/>
+        <line x1="0" y1="-4" x2="0" y2="4" stroke="#5A6578" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+        <line x1="22" y1="-11" x2="22" y2="11" stroke="#B9381E" stroke-width="4" stroke-linecap="round"/>
+      </g>
+      <text id="h2w" class="sans" x="30" y="9" font-size="27" font-weight="600" fill="#1A1D20" letter-spacing="-0.7">And then</text>
+      <rect x="150" y="0" width="4" height="4" fill="#5A6578" opacity="0.5"/>
+      <rect x="158" y="0" width="4" height="4" fill="#5A6578" opacity="0.75"/>
+      <rect x="166" y="0" width="4" height="4" fill="#1A1D20"/>
+      <text class="serif" x="177" y="9" font-size="29" font-weight="500" fill="#B9381E">?</text>
+      <text class="sans caption" x="98" y="46" text-anchor="middle">HORIZONTAL LOCKUP</text>
+    </g>
+  </g>
+</svg></div>
+      <dl class="notes"><div class="note"><dt>Mark</dt><dd>The delay is literally counted, not alluded to. Anyone who looks twice can count the gap.</dd></div><div class="note"><dt>Type</dt><dd>Inter SemiBold at −1.6 tracking, with one deliberate inversion: the question mark is the serif, the single editorial note in a geometric lockup.</dd></div><div class="note"><dt>Strength</dt><dd>The only mark of the three that encodes the actual product rule. Reduces cleanly to three ticks for a favicon.</dd></div><div class="note"><dt>Risk</dt><dd>At very small sizes the fourteen ticks blur into a rule, which is why the reduced three-tick variant is part of the system rather than an afterthought.</dd></div></dl>
+      <div class="dark-strip">
+        <div class="chip"><svg viewBox="0 0 120 60" aria-hidden="true"><g transform="translate(60,30)">
+<line x1="-22" y1="-11" x2="-22" y2="11" stroke="#F4F4F2" stroke-width="3" stroke-linecap="round"/>
+<line x1="0" y1="-4" x2="0" y2="4" stroke="#98A2B3" stroke-width="2" stroke-linecap="round"/>
+<line x1="22" y1="-11" x2="22" y2="11" stroke="#E0563A" stroke-width="3" stroke-linecap="round"/></g></svg></div>
+        <p>On dark, the ink inverts and the accent must lift from <code>#B9381E</code> to about <code>#E0563A</code> — the brief's crimson is too dark to hold against a near-black ground.</p>
+      </div>
+    </section>
+    <section class="opt">
+      <div class="opt-h"><span class="num">03</span><h2>Typographic Emphasis</h2></div>
+      <p class="lede">A question mark built entirely from an ellipsis — the dots swell and darken as they curve, resolving into a crimson point.</p>
+      <div class="board"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="And then …? — typographic logo lockup">
+  <title>And then …? — Typographic Emphasis</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&amp;family=Inter:wght@400;500;600&amp;display=swap');
+    .o3 .serif { font-family:'Playfair Display', Georgia, 'Times New Roman', serif; }
+    .o3 .sans  { font-family:'Inter', -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; }
+    .o3 .word  { font-size:82px; font-weight:400; font-style:italic; fill:#1A1D20; }
+    .o3 .qm    { font-size:104px; font-weight:500; font-style:italic; fill:#B9381E; }
+    .o3 .eyebrow { font-size:11px; font-weight:500; fill:#5A6578; letter-spacing:3.8px; }
+    .o3 .caption { font-size:10px; font-weight:500; fill:#5A6578; letter-spacing:2px; }
+  </style>
+  <g class="o3">
+    <rect width="800" height="600" fill="#F4F4F2"/>
+
+    <!-- ICON: a question mark built entirely from an ellipsis, resolving to an accent point -->
+    <g id="mark3" transform="translate(400,128)">
+      <circle cx="-29.34" cy="6.24" r="2.60" fill="#1A1D20" opacity="0.35"/>
+      <circle cx="-27.82" cy="-11.24" r="3.00" fill="#1A1D20" opacity="0.46"/>
+      <circle cx="-16.78" cy="-24.87" r="3.40" fill="#1A1D20" opacity="0.57"/>
+      <circle cx="-0.00" cy="-30.00" r="3.80" fill="#1A1D20" opacity="0.68"/>
+      <circle cx="16.78" cy="-24.87" r="4.20" fill="#1A1D20" opacity="0.79"/>
+      <circle cx="27.82" cy="-11.24" r="4.60" fill="#1A1D20" opacity="0.90"/>
+      <circle cx="18.50" cy="9.50" r="5.00" fill="#1A1D20"/>
+      <circle cx="7.50" cy="23.50" r="5.40" fill="#1A1D20"/>
+      <circle cx="3.50" cy="45.00" r="6.60" fill="#B9381E"/>
+    </g>
+
+    <!-- LOCKUP: the punctuation is the story — three dots swelling into the answer -->
+    <g id="lock3" transform="translate(-3,0)">
+      <text id="l3w" class="serif word" x="176" y="330">And then</text>
+      <circle cx="517" cy="322" r="4.0" fill="#1A1D20" opacity="0.4"/>
+      <circle cx="540" cy="322" r="5.0" fill="#1A1D20" opacity="0.65"/>
+      <circle cx="564" cy="322" r="6.0" fill="#1A1D20"/>
+      <text id="l3q" class="serif qm" x="586" y="336">?</text>
+    </g>
+
+    <text class="sans eyebrow" x="400" y="392" text-anchor="middle">THE NEWS, FOURTEEN DAYS LATER</text>
+
+    <line x1="150" y1="452" x2="650" y2="452" stroke="#DCDCD8" stroke-width="1"/>
+
+    <!-- small-size proofs -->
+    <g transform="translate(196,502)">
+      <g transform="scale(0.42) translate(0,-18)">
+      <circle cx="-29.34" cy="6.24" r="2.60" fill="#1A1D20" opacity="0.35"/>
+      <circle cx="-27.82" cy="-11.24" r="3.00" fill="#1A1D20" opacity="0.46"/>
+      <circle cx="-16.78" cy="-24.87" r="3.40" fill="#1A1D20" opacity="0.57"/>
+      <circle cx="-0.00" cy="-30.00" r="3.80" fill="#1A1D20" opacity="0.68"/>
+      <circle cx="16.78" cy="-24.87" r="4.20" fill="#1A1D20" opacity="0.79"/>
+      <circle cx="27.82" cy="-11.24" r="4.60" fill="#1A1D20" opacity="0.90"/>
+      <circle cx="18.50" cy="9.50" r="5.00" fill="#1A1D20"/>
+      <circle cx="7.50" cy="23.50" r="5.40" fill="#1A1D20"/>
+      <circle cx="3.50" cy="45.00" r="6.60" fill="#B9381E"/>
+      </g>
+      <text class="sans caption" x="0" y="56" text-anchor="middle">44 PX</text>
+    </g>
+    <g transform="translate(300,502)">
+      <g transform="scale(0.26) translate(0,-18)">
+      <circle cx="-29.34" cy="6.24" r="2.60" fill="#1A1D20" opacity="0.35"/>
+      <circle cx="-27.82" cy="-11.24" r="3.00" fill="#1A1D20" opacity="0.46"/>
+      <circle cx="-16.78" cy="-24.87" r="3.40" fill="#1A1D20" opacity="0.57"/>
+      <circle cx="-0.00" cy="-30.00" r="3.80" fill="#1A1D20" opacity="0.68"/>
+      <circle cx="16.78" cy="-24.87" r="4.20" fill="#1A1D20" opacity="0.79"/>
+      <circle cx="27.82" cy="-11.24" r="4.60" fill="#1A1D20" opacity="0.90"/>
+      <circle cx="18.50" cy="9.50" r="5.00" fill="#1A1D20"/>
+      <circle cx="7.50" cy="23.50" r="5.40" fill="#1A1D20"/>
+      <circle cx="3.50" cy="45.00" r="6.60" fill="#B9381E"/>
+      </g>
+      <text class="sans caption" x="0" y="56" text-anchor="middle">28 PX</text>
+    </g>
+    <g id="hz3" transform="translate(352,488)">
+      <g transform="scale(0.3) translate(0,-14)">
+      <circle cx="-29.34" cy="6.24" r="2.60" fill="#1A1D20" opacity="0.35"/>
+      <circle cx="-27.82" cy="-11.24" r="3.00" fill="#1A1D20" opacity="0.46"/>
+      <circle cx="-16.78" cy="-24.87" r="3.40" fill="#1A1D20" opacity="0.57"/>
+      <circle cx="-0.00" cy="-30.00" r="3.80" fill="#1A1D20" opacity="0.68"/>
+      <circle cx="16.78" cy="-24.87" r="4.20" fill="#1A1D20" opacity="0.79"/>
+      <circle cx="27.82" cy="-11.24" r="4.60" fill="#1A1D20" opacity="0.90"/>
+      <circle cx="18.50" cy="9.50" r="5.00" fill="#1A1D20"/>
+      <circle cx="7.50" cy="23.50" r="5.40" fill="#1A1D20"/>
+      <circle cx="3.50" cy="45.00" r="6.60" fill="#B9381E"/>
+      </g>
+      <text id="h3w" class="serif" x="34" y="10" font-size="31" font-style="italic" font-weight="400" fill="#1A1D20">And then</text>
+      <circle cx="167" cy="3" r="1.8" fill="#1A1D20" opacity="0.4"/>
+      <circle cx="176" cy="3" r="2.2" fill="#1A1D20" opacity="0.65"/>
+      <circle cx="185" cy="3" r="2.6" fill="#1A1D20"/>
+      <text class="serif" x="194" y="12" font-size="40" font-style="italic" font-weight="500" fill="#B9381E">?</text>
+      <text class="sans caption" x="112" y="56" text-anchor="middle">HORIZONTAL LOCKUP</text>
+    </g>
+  </g>
+</svg></div>
+      <dl class="notes"><div class="note"><dt>Mark</dt><dd>Punctuation telling the story exactly as briefed: the trailing-off and the answer are the same glyph.</dd></div><div class="note"><dt>Type</dt><dd>Playfair Display Italic gives the wordmark a reflective, essayistic voice; Inter holds the micro-label.</dd></div><div class="note"><dt>Strength</dt><dd>The most ownable and the most distinctive. It is a mark nobody else has.</dd></div><div class="note"><dt>Risk</dt><dd>The most fragile small. It holds to about 28px and below that the dots merge — it needs a solid-drawn variant for favicon use.</dd></div></dl>
+      <div class="dark-strip">
+        <div class="chip"><svg viewBox="0 0 120 60" aria-hidden="true"><g transform="translate(60,26) scale(0.42) translate(0,-16)"><circle cx="-29.3" cy="6.2" r="2.6" fill="#F4F4F2" opacity="0.35"/><circle cx="-27.8" cy="-11.2" r="3.0" fill="#F4F4F2" opacity="0.46"/><circle cx="-16.8" cy="-24.9" r="3.4" fill="#F4F4F2" opacity="0.57"/><circle cx="-0.0" cy="-30.0" r="3.8" fill="#F4F4F2" opacity="0.68"/><circle cx="16.8" cy="-24.9" r="4.2" fill="#F4F4F2" opacity="0.79"/><circle cx="27.8" cy="-11.2" r="4.6" fill="#F4F4F2" opacity="0.9"/><circle cx="18.5" cy="9.5" r="5.0" fill="#F4F4F2"/><circle cx="7.5" cy="23.5" r="5.4" fill="#F4F4F2"/><circle cx="3.5" cy="45" r="6.6" fill="#E0563A"/></g></svg></div>
+        <p>On dark, the ink inverts and the accent must lift from <code>#B9381E</code> to about <code>#E0563A</code> — the brief's crimson is too dark to hold against a near-black ground.</p>
+      </div>
+    </section>
+
+  <section class="rec">
+    <h2>Which one</h2>
+    <p><strong>Route 02 for the product, route 03 for the brand.</strong> They are not really competing — they do
+       different jobs, and the strongest outcome is probably to use both.</p>
+    <p>02 is the only mark that encodes the actual rule of the app. Fourteen ticks is a fact about the product, not
+       a mood about it, and it reduces to three ticks at favicon size without losing meaning. That makes it the safer
+       app icon and the better system.</p>
+    <p>03 is the mark nobody else could own. A question mark assembled from an ellipsis is exactly the brief's
+       "punctuation tells the story," and it is the one people would remember. It is also the most fragile below
+       28px, so it wants a solid-drawn variant before it goes on a home screen.</p>
+    <p>01 is the safest and the least distinctive. Worth keeping as the editorial-context lockup — a masthead rule
+       for a newsletter or a print footer — rather than the primary identity.</p>
+    <p>One thing to decide deliberately: this palette is warm newsprint, and the app as built runs on a cool twilight
+       blue-grey. They are different worlds. Adopting one of these means repainting the app, or consciously letting
+       the brand and the reading surface diverge.</p>
+
+    <div class="files">
+      <b>Files</b>
+      <ul>
+        <li><code>logo/option-1-editorial.svg</code> — 800×600, self-contained</li>
+        <li><code>logo/option-2-timeline.svg</code> — 800×600, self-contained</li>
+        <li><code>logo/option-3-typographic.svg</code> — 800×600, self-contained</li>
+      </ul>
+    </div>
+  </section>
+</div>

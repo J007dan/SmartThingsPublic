@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="And then …? — typographic logo lockup">
+  <title>And then …? — Typographic Emphasis</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&amp;family=Inter:wght@400;500;600&amp;display=swap');
+    .o3 .serif { font-family:'Playfair Display', Georgia, 'Times New Roman', serif; }
+    .o3 .sans  { font-family:'Inter', -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; }
+    .o3 .word  { font-size:82px; font-weight:400; font-style:italic; fill:#1A1D20; }
+    .o3 .qm    { font-size:104px; font-weight:500; font-style:italic; fill:#B9381E; }
+    .o3 .eyebrow { font-size:11px; font-weight:500; fill:#5A6578; letter-spacing:3.8px; }
+    .o3 .caption { font-size:10px; font-weight:500; fill:#5A6578; letter-spacing:2px; }
+  </style>
+  <g class="o3">
+    <rect width="800" height="600" fill="#F4F4F2"/>
+
+    <!-- ICON: a question mark built entirely from an ellipsis, resolving to an accent point -->
+    <g id="mark3" transform="translate(400,128)">
+      <circle cx="-29.34" cy="6.24" r="2.60" fill="#1A1D20" opacity="0.35"/>
+      <circle cx="-27.82" cy="-11.24" r="3.00" fill="#1A1D20" opacity="0.46"/>
+      <circle cx="-16.78" cy="-24.87" r="3.40" fill="#1A1D20" opacity="0.57"/>
+      <circle cx="-0.00" cy="-30.00" r="3.80" fill="#1A1D20" opacity="0.68"/>
+      <circle cx="16.78" cy="-24.87" r="4.20" fill="#1A1D20" opacity="0.79"/>
+      <circle cx="27.82" cy="-11.24" r="4.60" fill="#1A1D20" opacity="0.90"/>
+      <circle cx="18.50" cy="9.50" r="5.00" fill="#1A1D20"/>
+      <circle cx="7.50" cy="23.50" r="5.40" fill="#1A1D20"/>
+      <circle cx="3.50" cy="45.00" r="6.60" fill="#B9381E"/>
+    </g>
+
+    <!-- LOCKUP: the punctuation is the story — three dots swelling into the answer -->
+    <g id="lock3" transform="translate(-3,0)">
+      <text id="l3w" class="serif word" x="176" y="330">And then</text>
+      <circle cx="517" cy="322" r="4.0" fill="#1A1D20" opacity="0.4"/>
+      <circle cx="540" cy="322" r="5.0" fill="#1A1D20" opacity="0.65"/>
+      <circle cx="564" cy="322" r="6.0" fill="#1A1D20"/>
+      <text id="l3q" class="serif qm" x="586" y="336">?</text>
+    </g>
+
+    <text class="sans eyebrow" x="400" y="392" text-anchor="middle">THE NEWS, FOURTEEN DAYS LATER</text>
+
+    <line x1="150" y1="452" x2="650" y2="452" stroke="#DCDCD8" stroke-width="1"/>
+
+    <!-- small-size proofs -->
+    <g transform="translate(196,502)">
+      <g transform="scale(0.42) translate(0,-18)">
+      <circle cx="-29.34" cy="6.24" r="2.60" fill="#1A1D20" opacity="0.35"/>
+      <circle cx="-27.82" cy="-11.24" r="3.00" fill="#1A1D20" opacity="0.46"/>
+      <circle cx="-16.78" cy="-24.87" r="3.40" fill="#1A1D20" opacity="0.57"/>
+      <circle cx="-0.00" cy="-30.00" r="3.80" fill="#1A1D20" opacity="0.68"/>
+      <circle cx="16.78" cy="-24.87" r="4.20" fill="#1A1D20" opacity="0.79"/>
+      <circle cx="27.82" cy="-11.24" r="4.60" fill="#1A1D20" opacity="0.90"/>
+      <circle cx="18.50" cy="9.50" r="5.00" fill="#1A1D20"/>
+      <circle cx="7.50" cy="23.50" r="5.40" fill="#1A1D20"/>
+      <circle cx="3.50" cy="45.00" r="6.60" fill="#B9381E"/>
+      </g>
+      <text class="sans caption" x="0" y="56" text-anchor="middle">44 PX</text>
+    </g>
+    <g transform="translate(300,502)">
+      <g transform="scale(0.26) translate(0,-18)">
+      <circle cx="-29.34" cy="6.24" r="2.60" fill="#1A1D20" opacity="0.35"/>
+      <circle cx="-27.82" cy="-11.24" r="3.00" fill="#1A1D20" opacity="0.46"/>
+      <circle cx="-16.78" cy="-24.87" r="3.40" fill="#1A1D20" opacity="0.57"/>
+      <circle cx="-0.00" cy="-30.00" r="3.80" fill="#1A1D20" opacity="0.68"/>
+      <circle cx="16.78" cy="-24.87" r="4.20" fill="#1A1D20" opacity="0.79"/>
+      <circle cx="27.82" cy="-11.24" r="4.60" fill="#1A1D20" opacity="0.90"/>
+      <circle cx="18.50" cy="9.50" r="5.00" fill="#1A1D20"/>
+      <circle cx="7.50" cy="23.50" r="5.40" fill="#1A1D20"/>
+      <circle cx="3.50" cy="45.00" r="6.60" fill="#B9381E"/>
+      </g>
+      <text class="sans caption" x="0" y="56" text-anchor="middle">28 PX</text>
+    </g>
+    <g id="hz3" transform="translate(352,488)">
+      <g transform="scale(0.3) translate(0,-14)">
+      <circle cx="-29.34" cy="6.24" r="2.60" fill="#1A1D20" opacity="0.35"/>
+      <circle cx="-27.82" cy="-11.24" r="3.00" fill="#1A1D20" opacity="0.46"/>
+      <circle cx="-16.78" cy="-24.87" r="3.40" fill="#1A1D20" opacity="0.57"/>
+      <circle cx="-0.00" cy="-30.00" r="3.80" fill="#1A1D20" opacity="0.68"/>
+      <circle cx="16.78" cy="-24.87" r="4.20" fill="#1A1D20" opacity="0.79"/>
+      <circle cx="27.82" cy="-11.24" r="4.60" fill="#1A1D20" opacity="0.90"/>
+      <circle cx="18.50" cy="9.50" r="5.00" fill="#1A1D20"/>
+      <circle cx="7.50" cy="23.50" r="5.40" fill="#1A1D20"/>
+      <circle cx="3.50" cy="45.00" r="6.60" fill="#B9381E"/>
+      </g>
+      <text id="h3w" class="serif" x="34" y="10" font-size="31" font-style="italic" font-weight="400" fill="#1A1D20">And then</text>
+      <circle cx="167" cy="3" r="1.8" fill="#1A1D20" opacity="0.4"/>
+      <circle cx="176" cy="3" r="2.2" fill="#1A1D20" opacity="0.65"/>
+      <circle cx="185" cy="3" r="2.6" fill="#1A1D20"/>
+      <text class="serif" x="194" y="12" font-size="40" font-style="italic" font-weight="500" fill="#B9381E">?</text>
+      <text class="sans caption" x="112" y="56" text-anchor="middle">HORIZONTAL LOCKUP</text>
+    </g>
+  </g>
+</svg>
