@@ -176,6 +176,8 @@
   .legend i { width: .58rem; height: .58rem; border-radius: 2px; display: block; }
   .legend .k-noise { background: var(--ember); }
   .legend .k-then { background: var(--teal); }
+  .legend b { font-weight: 400; color: var(--ink-mute); opacity: .8; letter-spacing: .04em; }
+  .legend div { flex-wrap: wrap; }
   .legend em { font-family: var(--display); font-style: italic; text-transform: none; letter-spacing: 0; font-size: .82rem; }
 
   /* ---- story ---- */
@@ -227,7 +229,7 @@
   .m-name.branded { font-family: var(--display); font-style: italic; font-size: .92rem; text-transform: none; letter-spacing: 0; color: var(--ink-soft); font-weight: 400; }
   .m-val { font-size: .74rem; font-weight: 600; color: var(--ink); line-height: 1.25; }
   .bars { display: flex; gap: 3px; align-items: center; }
-  .bars i { display: block; height: 5px; flex: 1; border-radius: 1px; }
+  .bars i { display: block; height: 7px; flex: 1; border-radius: 1.5px; }
   .m-noise i { background: var(--ember-dim); }
   .m-noise i.on { background: var(--ember); }
   .m-then i { background: var(--teal-dim); }
@@ -508,8 +510,8 @@
   </section>
 
   <div class="legend">
-    <div><i class="k-noise"></i> Noise then</div>
-    <div><i class="k-then"></i> <em>And then . . .?</em></div>
+    <div><i class="k-noise"></i> Noise then <b>Crickets → Wall-to-wall</b></div>
+    <div><i class="k-then"></i> <em>And then . . .?</em> <b>Nada → Stuck</b></div>
   </div>
 
   <main class="stories" id="stories"></main>
@@ -583,15 +585,18 @@
 /*__DATA__*/
 
   const TODAY = new Date(2026, 7, 24);
-  const NOISE_WORDS = { 1: "Near silence", 2: "One cycle", 3: "Loud", 4: "Deafening" };
-  const THEN_WORDS = { 1: "Nothing yet", 2: "Some motion", 3: "Real shift", 4: "Permanent" };
+  // Three levels, not four. An even scale forces a lean; the cost is agonising
+  // between adjacent tiers. The middle here is a real category — it moved but
+  // has not settled — never a shrug.
+  const NOISE_WORDS = { 1: "Crickets", 2: "One cycle", 3: "Wall-to-wall" };
+  const THEN_WORDS = { 1: "Nada", 2: "Nudged", 3: "Stuck" };
   const GAP = {
     right: "This barely reached right-leaning feeds.",
     left: "This barely reached left-leaning feeds."
   };
 
   const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-  const bars = (n) => [1, 2, 3, 4].map((i) => '<i class="' + (i <= n ? "on" : "") + '"></i>').join("");
+  const bars = (n) => [1, 2, 3].map((i) => '<i class="' + (i <= n ? "on" : "") + '"></i>').join("");
 
   document.getElementById("today").textContent =
     TODAY.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });

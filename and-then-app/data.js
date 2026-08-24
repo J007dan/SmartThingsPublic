@@ -97,7 +97,7 @@ const EDITIONS = [
           left: "Read as the moment a court finally drew a line on executive spending. The judges' names trended for a day and a great many posts declared that accountability had arrived.",
           right: "Read as two appellate judges blocking a privately funded gift to the White House out of spite — obstruction of a project costing taxpayers nothing."
         },
-        noise: 4, then: 1,
+        noise: 3, then: 1,
         verdict: "Undone in 11 days",
         outcome: [
           "On 21 August, Chief Justice John Roberts issued a temporary stay lifting the hold. Construction was never actually interrupted, and the structure is now rising aboveground on the east side of the White House.",
@@ -118,7 +118,7 @@ const EDITIONS = [
           left: "Near the top of the week's alarm. Physicians' groups warned of preventable outbreaks, and the order was widely described as the end of routine childhood immunization in America.",
           right: "Framed as restoring parental choice and spacing out an overloaded schedule — a campaign promise kept and a rebuke to the public health establishment."
         },
-        noise: 4, then: 1,
+        noise: 3, then: 1,
         verdict: "Inert, with a live fuse",
         outcome: [
           "The MMR provision cannot currently be carried out by anyone. No manufacturer sells standalone measles, mumps or rubella vaccines in the United States, and the order does not create one. Fourteen days on, nothing about vaccine availability this fall has changed.",
@@ -140,7 +140,7 @@ const EDITIONS = [
           left: "Covered as a partisan exercise, with attention to the fact that the released texts show Fauci noting that more than 10,000 pregnant women had been vaccinated and \"no issues have arisen.\"",
           right: "Very big. Senators Johnson and Paul published texts from a phone containing more than 34,000 messages; Sen. Marshall called for a special counsel and Sen. Paul referred Fauci to the Justice Department for prosecution."
         },
-        noise: 4, then: 1,
+        noise: 3, then: 1,
         verdict: "Referred, not charged",
         outcome: [
           "Two weeks on, the contempt referral sits where contempt referrals sit. A referral is a request that the Justice Department act; it is not a charge, and no charging decision has been announced.",
@@ -163,7 +163,7 @@ const EDITIONS = [
           left: "Framed as chaos and self-inflicted price increases, with the usual reminder that tariffs are paid by importers.",
           right: "Framed as finally using leverage on a neighbour that has been free-riding on American markets for decades."
         },
-        noise: 3, then: 4,
+        noise: 2, then: 2,
         verdict: "Took effect — durability unproven",
         outcome: [
           "The tariffs took effect. Trump paused them for three days on 19 August citing a near-final deal, talks collapsed on the Friday night, and 50% duties landed at 12:01am Saturday on roughly $20 billion of Canadian goods — dairy, alcohol, cement, hockey equipment. Carney suspended negotiations and recalled Canada’s team the same day.",
@@ -195,7 +195,7 @@ const EDITIONS = [
           left: "Celebrated in February as the most significant judicial check on presidential power in decades — the taxing power returned to Congress.",
           right: "Called judicial overreach into the president's foreign affairs authority, and a gift to countries that had been extracting concessions for years."
         },
-        noise: 4, then: 3,
+        noise: 3, then: 2,
         verdict: "Won on paper, rebuilt in practice",
         outcome: [
           "Included here because it is what the Supreme Court watch is for: a decision that settles a furor from a year earlier, arriving long after everyone stopped waiting for it.",
@@ -219,7 +219,7 @@ const EDITIONS = [
           left: "Reported as the collapse of the peace push and as evidence that Netanyahu is unconstrained by Washington.",
           right: "Reported as Israel refusing to trade a withdrawal for promises from a terror group — and, more quietly, as Trump being strung along by an ally."
         },
-        noise: 4, then: 2,
+        noise: 3, then: 2,
         verdict: "Still unsettled",
         outcome: [
           "It was not a collapse. On 18 August Jared Kushner met Netanyahu and came away publicly optimistic; the two agreed that disarmament should begin with a Hamas weapons handover supervised by an American general.",
@@ -242,7 +242,7 @@ const EDITIONS = [
           left: "Covered lightly, mostly as schadenfreude about a coalition cracking.",
           right: "Large inside the coalition and genuinely contested. Greene posted from the meeting that the movement had backed Trump because he promised no more foreign wars, and that \"he's betrayed us all.\""
         },
-        noise: 3, then: 3,
+        noise: 2, then: 2,
         verdict: "This one grew",
         outcome: [
           "The rare item on this page that got bigger. On 21–22 August Trump responded with a lengthy Truth Social post branding Carlson, Greene and Massie \"LOSERS ALL\" and predicting Carlson's audience would keep shrinking. Greene answered that she wished she had never supported him. Carlson has said he intends to help build a third party rather than keep backing the GOP.",
@@ -265,7 +265,7 @@ const EDITIONS = [
           left: "An AP investigation that hit hard and was difficult to spin. More than 60 Democratic lawmakers signed an open letter to the defence and homeland security secretaries; several individual cases went viral.",
           right: null
         },
-        noise: 3, then: 1,
+        noise: 2, then: 1,
         verdict: "Policy intact",
         outcome: [
           "Individual outcomes improved. A judge ordered the release of a detained husband whose wife had halted a deployment; at least one other military spouse was released and returned home. Attention demonstrably helped specific families.",
@@ -309,7 +309,7 @@ const EDITIONS = [
           left: "One cycle of alarm about the president's former personal defence lawyer taking over the Justice Department, then the week moved on.",
           right: "A brief victory lap over a confirmation fight won by a single vote after weeks of uncertainty, then the week moved on."
         },
-        noise: 2, then: 4,
+        noise: 2, then: 3,
         verdict: "Permanent",
         outcome: [
           "He is the Attorney General. He was still the Attorney General fourteen days later, and there is no appeal, no stay and no second vote. Only Collins and Murkowski broke ranks; the margin was one.",
@@ -337,7 +337,7 @@ const EDITIONS = [
         flagged: true,
         arch: "anchorSoften",
         rx: { left: null, right: null },
-        noise: 1, then: 4,
+        noise: 1, then: 3,
         verdict: "In force — and already softening on schedule",
         outcome: [
           "The largest item in either edition, and it generated almost no public argument in either direction. Effective 28 July, any mobile ground robot over about 4.4 pounds that navigates on its own and carries sensors and connectivity — humanoids, quadrupeds, warehouse AMRs, and by the plain text of the rule robot vacuums and autonomous lawnmowers — cannot obtain the FCC equipment authorisation required to be imported, marketed or sold in the United States if it is foreign-produced.",
@@ -397,7 +397,7 @@ const EDITIONS = [
           left: "Treated as an emergency about the election itself — an executive order that would have DHS build state-by-state citizenship lists and the Postal Service use them to decide who may vote by mail.",
           right: "Framed as a routine integrity measure blocked by a friendly circuit, and as the Court's chance to stop lower courts from rewriting election administration."
         },
-        noise: 3, then: 2,
+        noise: 2, then: 1,
         verdict: "Still pending, and possibly moot",
         outcome: [
           "Four weeks on, no ruling has been announced. Justice Jackson ordered the plaintiff states to respond in early August and the administration has since pressed the Court to \"act promptly.\" An emergency application, in practice, went onto an ordinary clock.",
@@ -420,7 +420,7 @@ const EDITIONS = [
           left: "Read as the war hitting its natural limit, and as confirmation that the campaign had been launched without the inventory to sustain it.",
           right: "Read as a deliberate operational pause and a negotiating position, with Trump publicly dismissing the stockpile concerns."
         },
-        noise: 4, then: 2,
+        noise: 3, then: 2,
         verdict: "Deadline passed, nothing settled",
         outcome: [
           "Iran paused its retaliatory strikes on U.S. bases in return. The 60-day memorandum of understanding then ran out on 17 August with no final agreement. Both sides remain deadlocked on the Strait of Hormuz, Iran's nuclear programme, sanctions, and frozen Iranian funds.",
@@ -444,7 +444,7 @@ const EDITIONS = [
           left: "Covered as another round of economic self-harm, with the assumption — reasonable on the record — that the number would be negotiated down before it ever took effect.",
           right: "Covered as leverage finally applied, with the same assumption from the other direction: that Canada would fold before the deadline."
         },
-        noise: 2, then: 4,
+        noise: 2, then: 2,
         verdict: "Landed on schedule",
         outcome: [
           "Both sides expected a walk-back and neither got one on the day. Trump paused the duties for three days on 19 August citing a near-final deal; talks collapsed on the Friday night; 50% landed at 12:01am Saturday. The U.S. Trade Representative said Canada declined to finalise on agreed terms, Canada said the terms moved, and Carney suspended negotiations.",
