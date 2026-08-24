@@ -1,0 +1,279 @@
+<title>And then …? Motion Study</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&amp;family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+  :root {
+    --paper:#F4F4F2; --card:#FFFFFF; --stage:#F8F9FA; --ink:#1A1D20; --slate:#5A6578;
+    --accent:#B9381E; --edge:#DEDEDA; --hair:#E8E8E4; --good:#2F6B4F; --bad:#B9381E;
+    --serif:'Playfair Display', Georgia, 'Times New Roman', serif;
+    --sans:'Inter', -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:#141618; --card:#1C1F22; --stage:#101214; --ink:#ECECE8; --slate:#98A2B3;
+      --accent:#E0563A; --edge:#2C3034; --hair:#24282B; --good:#6FBF95; --bad:#E0563A;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:#141618; --card:#1C1F22; --stage:#101214; --ink:#ECECE8; --slate:#98A2B3;
+    --accent:#E0563A; --edge:#2C3034; --hair:#24282B; --good:#6FBF95; --bad:#E0563A;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--paper); color:var(--ink); font-family:var(--sans); line-height:1.55; -webkit-font-smoothing:antialiased; }
+  .shell { max-width:48rem; margin:0 auto; padding:0 1.25rem 5rem; }
+  header { padding:3.25rem 0 1.75rem; border-bottom:1px solid var(--edge); }
+  h1 { font-family:var(--serif); font-size:clamp(1.9rem,5.5vw,2.7rem); font-weight:400; margin:0 0 .55rem; letter-spacing:-.02em; }
+  h1 em { font-style:italic; color:var(--slate); }
+  .sub { color:var(--slate); font-size:.95rem; margin:0; max-width:40rem; }
+  .thesis { margin-top:1.4rem; padding:1rem 1.1rem; border-left:3px solid var(--accent); background:var(--card); border-radius:0 4px 4px 0; }
+  .thesis p { margin:0; font-size:.95rem; }
+  .thesis b { font-weight:600; }
+  section { padding:2.75rem 0; border-bottom:1px solid var(--edge); }
+  .sec-h { display:flex; align-items:baseline; gap:.8rem; margin-bottom:.5rem; flex-wrap:wrap; }
+  h2 { font-family:var(--serif); font-size:1.5rem; font-weight:400; margin:0; }
+  .verdict { font-size:.6rem; letter-spacing:.09em; text-transform:uppercase; font-weight:600; padding:.22rem .5rem; border-radius:2px; white-space:nowrap; }
+  .v-yes { color:var(--good); border:1px solid var(--good); }
+  .v-no { color:var(--bad); border:1px solid var(--bad); }
+  .lede { color:var(--slate); font-size:.92rem; margin:0 0 1.3rem; max-width:42rem; }
+  .stage { background:var(--stage); border:1px solid var(--edge); border-radius:6px; padding:2.5rem 1rem; display:flex; align-items:center; justify-content:center; min-height:230px; overflow:hidden; }
+  .controls { display:flex; gap:.5rem; margin-top:.75rem; align-items:center; flex-wrap:wrap; }
+  button { font-family:var(--sans); font-size:.78rem; font-weight:500; padding:.45rem .8rem; border-radius:3px; border:1px solid var(--edge); background:var(--card); color:var(--ink); cursor:pointer; transition:border-color .15s; }
+  button:hover { border-color:var(--slate); }
+  button:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  button[aria-pressed="true"] { background:var(--ink); color:var(--paper); border-color:var(--ink); }
+  .timing { font-size:.72rem; color:var(--slate); font-family:ui-monospace,Menlo,monospace; }
+  .lock { display:flex; flex-direction:column; align-items:center; gap:1.5rem; }
+  .mark svg { display:block; width:min(300px,72vw); height:auto; }
+  .wm { display:flex; align-items:baseline; gap:.12em; font-family:var(--sans); font-weight:600; font-size:clamp(1.6rem,7vw,2.3rem); letter-spacing:-.03em; color:var(--ink); }
+  .wm .sq { display:inline-block; width:.16em; height:.16em; background:var(--slate); margin-right:.09em; }
+  .wm .sq:nth-of-type(1) { opacity:.5; } .wm .sq:nth-of-type(2) { opacity:.75; }
+  .wm .sq:nth-of-type(3) { background:var(--ink); opacity:1; margin-right:.22em; }
+  .wm .q { font-family:var(--serif); font-weight:500; color:var(--accent); font-size:1.05em; }
+
+  /* ---------- restrained launch ---------- */
+  .tick { opacity:0; transform:scaleY(.15); transform-box:fill-box; transform-origin:center; }
+  .run .tick { animation:tickIn .3s cubic-bezier(.22,.7,.3,1) forwards; animation-delay:calc(var(--i) * 42ms); }
+  .run .t-last { animation-duration:.42s; }
+  @keyframes tickIn { to { opacity:1; transform:scaleY(1); } }
+  .daylab { opacity:0; }
+  .run .daylab { animation:fadeUp .4s ease forwards; }
+  .run .d0 { animation-delay:.18s; } .run .d14 { animation-delay:.72s; }
+  .wmp, .qp { opacity:0; }
+  .run .wmp { animation:fadeUp .45s cubic-bezier(.2,.7,.3,1) forwards; animation-delay:.82s; }
+  .run .qp { animation:fadeUp .45s cubic-bezier(.2,.7,.3,1) forwards; animation-delay:1.02s; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+
+  /* ---------- deliberately overdone ---------- */
+  .bad .tick { opacity:1; transform:none; animation:bounce 1.1s cubic-bezier(.5,-.5,.3,1.6) infinite !important; animation-delay:calc(var(--i) * 60ms) !important; }
+  @keyframes bounce { 0%,100% { transform:translateY(0) scaleY(1); } 50% { transform:translateY(-10px) scaleY(1.5); } }
+  .bad .t-last { animation:throb .7s ease-in-out infinite !important; }
+  @keyframes throb { 0%,100% { transform:scale(1); opacity:1; } 50% { transform:scale(1.9); opacity:.55; } }
+  .bad .wmp, .bad .qp { opacity:1; animation:sway 2s ease-in-out infinite !important; }
+  @keyframes sway { 0%,100% { transform:translateX(-4px); } 50% { transform:translateX(4px); } }
+  .bad .daylab { opacity:1; animation:blink .8s steps(2) infinite !important; }
+  @keyframes blink { 50% { opacity:.15; } }
+
+  /* ---------- brand mark assembling ---------- */
+  .qd { opacity:0; transform:scale(.3); transform-box:fill-box; transform-origin:center; }
+  .runq .qd { animation:dotIn .34s cubic-bezier(.2,.8,.3,1) forwards; animation-delay:calc(var(--i) * 62ms); }
+  .runq .qd-end { animation-duration:.5s; animation-delay:.62s; }
+  @keyframes dotIn { to { opacity:1; transform:scale(1); } }
+
+  /* reduced motion: everything lands immediately, nothing is lost */
+  .rm .tick, .rm .qd { opacity:1 !important; transform:none !important; animation:none !important; }
+  .rm .daylab, .rm .wmp, .rm .qp { opacity:1 !important; transform:none !important; animation:none !important; }
+  @media (prefers-reduced-motion:reduce) {
+    .tick, .qd, .daylab, .wmp, .qp { opacity:1 !important; transform:none !important; animation:none !important; }
+  }
+
+  .spec { padding:2.75rem 0 0; }
+  .spec table { width:100%; border-collapse:collapse; margin-top:1rem; }
+  .spec th { text-align:left; font-size:.6rem; letter-spacing:.08em; text-transform:uppercase; color:var(--slate); font-weight:600; padding:0 .6rem .5rem 0; border-bottom:1px solid var(--edge); }
+  .spec td { padding:.6rem .6rem .6rem 0; font-size:.85rem; border-bottom:1px solid var(--hair); vertical-align:top; }
+  .spec td:first-child { font-weight:600; white-space:nowrap; }
+  .spec .yes { color:var(--good); font-weight:600; }
+  .spec .no { color:var(--bad); font-weight:600; }
+  .spec p { font-size:.92rem; margin:0 0 .9rem; max-width:42rem; }
+</style>
+
+<div class="shell">
+  <header>
+    <h1>Motion for <em>And then …?</em></h1>
+    <p class="sub">Every news app uses motion to make you feel that something is happening right now. This one is
+       arguing the opposite. So the question is not whether motion is nice, it is whether a given movement says
+       the right thing.</p>
+    <div class="thesis">
+      <p><b>The rule:</b> motion here should demonstrate waiting, not reward attention. It runs once, it finishes,
+         and it never loops. Anything that pulses, throbs, or refuses to settle is telling the reader to stay alert —
+         which is the exact reflex this app exists to lower.</p>
+    </div>
+  </header>
+
+  <section>
+    <div class="sec-h"><h2>Launch</h2><span class="verdict v-yes">Worth it — once per session</span></div>
+    <p class="lede">Fourteen ticks count in, left to right, and the crimson one lands last. It teaches the entire
+       premise of the app before a word is read, and it takes about 1.3 seconds — a pause short enough to tolerate
+       and long enough to feel deliberate.</p>
+    <div class="stage"><div class="lock" id="stage-a">
+      <div class="mark"><svg viewBox="-140 -40 280 80" aria-label="Fourteen day timeline">
+          <line class="tick t-end" style="--i:0" x1="-118.00" y1="-14" x2="-118.00" y2="14" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/>
+          <line class="tick" style="--i:1" x1="-99.85" y1="-5" x2="-99.85" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick" style="--i:2" x1="-81.69" y1="-5" x2="-81.69" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick" style="--i:3" x1="-63.54" y1="-5" x2="-63.54" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick" style="--i:4" x1="-45.38" y1="-5" x2="-45.38" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick" style="--i:5" x1="-27.23" y1="-5" x2="-27.23" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick" style="--i:6" x1="-9.08" y1="-5" x2="-9.08" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick" style="--i:7" x1="9.08" y1="-5" x2="9.08" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick" style="--i:8" x1="27.23" y1="-5" x2="27.23" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick" style="--i:9" x1="45.38" y1="-5" x2="45.38" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick" style="--i:10" x1="63.54" y1="-5" x2="63.54" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick" style="--i:11" x1="81.69" y1="-5" x2="81.69" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick" style="--i:12" x1="99.85" y1="-5" x2="99.85" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick t-last" style="--i:13" x1="118.00" y1="-14" x2="118.00" y2="14" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/>
+          <text class="daylab d0" x="-118" y="32" text-anchor="middle" font-size="8" font-weight="600" letter-spacing="1.4" fill="var(--slate)" font-family="Inter, sans-serif">DAY 0</text>
+          <text class="daylab d14" x="118" y="32" text-anchor="middle" font-size="8" font-weight="600" letter-spacing="1.4" fill="var(--accent)" font-family="Inter, sans-serif">DAY 14</text>
+      </svg></div>
+      <div class="wm"><span class="wmp">And then</span><span class="wmp"><i class="sq"></i><i class="sq"></i><i class="sq"></i></span><span class="q qp">?</span></div>
+    </div></div>
+    <div class="controls">
+      <button data-replay="stage-a" data-cls="run">Replay</button>
+      <span class="timing">1.32s · ease-out · once</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-h"><h2>The same mark, overdone</h2><span class="verdict v-no">Never ship this</span></div>
+    <p class="lede">Identical artwork, wrong intent. Bouncing ticks, a throbbing accent, a drifting wordmark, blinking
+       labels — nothing here is unusual for a news app. Watch it for ten seconds and notice that it will not let you
+       settle. That restlessness is the product promise being contradicted by its own splash screen.</p>
+    <div class="stage"><div class="lock bad" id="stage-b">
+      <div class="mark"><svg viewBox="-140 -40 280 80" aria-label="Overdone motion example">
+          <line class="tick t-end" style="--i:0" x1="-118.00" y1="-14" x2="-118.00" y2="14" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/>
+          <line class="tick" style="--i:1" x1="-99.85" y1="-5" x2="-99.85" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick" style="--i:2" x1="-81.69" y1="-5" x2="-81.69" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick" style="--i:3" x1="-63.54" y1="-5" x2="-63.54" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick" style="--i:4" x1="-45.38" y1="-5" x2="-45.38" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick" style="--i:5" x1="-27.23" y1="-5" x2="-27.23" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick" style="--i:6" x1="-9.08" y1="-5" x2="-9.08" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick" style="--i:7" x1="9.08" y1="-5" x2="9.08" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick" style="--i:8" x1="27.23" y1="-5" x2="27.23" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick" style="--i:9" x1="45.38" y1="-5" x2="45.38" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick" style="--i:10" x1="63.54" y1="-5" x2="63.54" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick" style="--i:11" x1="81.69" y1="-5" x2="81.69" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick" style="--i:12" x1="99.85" y1="-5" x2="99.85" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick t-last" style="--i:13" x1="118.00" y1="-14" x2="118.00" y2="14" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/>
+          <text class="daylab" x="-118" y="32" text-anchor="middle" font-size="8" font-weight="600" letter-spacing="1.4" fill="var(--slate)" font-family="Inter, sans-serif">DAY 0</text>
+          <text class="daylab" x="118" y="32" text-anchor="middle" font-size="8" font-weight="600" letter-spacing="1.4" fill="var(--accent)" font-family="Inter, sans-serif">DAY 14</text>
+      </svg></div>
+      <div class="wm"><span class="wmp">And then</span><span class="wmp"><i class="sq"></i><i class="sq"></i><i class="sq"></i></span><span class="q qp">?</span></div>
+    </div></div>
+    <div class="controls"><span class="timing">infinite · elastic · four competing loops</span></div>
+  </section>
+
+  <section>
+    <div class="sec-h"><h2>Brand moment</h2><span class="verdict v-yes">Sparingly</span></div>
+    <p class="lede">The route 03 mark assembling itself, dot by dot, resolving into the crimson point. Too slow and
+       too precious for a launch screen every time — but right for a share card, an about screen, or the top of an
+       emailed edition, where it is seen once and carries the idea on its own.</p>
+    <div class="stage"><div id="stage-c">
+      <svg viewBox="-60 -50 120 120" style="width:min(180px,50vw);height:auto;display:block" aria-label="Question mark assembling from an ellipsis">
+        <circle class="qd" style="--i:0" cx="-29.3" cy="6.2" r="2.6" fill="var(--ink)" opacity="0.35"/>
+          <circle class="qd" style="--i:1" cx="-27.8" cy="-11.2" r="3.0" fill="var(--ink)" opacity="0.46"/>
+          <circle class="qd" style="--i:2" cx="-16.8" cy="-24.9" r="3.4" fill="var(--ink)" opacity="0.57"/>
+          <circle class="qd" style="--i:3" cx="-0.0" cy="-30.0" r="3.8" fill="var(--ink)" opacity="0.68"/>
+          <circle class="qd" style="--i:4" cx="16.8" cy="-24.9" r="4.2" fill="var(--ink)" opacity="0.79"/>
+          <circle class="qd" style="--i:5" cx="27.8" cy="-11.2" r="4.6" fill="var(--ink)" opacity="0.90"/>
+          <circle class="qd" style="--i:6" cx="18.5" cy="9.5" r="5.0" fill="var(--ink)"/>
+          <circle class="qd" style="--i:7" cx="7.5" cy="23.5" r="5.4" fill="var(--ink)"/>
+          <circle class="qd qd-end" style="--i:8" cx="3.5" cy="45" r="6.6" fill="var(--accent)"/>
+      </svg>
+    </div></div>
+    <div class="controls">
+      <button data-replay="stage-c" data-cls="runq">Replay</button>
+      <span class="timing">1.12s · ease-out · once</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-h"><h2>Reduced motion</h2><span class="verdict v-yes">Required</span></div>
+    <p class="lede">Readers who ask their device for less motion get the finished composition immediately. Nothing is
+       withheld — the animation was never carrying information the static frame lacks, which is the test any of this
+       has to pass.</p>
+    <div class="controls" style="margin:0 0 1rem">
+      <button id="rm-toggle" aria-pressed="false">Simulate reduced motion</button>
+      <span class="timing" id="rm-state">off — animations run</span>
+    </div>
+    <div class="stage"><div class="lock" id="stage-d">
+      <div class="mark"><svg viewBox="-140 -40 280 80" aria-hidden="true">
+          <line class="tick t-end" style="--i:0" x1="-118.00" y1="-14" x2="-118.00" y2="14" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/>
+          <line class="tick" style="--i:1" x1="-99.85" y1="-5" x2="-99.85" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick" style="--i:2" x1="-81.69" y1="-5" x2="-81.69" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick" style="--i:3" x1="-63.54" y1="-5" x2="-63.54" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick" style="--i:4" x1="-45.38" y1="-5" x2="-45.38" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick" style="--i:5" x1="-27.23" y1="-5" x2="-27.23" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick" style="--i:6" x1="-9.08" y1="-5" x2="-9.08" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick" style="--i:7" x1="9.08" y1="-5" x2="9.08" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick" style="--i:8" x1="27.23" y1="-5" x2="27.23" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick" style="--i:9" x1="45.38" y1="-5" x2="45.38" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick" style="--i:10" x1="63.54" y1="-5" x2="63.54" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick" style="--i:11" x1="81.69" y1="-5" x2="81.69" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick" style="--i:12" x1="99.85" y1="-5" x2="99.85" y2="5" stroke="var(--slate)" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>
+          <line class="tick t-last" style="--i:13" x1="118.00" y1="-14" x2="118.00" y2="14" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/>
+          <text class="daylab d0" x="-118" y="32" text-anchor="middle" font-size="8" font-weight="600" letter-spacing="1.4" fill="var(--slate)" font-family="Inter, sans-serif">DAY 0</text>
+          <text class="daylab d14" x="118" y="32" text-anchor="middle" font-size="8" font-weight="600" letter-spacing="1.4" fill="var(--accent)" font-family="Inter, sans-serif">DAY 14</text>
+      </svg></div>
+      <div class="wm"><span class="wmp">And then</span><span class="wmp"><i class="sq"></i><i class="sq"></i><i class="sq"></i></span><span class="q qp">?</span></div>
+    </div></div>
+    <div class="controls"><button data-replay="stage-d" data-cls="run">Replay</button></div>
+  </section>
+
+  <section class="spec">
+    <h2>Where motion goes, and where it does not</h2>
+    <p>The whole budget is one moment. Everywhere else in the app, stillness is the feature.</p>
+    <table>
+      <thead><tr><th>Surface</th><th>Call</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td>Launch screen</td><td class="yes">Yes</td><td>Once per session, 1.3s, finite. Teaches the premise wordlessly.</td></tr>
+        <tr><td>Reveal tap</td><td class="yes">Keep as is</td><td>The existing height transition already supplies the beat. Animating the mark here would gild it.</td></tr>
+        <tr><td>Share / about card</td><td class="yes">Yes</td><td>The route 03 mark assembling. Seen once, carries the idea alone.</td></tr>
+        <tr><td>Story feed</td><td class="no">No</td><td>Scroll-triggered card reveals are engagement mechanics wearing a design costume.</td></tr>
+        <tr><td>Pull to refresh</td><td class="no">No</td><td>There is nothing to refresh. The edition changes once a day. A spinner would manufacture urgency the product denies.</td></tr>
+        <tr><td>Badges, counters</td><td class="no">No</td><td>Pulsing anything is an alert. This app has no alerts.</td></tr>
+        <tr><td>Loading state</td><td class="yes">If over 400ms</td><td>The reduced three-tick mark, fading — not spinning. A spinner implies you should wait; a fade implies it will arrive.</td></tr>
+      </tbody>
+    </table>
+  </section>
+</div>
+
+<script>
+  document.querySelectorAll('[data-replay]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var el = document.getElementById(btn.dataset.replay);
+      var cls = btn.dataset.cls;
+      el.classList.remove(cls);
+      void el.offsetWidth;              // force reflow so the animation restarts
+      el.classList.add(cls);
+    });
+  });
+
+  var rm = document.getElementById('rm-toggle');
+  rm.addEventListener('click', function () {
+    var on = rm.getAttribute('aria-pressed') === 'true';
+    rm.setAttribute('aria-pressed', String(!on));
+    document.getElementById('stage-d').classList.toggle('rm', !on);
+    document.getElementById('rm-state').textContent = !on ? 'on — composition lands immediately' : 'off — animations run';
+  });
+
+  // play the launch sequence when each stage first scrolls into view
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var cls = e.target.id === 'stage-c' ? 'runq' : 'run';
+      e.target.classList.add(cls);
+      io.unobserve(e.target);
+    });
+  }, { threshold: .45 });
+  ['stage-a','stage-c','stage-d'].forEach(function (id) { io.observe(document.getElementById(id)); });
+</script>
