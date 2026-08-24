@@ -21,6 +21,7 @@ Root: **JordanOS** — `1FOU0cOGnP0HJzMTfTAH8aP-2khUncNjz`
 | Decision Log | `14DiDUKjb4cmqOfz3ErnXFoahliu3nMe99-ClTiE5OhE` | Knowledge/Decisions |
 | Open Loops Register | `15vZf2YM-ASY7UcKroFjAAY4PxRWQV3TytyA_Y17FB80` | Knowledge/OpenLoops |
 | Projects Register | `1Kv3uxYPYthGQuZwTnGhIUX553GDIaSA-YfFD1nnEXFM` | Knowledge/Projects |
+| Timeline Log | `1rBfnxAG2QLa4BPq97-EFHX7xu0pesaGL03XxhzYqv44` | Knowledge/Timeline |
 | Claude Export Seed Entries | `1nVxlaJkktJBRjyTOAhF6hdViNAXl7yW1nhbSGRjf_1Q` | Knowledge/Documents |
 
 ## Folders
@@ -70,3 +71,16 @@ Two Routines write here on a schedule. Times assume America/Los_Angeles; cron is
 
 Both fire fresh sessions. They create dated docs; they never edit existing ones (connector
 limitation), so register updates flow through the weekly review's FOLD-IN QUEUE.
+
+Both are currently **disabled** — see ROUTINES.md for why and how to enable them properly.
+
+## Connector capability note
+
+`update_file` exists but changes only a file's **title and parent** (rename / move). There is no
+tool that edits document *content*. Writing into JordanOS therefore always means creating a new
+file. Verified 2026-08-24.
+
+## Daily entries
+
+- Captain's Log 2026-08-24 `152aFomgBxtXke_GWkiE4RyRN-1sWdlsnLJb-ctpESBA` — first entry; backfills
+  2026-07-09 through 2026-08-24 from Drive evidence only.
