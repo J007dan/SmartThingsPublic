@@ -12,6 +12,8 @@
     --ember: #B8462F; --ember-dim: #DFC9C2;
     --teal: #3D6F80; --teal-dim: #C4D3D8;
     --gold: #7A5F26; --gold-bg: #EFE7D4; --gold-edge: #C7B183;
+    /* chart-only marks: the UI teal reads as grey as a data mark, so data uses its own validated pair */
+    --mark-from: #B8462F; --mark-to: #0B6E9C; --mark-rule: #C3CBD4;
     --shadow: 0 1px 2px rgba(27,36,48,.06), 0 8px 24px -16px rgba(27,36,48,.28);
     --veil: rgba(237,239,242,.9);
     --display: "Newsreader", "Iowan Old Style", Georgia, serif;
@@ -27,6 +29,8 @@
       --ember: #E0714E; --ember-dim: #4A3229;
       --teal: #79AEBE; --teal-dim: #26383E;
       --gold: #D9BC77; --gold-bg: #2E2718; --gold-edge: #5C4C28;
+    --mark-from: #D25A38; --mark-to: #3C9CBD; --mark-rule: #39434E;
+      --mark-from: #D25A38; --mark-to: #3C9CBD; --mark-rule: #39434E;
       --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
       --veil: rgba(20,24,30,.9);
     }
@@ -343,6 +347,76 @@
   .notice ul { margin: .1rem 0 .6rem; padding-left: 1.05rem; }
   .notice li { font-size: .82rem; line-height: 1.55; color: var(--ink-soft); margin-bottom: .3rem; }
 
+
+  /* ---- anchor base rate ---- */
+  .anchor { margin-top: 1.2rem; padding-top: .95rem; border-top: 1px solid var(--edge); }
+  .anchor-h {
+    font-family: var(--mono); font-size: .62rem; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--ink-mute); margin-bottom: .55rem;
+  }
+  .anchor figure { margin: 0; }
+  .anchor figcaption { font-size: .87rem; line-height: 1.5; color: var(--ink); margin-bottom: .55rem; font-weight: 600; }
+  .chart-legend {
+    display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: .5rem;
+    font-family: var(--mono); font-size: .61rem; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-mute);
+  }
+  .chart-legend span { display: flex; align-items: center; gap: .35rem; }
+  .chart-legend i { width: 9px; height: 9px; border-radius: 50%; display: block; }
+  .chart-legend .sw-from { background: var(--mark-from); }
+  .chart-legend .sw-to { background: var(--mark-to); }
+  .chart-wrap { overflow-x: auto; }
+  .chart-wrap svg { width: 100%; height: auto; display: block; min-width: 300px; }
+  .anchor-notes { list-style: none; margin: .7rem 0 0; padding: 0; display: flex; flex-direction: column; gap: .4rem; }
+  .anchor-notes li { font-size: .8rem; line-height: 1.5; color: var(--ink-soft); }
+  .anchor-notes b { color: var(--ink); font-weight: 600; }
+  .anchor-aside {
+    margin-top: .8rem; padding: .7rem .8rem; border-left: 2px solid var(--edge);
+    font-size: .83rem; line-height: 1.55; color: var(--ink-soft);
+  }
+  .anchor-lesson {
+    margin-top: .8rem; padding: .75rem .85rem; background: var(--surface);
+    border: 1px solid var(--edge-soft); border-radius: 3px;
+    font-size: .87rem; line-height: 1.58; color: var(--ink);
+  }
+
+  /* ---- ledger ---- */
+  .ledger { margin-top: 2.4rem; padding-top: 1.5rem; border-top: 1px solid var(--edge); }
+  .ledger h3 { font-family: var(--display); font-weight: 400; font-size: 1.28rem; margin: 0 0 .5rem; color: var(--ink); }
+  .ledger > p { font-size: .86rem; line-height: 1.6; color: var(--ink-soft); margin: 0 0 1rem; }
+  .led-tally {
+    display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: 1rem;
+    font-family: var(--mono); font-size: .62rem; letter-spacing: .07em; text-transform: uppercase;
+  }
+  .led-tally span { padding: .28rem .5rem; border-radius: 2px; border: 1px solid var(--edge); color: var(--ink-soft); background: var(--surface); }
+  .led-tally .t-open { border-color: var(--gold-edge); background: var(--gold-bg); color: var(--gold); }
+  .led-item {
+    border: 1px solid var(--edge-soft); border-left: 3px solid var(--gold-edge);
+    background: var(--surface); border-radius: 3px; padding: .8rem .9rem; margin-bottom: .6rem;
+  }
+  .led-top {
+    display: flex; justify-content: space-between; align-items: baseline; gap: .6rem;
+    margin-bottom: .35rem; flex-wrap: wrap;
+  }
+  .led-subject { font-size: .78rem; font-weight: 600; color: var(--ink); }
+  .led-status {
+    font-family: var(--mono); font-size: .57rem; letter-spacing: .07em; text-transform: uppercase;
+    padding: .16rem .4rem; border-radius: 2px; background: var(--gold-bg); color: var(--gold); white-space: nowrap;
+  }
+  .led-claim { font-size: .87rem; line-height: 1.55; color: var(--ink); margin: 0 0 .5rem; }
+  .led-dates {
+    font-family: var(--mono); font-size: .6rem; letter-spacing: .05em; text-transform: uppercase;
+    color: var(--ink-mute); display: flex; gap: .9rem; flex-wrap: wrap;
+  }
+  .led-dates b { color: var(--ink-soft); font-weight: 500; }
+  .led-empty {
+    padding: .9rem 1rem; border: 1px dashed var(--edge); border-radius: 3px;
+    font-size: .84rem; line-height: 1.55; color: var(--ink-mute); font-style: italic;
+  }
+  .led-sub {
+    font-family: var(--mono); font-size: .62rem; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--ink-mute); margin: 1.2rem 0 .5rem;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
     .wm-trail i, .wordmark .wm-q { opacity: 1; }
@@ -439,6 +513,16 @@
   </div>
 
   <main class="stories" id="stories"></main>
+
+  <section class="ledger">
+    <h3>The ledger</h3>
+    <p id="led-note"></p>
+    <div class="led-tally" id="led-tally"></div>
+    <div class="led-sub">Open calls</div>
+    <div id="led-open"></div>
+    <div class="led-sub">Scored</div>
+    <div id="led-scored"></div>
+  </section>
 
   <section class="coda">
     <h3>Notice which bars are long.</h3>
@@ -578,6 +662,76 @@
       "</div>";
   }
 
+
+  function anchorChart() {
+    const A = ANCHOR_BASE;
+    const rows = A.rows.slice().sort((a, b) => b.from - a.from);
+    const W = 360, padL = 78, padR = 38, rowH = 28, top = 20;
+    const plotW = W - padL - padR;
+    const H = top + rows.length * rowH + 26;
+    const x = (v) => padL + (v / A.max) * plotW;
+    const ticks = [0, 50, 100, 150];
+
+    const grid = ticks.map((t) =>
+      '<line x1="' + x(t).toFixed(1) + '" y1="' + (top - 6) + '" x2="' + x(t).toFixed(1) + '" y2="' +
+      (top + rows.length * rowH - 6) + '" stroke="var(--edge)" stroke-width="1"/>' +
+      '<text x="' + x(t).toFixed(1) + '" y="' + (top + rows.length * rowH + 8) +
+      '" font-size="8" fill="var(--ink-mute)" text-anchor="middle" font-family="var(--mono)">' + t + '%</text>'
+    ).join("");
+
+    const marks = rows.map((r, i) => {
+      const cy = top + i * rowH + 6;
+      const x1 = x(r.from), x2 = x(r.to);
+      return '<text x="' + (padL - 8) + '" y="' + (cy + 3) + '" font-size="8.5" fill="var(--ink-soft)" text-anchor="end">' + esc(r.label) + "</text>" +
+        '<line x1="' + x1.toFixed(1) + '" y1="' + cy + '" x2="' + x2.toFixed(1) + '" y2="' + cy +
+        '" stroke="var(--mark-rule)" stroke-width="2" stroke-linecap="round"/>' +
+        '<circle cx="' + x1.toFixed(1) + '" cy="' + cy + '" r="4.5" fill="var(--mark-from)" stroke="var(--surface)" stroke-width="2"/>' +
+        '<circle cx="' + x2.toFixed(1) + '" cy="' + cy + '" r="4.5" fill="var(--mark-to)" stroke="var(--surface)" stroke-width="2"/>' +
+        '<text x="' + (W - 4) + '" y="' + (cy + 3) + '" font-size="8.5" fill="var(--ink-mute)" text-anchor="end" font-family="var(--mono)">' +
+        r.from + "\u2192" + r.to + "</text>";
+    }).join("");
+
+    return '<div class="chart-wrap"><svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="' +
+      esc(A.title) + '. ' + rows.map((r) => r.label + " announced " + r.from + " percent, ended at " + r.to + " percent").join("; ") +
+      '">' + grid + marks + "</svg></div>";
+  }
+
+  function anchorBlock(on) {
+    if (!on || typeof ANCHOR_BASE === "undefined") return "";
+    return '<div class="anchor"><div class="anchor-h">Base rate</div><figure>' +
+      "<figcaption>" + esc(ANCHOR_BASE.title) + "</figcaption>" +
+      '<div class="chart-legend"><span><i class="sw-from"></i>Announced</span><span><i class="sw-to"></i>Where it ended</span></div>' +
+      anchorChart() +
+      '<ul class="anchor-notes">' + ANCHOR_BASE.rows.map((r) =>
+        "<li><b>" + esc(r.label) + "</b> — " + esc(r.note) + "</li>").join("") + "</ul>" +
+      "</figure>" +
+      '<div class="anchor-aside">' + esc(ANCHOR_BASE.aside) + "</div>" +
+      '<div class="anchor-lesson">' + esc(ANCHOR_BASE.lesson) + "</div></div>";
+  }
+
+  function renderLedger() {
+    if (typeof LEDGER === "undefined") return;
+    document.getElementById("led-note").textContent = LEDGER.note;
+    document.getElementById("led-tally").innerHTML =
+      '<span class="t-open">' + LEDGER.open.length + " open</span>" +
+      "<span>" + LEDGER.scored.filter((x) => x.result === "hit").length + " hit</span>" +
+      "<span>" + LEDGER.scored.filter((x) => x.result === "miss").length + " missed</span>";
+
+    document.getElementById("led-open").innerHTML = LEDGER.open.map((c) =>
+      '<div class="led-item"><div class="led-top"><span class="led-subject">' + esc(c.subject) +
+      '</span><span class="led-status">Open</span></div>' +
+      '<p class="led-claim">' + esc(c.claim) + "</p>" +
+      '<div class="led-dates"><span>Made <b>' + esc(c.made) + "</b></span><span>Due <b>" + esc(c.by) + "</b></span></div></div>"
+    ).join("");
+
+    document.getElementById("led-scored").innerHTML = LEDGER.scored.length
+      ? LEDGER.scored.map((c) =>
+          '<div class="led-item"><div class="led-top"><span class="led-subject">' + esc(c.subject) +
+          '</span><span class="led-status">' + esc(c.result) + "</span></div>" +
+          '<p class="led-claim">' + esc(c.claim) + "</p></div>").join("")
+      : '<div class="led-empty">Nothing has come due yet. The first call is scored on 31 October 2026. Misses will appear here in the same place, and at the same size, as hits.</div>';
+  }
+
   function render() {
     const ed = edition();
     document.getElementById("count").textContent = ed.stories.length;
@@ -619,6 +773,7 @@
             <div class="outcome-pad">
               <span class="verdict">${esc(s.verdict)}</span>
               ${s.outcome.map((p) => "<p>" + esc(p) + "</p>").join("")}
+              ${anchorBlock(s.anchorBase)}
               ${precedentBlock(s.precedent)}
               ${predictionBlock(s.prediction)}
               ${archetypeBlock(s.arch)}
@@ -668,4 +823,5 @@
 
   syncPressed();
   render();
+  renderLedger();
 </script>

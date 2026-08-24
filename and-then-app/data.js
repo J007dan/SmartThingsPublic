@@ -13,11 +13,11 @@ const ARCHETYPES = {
     check: "Agency exemption notices, waivers, and named conditional approvals",
     window: "First carve-outs 2–6 weeks; named incumbents approved 1–3 months"
   },
-  anchorHeld: {
-    name: "Anchor that held",
-    tell: "Same opening as above, but the deadline arrives and the number does not move.",
-    check: "The effective date itself, then retaliation and exclusion requests",
-    window: "Resolves on the stated deadline"
+  anchorTookEffect: {
+    name: "Took effect ≠ stuck",
+    tell: "The deadline arrives and the number does not move, so the story is filed as settled. Durability is a separate question the coverage never returns to.",
+    check: "The effective rate rather than the headline — exclusion notices, the scope of the covered basket, and any statute the same duty can be rebuilt on",
+    window: "Erosion usually begins within 1–4 months, and arrives by exclusion rather than repeal"
   },
   stayed: {
     name: "Ruled, then stayed",
@@ -156,20 +156,29 @@ const EDITIONS = [
       {
         ago: "14 days ago",
         date: "Monday, 10 August",
-        headline: "Commerce proposes expanding Section 232 duties on steel, aluminium and copper — days before a 50% tariff deadline on Canada",
+        headline: "A 50% tariff on Canada is days from taking effect, as Commerce moves to widen Section 232 duties on steel, aluminium and copper",
         tags: [{ t: "Trade · anchor", k: "t-trade" }],
-        arch: "anchorHeld",
+        arch: "anchorTookEffect",
         rx: {
           left: "Framed as chaos and self-inflicted price increases, with the usual reminder that tariffs are paid by importers.",
           right: "Framed as finally using leverage on a neighbour that has been free-riding on American markets for decades."
         },
         noise: 3, then: 4,
-        verdict: "The anchor held",
+        verdict: "Took effect — durability unproven",
         outcome: [
-          "This is the case that breaks the usual pattern, which is why it is worth watching closely. The normal shape is anchor high, negotiate down, quietly settle — so the announced number is rarely the real one.",
-          "Not this time. Trump paused the 50% Canadian tariffs on 19 August citing a near-final deal, and Prime Minister Carney said substantial progress had been made. Talks then collapsed on the Friday night, and the tariffs took effect at 12:01am Saturday on roughly $20 billion of goods including dairy, alcohol, cement and hockey equipment. Each side blamed the other. Carney has since said Canada is \"at war\" with the United States on trade.",
-          "Two lessons. First: the walk-back is the norm, not the rule, so an anchor must be tracked rather than assumed. Second: the pause was reported far more loudly than the collapse, which is exactly backwards."
+          "The tariffs took effect. Trump paused them for three days on 19 August citing a near-final deal, talks collapsed on the Friday night, and 50% duties landed at 12:01am Saturday on roughly $20 billion of Canadian goods — dairy, alcohol, cement, hockey equipment. Carney suspended negotiations and recalled Canada’s team the same day.",
+          "So the anchor held at the deadline. That is where the coverage stopped, and it is the wrong place to stop. “Took effect” and “stuck” are different claims, and no comparable maximal tariff anchor has stayed at its announced level.",
+          "Three things were visible on day one and went almost unreported. The legal authority is Section 338 of the Tariff Act of 1930 — an essentially unused provision, not the IEEPA power the Supreme Court struck down in February. The covered basket was carved out before the duties ever landed: energy, potash, fish, critical minerals and goods already under Section 232 are excluded, which is most of what actually matters in the relationship. And it runs alongside a live USMCA renegotiation. Holland & Knight titled their client alert “50 Percent Opening Bid.”",
+          "The honest counter-signal, and the reason this is a forecast rather than a certainty: the instrument was deliberately hardened against both mechanisms that unwound the last two rounds. Section 338 is untouched by the February IEEPA ruling that collapsed Brazil’s 50%, and unlike March 2025 it explicitly denies USMCA-compliant relief — the exact escape hatch Canada used last time. Both doors were closed on purpose."
         ],
+        anchorBase: true,
+        prediction: {
+          claim: "The 50% will not still be the operative rate across the full original $20 billion basket by the end of November 2026. The likeliest mechanism is product-level exclusions rather than repeal — the headline number survives while the basket quietly shrinks.",
+          basis: "Five of six comparable maximal anchors came down substantially, most within weeks. Canada’s own March 2025 round collapsed in 48 hours via a USMCA carve-out. This action arrived pre-carved — energy, potash, fish and critical minerals excluded on day one — which is the erosion mechanism already running, and it is pressure timed to a live USMCA renegotiation rather than a standalone policy.",
+          against: "Two real reasons to hold this near three-in-four rather than certain. Section 338 was chosen precisely because it dodges the IEEPA ruling and overrides USMCA relief, closing both prior exits. And India stands as the counter-example: its 25% escalated to 50% instead of settling. Anchors do sometimes ratchet up.",
+          check: "Federal Register exclusion notices and the covered-goods list — the effective rate on the basket, not the headline percentage",
+          by: "30 November 2026"
+        },
         sources: [
           ["Trump says U.S. and Canada reached deal to delay 50% tariffs — NPR, 19 Aug", "https://www.npr.org/2026/08/19/g-s1-139156/trump-canada-tariffs"],
           ["Trump's 50% tariffs on Canada take effect as Carney vows to retaliate — ABC News", "https://abcnews.com/Business/trumps-proposed-tariffs-canada-hurtle-deadline-amid-trade/story?id=135833861"],
@@ -430,17 +439,17 @@ const EDITIONS = [
         date: "Monday, 20 July",
         headline: "Three presidential proclamations authorise duties of up to 50% on Canadian goods, effective 19 August",
         tags: [{ t: "Trade · anchor", k: "t-trade" }],
-        arch: "anchorHeld",
+        arch: "anchorTookEffect",
         rx: {
           left: "Covered as another round of economic self-harm, with the assumption — reasonable on the record — that the number would be negotiated down before it ever took effect.",
           right: "Covered as leverage finally applied, with the same assumption from the other direction: that Canada would fold before the deadline."
         },
         noise: 2, then: 4,
-        verdict: "The anchor held",
+        verdict: "Landed on schedule",
         outcome: [
-          "Both sides expected a walk-back. This is the value of tracking anchors for a month rather than a fortnight: the four-week view catches the whole arc, and the arc did not go where the pattern said.",
-          "Trump paused the tariffs for three days on 19 August citing a near-final deal. Talks collapsed on the Friday night. The duties took effect at 12:01am Saturday on roughly $20 billion of goods — dairy, alcohol, cement, hockey equipment. The U.S. Trade Representative said Canada declined to finalise on agreed terms; Canada said the terms moved. Carney now describes the relationship as a trade war.",
-          "Same story as the Section 232 card in the August edition, seen from five weeks out instead of two. The longer window does not soften it. It sharpens it."
+          "Both sides expected a walk-back and neither got one on the day. Trump paused the duties for three days on 19 August citing a near-final deal; talks collapsed on the Friday night; 50% landed at 12:01am Saturday. The U.S. Trade Representative said Canada declined to finalise on agreed terms, Canada said the terms moved, and Carney suspended negotiations.",
+          "The detail lost between 20 July and 22 August is the instrument. These were three proclamations under Section 338 of the Tariff Act of 1930 — not the emergency power the Supreme Court voided in February, and not a Section 232 national-security action. Section 338 has essentially never been used in the modern era, and it does not admit USMCA relief.",
+          "Choosing it was not incidental. It routes around the February IEEPA ruling and around the USMCA carve-out that ended Canada’s March 2025 round in two days. Whether that hardening actually holds is the live call carried on this story’s card in the August edition."
         ],
         sources: [
           ["Trump 2.0 tariff tracker — Trade Compliance Resource Hub", "https://www.tradecomplianceresourcehub.com/2026/08/19/trump-2-0-tariff-tracker/"],
@@ -451,3 +460,32 @@ const EDITIONS = [
     ]
   }
 ];
+
+/* Comparable maximal tariff anchors and where the rate actually ended up.
+   Feeds the dumbbell chart on any story flagged anchorBase. */
+const ANCHOR_BASE = {
+  title: "Where maximal tariff anchors actually settled",
+  max: 150,
+  rows: [
+    { label: "China, Apr 2025", from: 145, to: 30, note: "Cut to 30% within weeks under a 90-day deal." },
+    { label: "EU, 2025", from: 50, to: 15, note: "Threatened 50%, settled at 15%. Average effective bilateral rate from April 2025 to February 2026 was 7.8%." },
+    { label: "Japan, 2025", from: 35, to: 15, note: "Threatened 30–35%, agreed 15%." },
+    { label: "Brazil, Aug 2025", from: 50, to: 10, note: "The closest analogue. Held about six months with orange juice and aircraft carved out, then fell to 10% when the Supreme Court voided its IEEPA component. A new 25% Section 301 duty followed in July 2026." },
+    { label: "Section 122 duties", from: 15, to: 10, note: "Took effect below the threatened rate." },
+    { label: "India, Aug 2025", from: 25, to: 50, note: "The counter-case. Escalated rather than settling — 25% became 50% three weeks later." }
+  ],
+  aside: "Not plotted, because it is a change of scope rather than of rate: Canada’s own March 2025 round. The 25% took effect on 4 March 2025 and was suspended for USMCA-compliant goods on 6 March. Two days. The current action is written specifically to deny that relief.",
+  lesson: "In every comparable case the announced percentage was a negotiating position rather than a forecast. Five of six came down; the one that did not, Brazil, was hollowed out by exclusions first and then collapsed on a court ruling. The number to watch is never the headline rate. It is the effective rate on the covered basket."
+};
+
+/* Every dated call the app has made. Misses stay published. */
+const LEDGER = {
+  note: "A prediction the app can quietly delete is worth nothing. Every call is listed here with the date it was made and the date it comes due. Misses are kept, labelled, and left in place.",
+  open: [
+    { subject: "FCC robotics Covered List", claim: "Named Conditional Approvals for major robotics incumbents will be published, following the drone and router precedents.", made: "24 August 2026", by: "31 October 2026" },
+    { subject: "Canada 50% tariffs", claim: "The 50% Section 338 rate will no longer apply across the full original $20 billion basket — most likely narrowed by product exclusions rather than repealed.", made: "24 August 2026", by: "30 November 2026" },
+    { subject: "Fauci contempt referral", claim: "The Justice Department will not have filed contempt charges on the Senate referral.", made: "24 August 2026", by: "8 November 2026" },
+    { subject: "Mail-in voting application", claim: "The order’s DHS-list and Postal Service mechanism will not be operative for the midterms, whether or not the Court rules for the administration.", made: "24 August 2026", by: "3 November 2026" }
+  ],
+  scored: []
+};
