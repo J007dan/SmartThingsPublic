@@ -42,9 +42,14 @@ const standalone = html
   .replace('<link rel="stylesheet" href="styles.css">', `<style>\n${css}\n</style>`)
   .replace('<script src="app.js"></script>', scripts);
 
+// The artifact build keeps only the body, so the webfont link from <head> has to
+// travel with the stylesheet. @import must lead the sheet to be honored.
+const fontHref = html.match(/href="(https:\/\/fonts\.googleapis\.com\/css2[^"]*)"/)?.[1];
+if (!fontHref) throw new Error('could not find the webfont link in index.html');
+
 const artifact = [
   '<title>…And Then What Happened?</title>',
-  `<style>\n${css}\n</style>`,
+  `<style>\n@import url("${fontHref.replace(/&amp;/g, '&')}");\n${css}\n</style>`,
   body,
   scripts,
 ].join('\n');

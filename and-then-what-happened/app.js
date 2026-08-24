@@ -45,7 +45,11 @@ async function loadEdition(date) {
 
 function noiseMeter(level) {
   const n = Math.max(0, Math.min(5, Number(level) || 0));
-  return `<p class="noise">Noise then <b>${'▮'.repeat(n)}</b><i>${'▮'.repeat(5 - n)}</i></p>`;
+  const bars = Array.from({ length: 5 }, (_, i) => `<i class="${i < n ? 'on' : ''}"></i>`).join('');
+  return `<p class="noise" title="How loud this got at the time: ${n} of 5">
+      Noise then <span class="bars" aria-hidden="true">${bars}</span>
+      <span class="sr">${n} out of 5</span>
+    </p>`;
 }
 
 function sourceList(sources) {
