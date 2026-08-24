@@ -24,6 +24,9 @@ data/index.json          which editions exist
 data/editions/*.json     one file per day
 tools/validate-edition.mjs   schema + sourcing check
 tools/build-standalone.mjs   bundles everything into one file
+pipeline/build-edition.mjs   researches and writes an edition
+pipeline/test-loop.mjs       tests the loop with no API key
+pipeline/pr-body.mjs         renders the review checklist for the PR
 ```
 
 ## Run it
@@ -69,7 +72,54 @@ carries a **Noise then** meter next to its verdict. A story with five bars of
 noise and a `nothing-yet` verdict is the pattern the app exists to show you.
 A story with two bars and a `landed` verdict is the one you actually missed.
 
-## Adding an edition
+## The pipeline
+
+Editions can be researched and written automatically.
+
+```sh
+npm install
+export ANTHROPIC_API_KEY=...
+npm run edition                      # today's edition (the news of 14 days ago)
+npm run edition -- --date 2026-08-25 # a specific day
+npm run edition -- --dry-run         # print the brief, call nothing
+```
+
+`pipeline/build-edition.mjs` runs Claude with the server-side web search and fetch
+tools over a two-pass brief: find what ran that day, then search each thread
+forward to today. It hands the result back through a strict `emit_edition` tool,
+so the output is shape-checked before it is ever written. If the edition fails
+`tools/validate-edition.mjs`, the errors go back to the model and it gets two
+attempts to fix them.
+
+The dates are computed by the script, not asked for in the prompt — date
+arithmetic is the one part of this that can be certain, so there is no reason to
+leave it to a model.
+
+**`EDITION_GUIDE.md` is the prompt.** The script reads it and passes it through as
+the system prompt, so the guide a person would read to write an edition by hand is
+the same text the pipeline follows. Change the editorial policy there and the
+pipeline changes with it.
+
+`pipeline/test-loop.mjs` exercises the loop against a scripted client — no API key,
+no network. It covers a paused server-tool turn, a rejected edition getting
+repaired, and the failure modes. Run it before touching the loop.
+
+### On a schedule
+
+`.github/workflows/edition.yml` runs the pipeline daily at 12:00 UTC and opens a
+pull request. Set the `ANTHROPIC_API_KEY` repository secret first
+(Settings → Secrets and variables → Actions). You can also trigger it by hand from
+the Actions tab, optionally for a specific date.
+
+**Nothing publishes without a human merging the PR, and that gate is deliberate.**
+The pipeline is doing journalism. The validator can check the 14-day gap, the
+verdict values, and that every story carries a source; it cannot check whether a
+follow-up is *true*. The PR body renders a review checklist that puts the
+riskiest claims first — every story marked "This one landed," and any low-noise
+story with a real outcome, since those are both the most valuable cards and the
+most expensive to get wrong.
+
+## Adding an edition by hand
 
 1. Write `data/editions/YYYY-MM-DD.json` — see `EDITION_GUIDE.md` for the
    schema and the research process.

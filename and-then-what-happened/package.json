@@ -1,0 +1,16 @@
+{
+  "name": "and-then-what-happened",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "The news from two weeks ago, with what actually came of it.",
+  "scripts": {
+    "build": "node tools/build-standalone.mjs",
+    "edition": "node pipeline/build-edition.mjs",
+    "validate": "node tools/validate-edition.mjs"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.72.0"
+  },
+  "engines": { "node": ">=20" }
+}
