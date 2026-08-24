@@ -2,23 +2,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400;1,6..72,500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 
 <style>
   :root {
     --ground: #EDEFF2;
-    --ground-deep: #E2E6EB;
+    --ground-deep: #E4E8ED;
     --surface: #F8F9FB;
+    --mark-bg: #FFFFFF;
     --edge: #D3D9E0;
     --edge-soft: #E1E6EC;
     --ink: #1B2430;
     --ink-soft: #47535F;
     --ink-mute: #6E7A87;
     --ember: #B8462F;
-    --ember-dim: #D9C3BC;
+    --ember-dim: #DFC9C2;
     --teal: #3D6F80;
-    --teal-dim: #C2D2D7;
-    --shadow: 0 1px 2px rgba(27, 36, 48, .06), 0 8px 24px -16px rgba(27, 36, 48, .28);
+    --teal-dim: #C4D3D8;
+    --gold: #8A6D2F;
+    --gold-bg: #EFE7D4;
+    --shadow: 0 1px 2px rgba(27,36,48,.06), 0 8px 24px -16px rgba(27,36,48,.28);
+    --veil: rgba(237,239,242,.88);
     --display: "Newsreader", "Iowan Old Style", Georgia, serif;
     --ui: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
@@ -26,285 +30,289 @@
 
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --ground: #14181E;
-      --ground-deep: #0F1319;
-      --surface: #1C222A;
-      --edge: #2C343E;
-      --edge-soft: #262D36;
-      --ink: #E4E8ED;
-      --ink-soft: #B3BCC6;
-      --ink-mute: #808D9A;
-      --ember: #E0714E;
-      --ember-dim: #4A3229;
-      --teal: #79AEBE;
-      --teal-dim: #26383E;
-      --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .8);
+      --ground: #14181E; --ground-deep: #0F1319; --surface: #1C222A; --mark-bg: #232B34;
+      --edge: #2C343E; --edge-soft: #262D36;
+      --ink: #E4E8ED; --ink-soft: #B3BCC6; --ink-mute: #808D9A;
+      --ember: #E0714E; --ember-dim: #4A3229;
+      --teal: #79AEBE; --teal-dim: #26383E;
+      --gold: #C9A85F; --gold-bg: #332C1B;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+      --veil: rgba(20,24,30,.88);
     }
   }
 
   :root[data-theme="dark"] {
-    --ground: #14181E;
-    --ground-deep: #0F1319;
-    --surface: #1C222A;
-    --edge: #2C343E;
-    --edge-soft: #262D36;
-    --ink: #E4E8ED;
-    --ink-soft: #B3BCC6;
-    --ink-mute: #808D9A;
-    --ember: #E0714E;
-    --ember-dim: #4A3229;
-    --teal: #79AEBE;
-    --teal-dim: #26383E;
-    --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .8);
+    --ground: #14181E; --ground-deep: #0F1319; --surface: #1C222A; --mark-bg: #232B34;
+    --edge: #2C343E; --edge-soft: #262D36;
+    --ink: #E4E8ED; --ink-soft: #B3BCC6; --ink-mute: #808D9A;
+    --ember: #E0714E; --ember-dim: #4A3229;
+    --teal: #79AEBE; --teal-dim: #26383E;
+    --gold: #C9A85F; --gold-bg: #332C1B;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+    --veil: rgba(20,24,30,.88);
   }
 
   * { box-sizing: border-box; }
 
   body {
-    margin: 0;
-    background: var(--ground);
-    color: var(--ink);
-    font-family: var(--ui);
-    font-size: 16px;
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
+    margin: 0; background: var(--ground); color: var(--ink);
+    font-family: var(--ui); font-size: 16px; line-height: 1.5;
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
   }
 
-  .shell {
-    max-width: 34rem;
-    margin: 0 auto;
-    padding: 0 1.15rem 4rem;
-  }
+  .shell { max-width: 34rem; margin: 0 auto; padding: 0 1.15rem 4rem; }
 
-  /* ---------- masthead ---------- */
+  /* ---------------- masthead + mark ---------------- */
 
-  .masthead {
-    padding: 2.6rem 0 1.5rem;
-    border-bottom: 1px solid var(--edge);
-  }
+  .masthead { padding: 2.2rem 0 1.4rem; }
+
+  .lockup { display: flex; align-items: center; gap: .8rem; }
+
+  .appmark { width: 46px; height: 46px; flex-shrink: 0; display: block; }
 
   .wordmark {
-    font-family: var(--display);
-    font-weight: 400;
-    font-size: clamp(2.5rem, 13vw, 3.4rem);
-    line-height: 1;
-    letter-spacing: -.02em;
-    margin: 0;
-    color: var(--ink);
-    display: flex;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: .12em;
+    font-family: var(--display); font-weight: 400;
+    font-size: clamp(2.05rem, 10.5vw, 2.7rem);
+    line-height: .95; letter-spacing: -.021em; margin: 0; color: var(--ink);
+    display: flex; align-items: baseline; gap: .2em;
   }
 
-  .wordmark em {
-    font-style: italic;
-    font-weight: 300;
+  .wordmark .wm-and { font-style: italic; font-weight: 300; color: var(--ink-soft); }
+  .wordmark .wm-then { font-weight: 500; }
+
+  .wm-trail {
+    display: inline-flex; align-items: center; gap: .16em;
+    position: relative; padding: 0 .1em; transform: translateY(-.12em);
   }
 
-  .wordmark .dots {
-    display: inline-flex;
-    gap: .18em;
-    align-items: baseline;
-    margin-left: .1em;
+  .wm-trail::before {
+    content: ""; position: absolute; left: 0; right: 0; top: 50%;
+    height: 1px; background: var(--ink-mute); opacity: .35;
   }
 
-  .wordmark .dots span {
-    display: block;
-    width: .11em;
-    height: .11em;
-    border-radius: 50%;
-    background: var(--ink-mute);
-    transform: translateY(-.06em);
-    opacity: 0;
-    animation: settle .5s ease forwards;
+  .wm-trail i {
+    position: relative; display: block;
+    width: .115em; height: .115em; border-radius: 50%;
+    background: var(--ink); box-shadow: 0 0 0 .055em var(--ground);
+    opacity: 0; animation: settle .45s ease forwards;
   }
 
-  .wordmark .dots span:nth-child(1) { animation-delay: .25s; }
-  .wordmark .dots span:nth-child(2) { animation-delay: .5s; }
-  .wordmark .dots span:nth-child(3) { animation-delay: .75s; }
+  .wm-trail i:nth-child(1) { animation-delay: .2s; }
+  .wm-trail i:nth-child(2) { animation-delay: .42s; }
+  .wm-trail i:nth-child(3) { animation-delay: .64s; }
 
-  .wordmark .q {
-    opacity: 0;
-    animation: settle .5s ease forwards 1.05s;
-    color: var(--ember);
+  .wordmark .wm-q {
+    color: var(--ember); font-weight: 500; font-style: italic;
+    opacity: 0; animation: settle .45s ease forwards .92s;
   }
 
-  @keyframes settle {
-    from { opacity: 0; transform: translateY(.15em); }
-    to   { opacity: 1; transform: translateY(-.06em); }
-  }
+  @keyframes settle { from { opacity: 0; transform: translateY(.2em); } to { opacity: 1; transform: none; } }
 
   .strap {
-    font-size: .9rem;
-    color: var(--ink-soft);
-    margin: .9rem 0 0;
-    max-width: 30rem;
+    font-size: .9rem; color: var(--ink-soft);
+    margin: 1.05rem 0 0; max-width: 31rem;
   }
 
   .edition {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .35rem .75rem;
-    align-items: baseline;
-    margin-top: 1.4rem;
-    font-family: var(--mono);
-    font-size: .7rem;
-    letter-spacing: .06em;
-    text-transform: uppercase;
-    color: var(--ink-mute);
+    display: flex; flex-wrap: wrap; gap: .3rem .9rem; align-items: baseline;
+    margin-top: 1.1rem; padding-top: .9rem; border-top: 1px solid var(--edge);
+    font-family: var(--mono); font-size: .68rem; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--ink-mute);
   }
 
-  .edition b {
-    font-weight: 500;
-    color: var(--ink);
+  .edition b { font-weight: 500; color: var(--ink); }
+
+  /* ---------------- lens selector ---------------- */
+
+  .lensbar {
+    position: sticky; top: 0; z-index: 20;
+    background: var(--veil); backdrop-filter: blur(10px);
+    margin: 0 -1.15rem; padding: .7rem 1.15rem .75rem;
+    border-bottom: 1px solid var(--edge);
   }
 
-  /* ---------- meter legend ---------- */
+  .lens-q {
+    font-family: var(--mono); font-size: .62rem; letter-spacing: .09em;
+    text-transform: uppercase; color: var(--ink-mute); margin-bottom: .45rem;
+  }
+
+  .lens {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px;
+    background: var(--ground-deep); border: 1px solid var(--edge);
+    border-radius: 4px; padding: 3px;
+  }
+
+  .lens button {
+    appearance: none; border: 0; border-radius: 2px; cursor: pointer;
+    background: transparent; color: var(--ink-mute);
+    font-family: var(--ui); font-size: .78rem; font-weight: 500;
+    padding: .45rem .3rem; line-height: 1.2;
+    display: flex; flex-direction: column; align-items: center; gap: .12rem;
+    transition: background .16s ease, color .16s ease;
+  }
+
+  .lens button small {
+    font-family: var(--mono); font-size: .58rem; letter-spacing: .05em;
+    opacity: .75; font-weight: 400;
+  }
+
+  .lens button[aria-pressed="true"] {
+    background: var(--surface); color: var(--ink); box-shadow: var(--shadow);
+  }
+
+  .lens button:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
+
+  /* ---------------- standing watches ---------------- */
+
+  .watches {
+    margin-top: 1.5rem; border: 1px solid var(--edge);
+    border-radius: 5px; background: var(--surface); overflow: hidden;
+  }
+
+  .watches-h {
+    display: flex; align-items: baseline; justify-content: space-between; gap: .6rem;
+    padding: .85rem 1rem; border-bottom: 1px solid var(--edge-soft);
+    background: var(--ground-deep);
+  }
+
+  .watches-h span {
+    font-family: var(--mono); font-size: .64rem; letter-spacing: .09em;
+    text-transform: uppercase; color: var(--ink-mute);
+  }
+
+  .watches-h b { font-family: var(--display); font-size: 1.02rem; font-weight: 500; color: var(--ink); }
+
+  .watch { padding: .8rem 1rem; border-bottom: 1px solid var(--edge-soft); }
+  .watch:last-child { border-bottom: 0; }
+
+  .watch-top {
+    display: flex; align-items: baseline; gap: .5rem; justify-content: space-between;
+  }
+
+  .watch-name { font-size: .88rem; font-weight: 600; color: var(--ink); }
+
+  .watch-state {
+    font-family: var(--mono); font-size: .58rem; letter-spacing: .07em;
+    text-transform: uppercase; padding: .18rem .4rem; border-radius: 2px;
+    white-space: nowrap; flex-shrink: 0;
+  }
+
+  .st-live { background: var(--gold-bg); color: var(--gold); }
+  .st-open { background: var(--teal-dim); color: var(--teal); }
+
+  .watch p { margin: .35rem 0 0; font-size: .82rem; line-height: 1.55; color: var(--ink-soft); }
+
+  /* ---------------- legend ---------------- */
 
   .legend {
-    display: flex;
-    gap: 1.25rem;
-    flex-wrap: wrap;
-    padding: 1rem 0 .25rem;
-    font-family: var(--mono);
-    font-size: .66rem;
-    letter-spacing: .05em;
-    text-transform: uppercase;
-    color: var(--ink-mute);
+    display: flex; gap: 1.2rem; flex-wrap: wrap; padding: 1.5rem 0 .1rem;
+    font-family: var(--mono); font-size: .64rem; letter-spacing: .05em;
+    text-transform: uppercase; color: var(--ink-mute);
   }
 
   .legend div { display: flex; align-items: center; gap: .4rem; }
-
-  .legend i {
-    width: .6rem;
-    height: .6rem;
-    border-radius: 2px;
-    display: block;
-  }
-
+  .legend i { width: .58rem; height: .58rem; border-radius: 2px; display: block; }
   .legend .k-noise { background: var(--ember); }
-  .legend .k-change { background: var(--teal); }
+  .legend .k-then { background: var(--teal); }
+  .legend em { font-family: var(--display); font-style: italic; text-transform: none; letter-spacing: 0; font-size: .82rem; }
 
-  /* ---------- story ---------- */
+  /* ---------------- story ---------------- */
 
-  .stories {
-    display: flex;
-    flex-direction: column;
-    gap: 1.1rem;
-    padding-top: 1.1rem;
-  }
+  .stories { display: flex; flex-direction: column; gap: 1.1rem; padding-top: 1rem; }
 
   .story {
-    background: var(--surface);
-    border: 1px solid var(--edge-soft);
-    border-radius: 5px;
-    box-shadow: var(--shadow);
-    overflow: hidden;
+    background: var(--surface); border: 1px solid var(--edge-soft);
+    border-radius: 5px; box-shadow: var(--shadow); overflow: hidden;
   }
 
-  .story-top { padding: 1.15rem 1.15rem 1.25rem; }
+  .story.flagged { border-color: var(--gold); }
+
+  .story-top { padding: 1.1rem 1.1rem 1.2rem; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: .7rem; }
+
+  .tag {
+    font-family: var(--mono); font-size: .58rem; letter-spacing: .07em;
+    text-transform: uppercase; padding: .2rem .42rem; border-radius: 2px;
+    border: 1px solid var(--edge); color: var(--ink-mute); background: var(--ground-deep);
+  }
+
+  .tag.t-flag { background: var(--gold-bg); color: var(--gold); border-color: var(--gold); font-weight: 500; }
+  .tag.t-scotus { background: var(--teal-dim); color: var(--teal); border-color: transparent; }
+  .tag.t-trade { background: var(--teal-dim); color: var(--teal); border-color: transparent; }
 
   .dateline {
-    font-family: var(--mono);
-    font-size: .68rem;
-    letter-spacing: .07em;
-    text-transform: uppercase;
-    color: var(--ink-mute);
-    display: flex;
-    gap: .5rem;
-    align-items: center;
-    flex-wrap: wrap;
+    font-family: var(--mono); font-size: .66rem; letter-spacing: .07em;
+    text-transform: uppercase; color: var(--ink-mute);
+    display: flex; gap: .5rem; align-items: center; flex-wrap: wrap;
   }
 
-  .dateline .ago {
-    color: var(--ink);
-    border-bottom: 1px solid var(--edge);
-    padding-bottom: 1px;
-  }
+  .dateline .ago { color: var(--ink); border-bottom: 1px solid var(--edge); padding-bottom: 1px; }
 
   .story h2 {
-    font-family: var(--display);
-    font-weight: 400;
-    font-size: 1.42rem;
-    line-height: 1.24;
-    letter-spacing: -.011em;
-    text-wrap: balance;
-    margin: .6rem 0 0;
-    color: var(--ink);
+    font-family: var(--display); font-weight: 400; font-size: 1.4rem;
+    line-height: 1.24; letter-spacing: -.011em; text-wrap: balance;
+    margin: .55rem 0 0; color: var(--ink);
   }
 
-  .reaction {
-    margin: .75rem 0 0;
-    font-size: .92rem;
-    line-height: 1.55;
-    color: var(--ink-soft);
+  /* ---------------- reactions by lens ---------------- */
+
+  .reactions { margin-top: .9rem; display: flex; flex-direction: column; gap: .7rem; }
+
+  .rx { padding-left: .7rem; border-left: 2px solid var(--edge); }
+
+  .rx-lab {
+    font-family: var(--mono); font-size: .58rem; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--ink-mute); display: block; margin-bottom: .22rem;
   }
 
-  /* ---------- meters ---------- */
+  .rx p { margin: 0; font-size: .89rem; line-height: 1.55; color: var(--ink-soft); }
+
+  .rx.gap { border-left-style: dashed; }
+  .rx.gap p { font-style: italic; color: var(--ink-mute); }
+
+  /* ---------------- meters ---------------- */
 
   .meters {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: .55rem 1rem;
-    margin-top: 1.1rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--edge-soft);
+    display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto auto;
+    column-gap: 1.1rem; row-gap: .38rem;
+    margin-top: 1.05rem; padding-top: .95rem; border-top: 1px solid var(--edge-soft);
   }
 
-  .meter-label {
-    font-family: var(--mono);
-    font-size: .63rem;
-    letter-spacing: .07em;
-    text-transform: uppercase;
-    color: var(--ink-mute);
-    display: flex;
-    justify-content: space-between;
-    gap: .5rem;
-    margin-bottom: .3rem;
+  .m-lab-1 { grid-area: 1 / 1; }
+  .m-lab-2 { grid-area: 1 / 2; }
+  .m-bar-1 { grid-area: 2 / 1; }
+  .m-bar-2 { grid-area: 2 / 2; }
+
+  .m-lab { align-self: end; display: flex; flex-direction: column; gap: .12rem; }
+
+  .m-name {
+    font-family: var(--mono); font-size: .6rem; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--ink-mute); line-height: 1.3;
   }
 
-  .meter-label b {
-    font-weight: 500;
-    color: var(--ink-soft);
-    text-transform: none;
-    letter-spacing: 0;
-    font-size: .68rem;
+  .m-name.branded {
+    font-family: var(--display); font-style: italic; font-size: .92rem;
+    text-transform: none; letter-spacing: 0; color: var(--ink-soft); font-weight: 400;
   }
 
-  .bars { display: flex; gap: 3px; }
+  .m-val { font-size: .74rem; font-weight: 600; color: var(--ink); line-height: 1.25; }
 
-  .bars i {
-    display: block;
-    height: 5px;
-    flex: 1;
-    border-radius: 1px;
-  }
-
+  .bars { display: flex; gap: 3px; align-items: center; }
+  .bars i { display: block; height: 5px; flex: 1; border-radius: 1px; }
   .m-noise i { background: var(--ember-dim); }
   .m-noise i.on { background: var(--ember); }
-  .m-change i { background: var(--teal-dim); }
-  .m-change i.on { background: var(--teal); }
+  .m-then i { background: var(--teal-dim); }
+  .m-then i.on { background: var(--teal); }
 
-  /* ---------- reveal ---------- */
+  /* ---------------- reveal ---------------- */
 
   .reveal {
-    width: 100%;
-    border: 0;
-    border-top: 1px solid var(--edge-soft);
-    background: transparent;
-    color: var(--ink);
-    font-family: var(--display);
-    font-style: italic;
-    font-size: 1.06rem;
-    padding: .95rem 1.15rem;
-    text-align: left;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
+    width: 100%; border: 0; border-top: 1px solid var(--edge-soft);
+    background: transparent; color: var(--ink);
+    font-family: var(--display); font-style: italic; font-size: 1.05rem;
+    padding: .9rem 1.1rem; text-align: left; cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
     transition: background .18s ease;
   }
 
@@ -312,171 +320,170 @@
   .reveal:focus-visible { outline: 2px solid var(--teal); outline-offset: -2px; }
 
   .reveal .chev {
-    font-family: var(--ui);
-    font-style: normal;
-    font-size: .7rem;
-    color: var(--ink-mute);
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    white-space: nowrap;
-    flex-shrink: 0;
+    font-family: var(--ui); font-style: normal; font-size: .68rem;
+    color: var(--ink-mute); letter-spacing: .08em; text-transform: uppercase;
+    white-space: nowrap; flex-shrink: 0;
   }
 
   .outcome {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows .34s cubic-bezier(.4, 0, .2, 1);
-    background: var(--ground-deep);
+    display: grid; grid-template-rows: 0fr; background: var(--ground-deep);
+    transition: grid-template-rows .34s cubic-bezier(.4,0,.2,1);
   }
 
   .story.open .outcome { grid-template-rows: 1fr; }
-
-  .outcome-inner {
-    overflow: hidden;
-    min-height: 0;
-  }
-
-  .outcome-pad {
-    padding: 1.15rem;
-    border-top: 1px solid var(--edge-soft);
-  }
+  .outcome-inner { overflow: hidden; min-height: 0; }
+  .outcome-pad { padding: 1.1rem; border-top: 1px solid var(--edge-soft); }
 
   .verdict {
-    display: inline-block;
-    font-family: var(--mono);
-    font-size: .64rem;
-    letter-spacing: .09em;
-    text-transform: uppercase;
-    padding: .3rem .55rem;
-    border-radius: 3px;
-    background: var(--surface);
-    border: 1px solid var(--edge);
-    color: var(--ink-soft);
-    margin-bottom: .85rem;
+    display: inline-block; font-family: var(--mono); font-size: .62rem;
+    letter-spacing: .09em; text-transform: uppercase;
+    padding: .3rem .55rem; border-radius: 3px;
+    background: var(--surface); border: 1px solid var(--edge);
+    color: var(--ink-soft); margin-bottom: .8rem;
   }
 
-  .outcome p {
-    margin: 0 0 .85rem;
-    font-size: .95rem;
-    line-height: 1.62;
-    color: var(--ink);
-  }
-
+  .outcome p { margin: 0 0 .8rem; font-size: .93rem; line-height: 1.62; color: var(--ink); }
   .outcome p:last-of-type { margin-bottom: 0; }
 
   .sources {
-    margin-top: 1rem;
-    padding-top: .85rem;
-    border-top: 1px solid var(--edge);
-    display: flex;
-    flex-direction: column;
-    gap: .45rem;
+    margin-top: 1rem; padding-top: .8rem; border-top: 1px solid var(--edge);
+    display: flex; flex-direction: column; gap: .42rem;
   }
 
   .sources-h {
-    font-family: var(--mono);
-    font-size: .63rem;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    color: var(--ink-mute);
+    font-family: var(--mono); font-size: .61rem; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--ink-mute);
   }
 
   .sources a {
-    color: var(--teal);
-    font-size: .84rem;
-    text-decoration: none;
-    border-bottom: 1px solid var(--teal-dim);
-    align-self: flex-start;
-    line-height: 1.4;
+    color: var(--teal); font-size: .82rem; text-decoration: none;
+    border-bottom: 1px solid var(--teal-dim); align-self: flex-start; line-height: 1.4;
   }
 
   .sources a:hover { border-bottom-color: var(--teal); }
   .sources a:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
 
-  /* ---------- closing ---------- */
+  /* ---------------- coda ---------------- */
 
-  .coda {
-    margin-top: 2.5rem;
-    padding-top: 1.6rem;
-    border-top: 1px solid var(--edge);
-  }
+  .coda { margin-top: 2.4rem; padding-top: 1.5rem; border-top: 1px solid var(--edge); }
 
   .coda h3 {
-    font-family: var(--display);
-    font-weight: 400;
-    font-size: 1.3rem;
-    line-height: 1.3;
-    margin: 0 0 .7rem;
-    color: var(--ink);
-    text-wrap: balance;
+    font-family: var(--display); font-weight: 400; font-size: 1.28rem;
+    line-height: 1.3; margin: 0 0 .65rem; color: var(--ink); text-wrap: balance;
   }
 
-  .coda p {
-    font-size: .9rem;
-    line-height: 1.62;
-    color: var(--ink-soft);
-    margin: 0 0 .8rem;
-    max-width: 32rem;
-  }
+  .coda p { font-size: .89rem; line-height: 1.62; color: var(--ink-soft); margin: 0 0 .8rem; }
 
   .notice {
-    margin-top: 1.6rem;
-    padding: .95rem 1.05rem;
-    border-radius: 4px;
-    border: 1px dashed var(--edge);
-    background: var(--ground-deep);
+    margin-top: 1.5rem; padding: .95rem 1.05rem; border-radius: 4px;
+    border: 1px dashed var(--edge); background: var(--ground-deep);
   }
 
   .notice b {
-    display: block;
-    font-family: var(--mono);
-    font-size: .64rem;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    color: var(--ink-mute);
-    margin-bottom: .45rem;
-    font-weight: 500;
+    display: block; font-family: var(--mono); font-size: .62rem;
+    letter-spacing: .08em; text-transform: uppercase; color: var(--ink-mute);
+    margin-bottom: .5rem; font-weight: 500;
   }
 
-  .notice p {
-    margin: 0 0 .6rem;
-    font-size: .84rem;
-    line-height: 1.6;
-    color: var(--ink-soft);
-  }
-
+  .notice p { margin: 0 0 .55rem; font-size: .82rem; line-height: 1.6; color: var(--ink-soft); }
   .notice p:last-child { margin-bottom: 0; }
+
+  .notice ul { margin: .1rem 0 .6rem; padding-left: 1.05rem; }
+  .notice li { font-size: .82rem; line-height: 1.55; color: var(--ink-soft); margin-bottom: .3rem; }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
-      animation-duration: .01ms !important;
-      animation-iteration-count: 1 !important;
+      animation-duration: .01ms !important; animation-iteration-count: 1 !important;
       transition-duration: .01ms !important;
     }
-    .wordmark .dots span, .wordmark .q { opacity: 1; }
+    .wm-trail i, .wordmark .wm-q { opacity: 1; }
   }
 </style>
 
 <div class="shell">
 
   <header class="masthead">
-    <h1 class="wordmark">
-      <em>And</em> then<span class="dots"><span></span><span></span><span></span></span><span class="q">?</span>
-    </h1>
+    <div class="lockup">
+      <svg class="appmark" viewBox="0 0 48 48" aria-hidden="true">
+        <rect x="1" y="1" width="46" height="46" rx="11.5" fill="var(--mark-bg)" stroke="var(--edge)" stroke-width="1.5"/>
+        <line x1="10" y1="29" x2="27" y2="29" stroke="var(--ink-mute)" stroke-width="1.1" opacity=".4"/>
+        <circle cx="11.5" cy="29" r="2.15" fill="var(--ink)" opacity=".32"/>
+        <circle cx="18" cy="29" r="2.15" fill="var(--ink)" opacity=".62"/>
+        <circle cx="24.5" cy="29" r="2.15" fill="var(--ink)"/>
+        <text x="30" y="35.5" font-family="Newsreader, Georgia, serif" font-style="italic" font-weight="500" font-size="23" fill="var(--ember)">?</text>
+      </svg>
+      <h1 class="wordmark">
+        <span class="wm-and">And</span><span class="wm-then">then</span><span class="wm-trail"><i></i><i></i><i></i></span><span class="wm-q">?</span>
+      </h1>
+    </div>
+
     <p class="strap">
       The news from two weeks ago, plus the only part that was ever going to matter:
       what actually came of it.
     </p>
+
     <div class="edition">
       <span>Today <b id="today">—</b></span>
       <span>Edition of <b id="edition">—</b></span>
-      <span><b>6</b> stories</span>
+      <span><b id="count">—</b> stories</span>
     </div>
   </header>
 
+  <div class="lensbar">
+    <div class="lens-q">Whose fury are we tracking?</div>
+    <div class="lens" role="group" aria-label="Choose which coverage the reactions are drawn from">
+      <button data-lens="right" aria-pressed="false">Right<small id="n-right">—</small></button>
+      <button data-lens="both" aria-pressed="true">Blended<small id="n-both">—</small></button>
+      <button data-lens="left" aria-pressed="false">Left<small id="n-left">—</small></button>
+    </div>
+  </div>
+
+  <section class="watches">
+    <div class="watches-h">
+      <b>Standing watches</b>
+      <span>Never dropped</span>
+    </div>
+
+    <div class="watch">
+      <div class="watch-top">
+        <span class="watch-name">Supreme Court docket</span>
+        <span class="watch-state st-open">Check every session</span>
+      </div>
+      <p>
+        Every term, the Court quietly resolves a fight the country screamed about a year earlier.
+        Two live threads right now: the ballroom appropriations case, on a temporary stay since
+        21 August, and the refund question left open by February's IEEPA tariff ruling.
+      </p>
+    </div>
+
+    <div class="watch">
+      <div class="watch-top">
+        <span class="watch-name">Trade &amp; tariff anchors</span>
+        <span class="watch-state st-open">Rolling</span>
+      </div>
+      <p>
+        The reliable pattern is anchor high, then negotiate down — so the announcement is
+        almost never the number. Tracked here so the walk-back gets the same attention as the
+        threat. Note the Canada round below, where the anchor did not move.
+      </p>
+    </div>
+
+    <div class="watch">
+      <div class="watch-top">
+        <span class="watch-name">FCC robotics rule</span>
+        <span class="watch-state st-live">Flagged</span>
+      </div>
+      <p>
+        Foreign-made mobile robots joined the Covered List on 28 July 2026 — the third
+        category-wide import ban in eight months. Almost no general coverage. Flagged for
+        permanent tracking; see the full card below.
+      </p>
+    </div>
+  </section>
+
   <div class="legend">
     <div><i class="k-noise"></i> Noise then</div>
-    <div><i class="k-change"></i> Changed since</div>
+    <div><i class="k-then"></i> <em>And then . . .?</em></div>
   </div>
 
   <main class="stories" id="stories"></main>
@@ -484,29 +491,36 @@
   <section class="coda">
     <h3>Notice which bars are long.</h3>
     <p>
-      Five of the six stories below dominated a news cycle and moved almost nothing. The sixth
-      barely trended for a day and is permanent. That inversion is the whole reason this app
-      exists — the volume of a story on the day it breaks tells you almost nothing about whether
-      it will matter, and the feeling of being informed is mostly the feeling of being upset on
-      schedule.
+      Most of what follows dominated a news cycle and moved almost nothing. A few items barely
+      registered and are permanent. That inversion is the reason this app exists — the volume of
+      a story on the day it breaks tells you very little about whether it will matter.
     </p>
     <p>
-      Waiting two weeks costs you nothing. Nothing here was actionable on the day it broke.
-      Every single item is more accurate now than it was then.
+      Switch lenses on any card. The account of who was furious changes completely. The outcome
+      never does.
     </p>
+
+    <div class="notice">
+      <b>Editorial checklist — run every session</b>
+      <ul>
+        <li>Pull the Supreme Court's order and opinion lists; trace every decision back to the furor it settles, however old.</li>
+        <li>Re-check open tariff anchors for the quiet walk-back, and record whether the anchor held.</li>
+        <li>Check the FCC Covered List and equipment-authorization docket for robotics movement.</li>
+        <li>Confirm both lenses are populated. A card with one empty lens is a finding, not a gap to hide.</li>
+      </ul>
+    </div>
 
     <div class="notice">
       <b>Prototype notes</b>
       <p>
-        Every story, date, and outcome here is real and sourced — researched by hand on
-        24 August 2026 for the 10 August edition. In the shipping version this is a pipeline:
-        pull the archive for T-minus-14, cluster by story, then research each cluster's
-        outcome before publishing.
+        Every story, date, reaction and outcome here is real and sourced — researched by hand on
+        24 August 2026 for the 10 August edition. The shipping version needs this as a pipeline:
+        pull the archive at T-minus-14, cluster by story, resolve each cluster's outcome, then
+        classify the reaction separately in left- and right-leaning coverage.
       </p>
       <p>
-        Known gap: this edition skews toward one administration because that is what
-        the 10 August cycle was. A real edition needs an explicit balance pass, or the app
-        becomes the thing it is trying to cure.
+        The lens control deliberately uses no red and no blue. Colour-coding the sides would
+        re-create the tribal signal the app exists to lower.
       </p>
     </div>
   </section>
@@ -521,159 +535,339 @@
     {
       date: "Monday, 10 August",
       headline: "Federal appeals court rules Trump cannot build his $400 million White House ballroom without Congress",
-      reaction: "Treated as the day the courts finally held the line — or, depending on the feed, as two partisan judges blocking a privately funded gift. The judges' names trended. Several people announced that this was the beginning of accountability.",
-      noise: 4,
-      change: 1,
+      tags: [{ t: "Supreme Court", k: "t-scotus" }],
+      rx: {
+        left: "Read as the moment a court finally drew a line on executive spending. The judges' names trended for a day and a great many posts declared that accountability had arrived.",
+        right: "Read as two appellate judges blocking a privately funded gift to the White House out of spite — obstruction of a project costing taxpayers nothing."
+      },
+      noise: 4, then: 1,
       verdict: "Undone in 11 days",
       outcome: [
         "On 21 August, Chief Justice John Roberts issued a temporary stay lifting the hold. Construction was never actually interrupted, and the structure is now rising aboveground on the east side of the White House.",
-        "The litigation is still live at the Supreme Court and the stay is explicitly provisional — the justices simply wanted more time. But the practical situation two weeks later is the same as it was two weeks before: they are building the ballroom."
+        "The case is still live and the stay is explicitly provisional — the justices simply wanted more time. But the practical situation two weeks later is identical to the situation two weeks before: they are building the ballroom."
       ],
       sources: [
         ["Appeals court blocks construction of White House ballroom — ABC News", "https://abcnews.com/US/appeals-court-blocks-construction-white-house-ballroom/story?id=135459043"],
-        ["Supreme Court allows Trump's ballroom construction to continue for now — NPR, 21 Aug", "https://www.npr.org/2026/08/21/nx-s1-5935417/supreme-court-allows-trumps-ballroom-construction-to-continue-for-now"]
+        ["Supreme Court allows ballroom construction to continue for now — NPR, 21 Aug", "https://www.npr.org/2026/08/21/nx-s1-5935417/supreme-court-allows-trumps-ballroom-construction-to-continue-for-now"]
       ]
     },
     {
       date: "Monday, 10 August",
       headline: "Trump signs executive order splitting the MMR vaccine into three shots and cutting the childhood schedule from 17 doses to 11",
-      reaction: "Close to the loudest story of the week. Physicians' groups warned of preventable infections; the order was widely described as the end of routine childhood immunization in America. A lot of people made plans about the fall.",
-      noise: 4,
-      change: 1,
+      tags: [],
+      rx: {
+        left: "Near the top of the week's alarm. Physicians' groups warned of preventable outbreaks, and the order was widely described as the end of routine childhood immunization in America.",
+        right: "Framed as restoring parental choice and spacing out an overloaded schedule — a campaign promise kept and a rebuke to the public health establishment."
+      },
+      noise: 4, then: 1,
       verdict: "Inert, with a live fuse",
       outcome: [
-        "The MMR provision cannot currently be carried out by anyone: no manufacturer sells standalone measles, mumps, or rubella vaccines in the United States, and the order does not create one. Fourteen days on, there is no change to vaccine availability for the fall.",
-        "The part that could actually bite got far less attention — the order directs the Attorney General to bring legal challenges against state limits on religious and medical exemptions. That is real, and it has not been tested yet. If this story matters, it will matter through that clause, months from now, under a headline nobody will connect to this one."
+        "The MMR provision cannot currently be carried out by anyone. No manufacturer sells standalone measles, mumps or rubella vaccines in the United States, and the order does not create one. Fourteen days on, nothing about vaccine availability this fall has changed.",
+        "The part that could actually bite got far less attention from either side: the order directs the Attorney General to bring legal challenges against state limits on religious and medical exemptions. That is real and untested. If this story matters, it will matter through that clause, months from now, under a headline nobody connects to this one."
       ],
       sources: [
-        ["What Trump's executive order means for vaccinations this fall — CNN, 10 Aug", "https://www.cnn.com/2026/08/10/health/executive-order-vaccines-what-it-means"],
-        ["Doctors push back on executive order to change childhood vaccine schedule — ABC News", "https://abcnews.com/Politics/trump-executive-order-childhood-vaccine-schedule/story?id=135524851"],
-        ["Trump signs order to break up measles, mumps, rubella vaccine — CIDRAP", "https://www.cidrap.umn.edu/childhood-vaccines/trump-signs-executive-order-break-measles-mumps-rubella-vaccine"]
+        ["What the executive order means for vaccinations this fall — CNN, 10 Aug", "https://www.cnn.com/2026/08/10/health/executive-order-vaccines-what-it-means"],
+        ["Doctors push back on executive order — ABC News", "https://abcnews.com/Politics/trump-executive-order-childhood-vaccine-schedule/story?id=135524851"],
+        ["CIDRAP: order to break up the measles, mumps and rubella vaccine", "https://www.cidrap.umn.edu/childhood-vaccines/trump-signs-executive-order-break-measles-mumps-rubella-vaccine"]
+      ]
+    },
+    {
+      date: "Monday, 10 August",
+      headline: "Senators release texts from Fauci's government iPhone as a Senate committee votes to hold him in contempt",
+      tags: [],
+      rx: {
+        left: "Covered as a partisan exercise, with attention to the fact that the released texts show Fauci noting that more than 10,000 pregnant women had been vaccinated and \"no issues have arisen.\"",
+        right: "Very big. Senators Johnson and Paul published texts from a phone containing more than 34,000 messages; Sen. Marshall called for a special counsel and Sen. Paul referred Fauci to the Justice Department for prosecution."
+      },
+      noise: 4, then: 1,
+      verdict: "Referred, not charged",
+      outcome: [
+        "Two weeks on, the contempt referral sits where contempt referrals sit. A referral is a request that the Justice Department act; it is not a charge, and no charging decision has been announced.",
+        "The texts themselves proved to be the least useful part of the story for the people promoting them — the passage at the centre of the release has him reporting an absence of adverse events, which is why the two lenses above describe the same document so differently.",
+        "This is a right-lens mirror of \"vows to sue\": a procedural step reported as an outcome."
+      ],
+      sources: [
+        ["Senators Johnson, Paul release initial texts from Fauci's government iPhone", "https://www.ronjohnson.senate.gov/2026/08/10/senators-johnson-paul-release-initial-texts-from-dr-faucis-government-iphone-2/"],
+        ["Republican senators release Fauci's text messages — CNN, 11 Aug", "https://www.cnn.com/2026/08/11/politics/fauci-text-messages-released-covid-vaccine-pregnancy-hnk"],
+        ["Senate committee votes to hold Fauci in contempt of Congress — PBS News", "https://www.pbs.org/newshour/show/news-wrap-senate-committee-votes-to-hold-fauci-in-contempt-of-congress"]
+      ]
+    },
+    {
+      date: "Monday, 10 August",
+      headline: "Commerce proposes expanding Section 232 duties on steel, aluminium and copper — days before a 50% tariff deadline on Canada",
+      tags: [{ t: "Trade · anchor→negotiate", k: "t-trade" }],
+      rx: {
+        left: "Framed as chaos and self-inflicted price increases, with the usual reminder that tariffs are paid by importers.",
+        right: "Framed as finally using leverage on a neighbour that has been free-riding on American markets for decades."
+      },
+      noise: 3, then: 4,
+      verdict: "The anchor held",
+      outcome: [
+        "This is the case that breaks the usual pattern, which is why it is worth watching closely. The normal shape is anchor high, negotiate down, quietly settle — so the announced number is rarely the real one.",
+        "Not this time. Trump paused the 50% Canadian tariffs on 19 August, citing a near-final deal; Prime Minister Carney said substantial progress had been made. Talks then collapsed on the Friday night, and the tariffs took effect at 12:01am Saturday on roughly $20 billion of goods including dairy, alcohol, cement and hockey equipment. Each side blamed the other. Carney has since said Canada is \"at war\" with the United States on trade.",
+        "Two lessons for this app. First: the walk-back is the norm, not the rule, so an anchor must be tracked rather than assumed. Second: the pause was reported far more loudly than the collapse, which is exactly backwards."
+      ],
+      sources: [
+        ["Trump says U.S. and Canada reached deal to delay 50% tariffs — NPR, 19 Aug", "https://www.npr.org/2026/08/19/g-s1-139156/trump-canada-tariffs"],
+        ["Trump's 50% tariffs on Canada take effect as Carney vows to retaliate — ABC News", "https://abcnews.com/Business/trumps-proposed-tariffs-canada-hurtle-deadline-amid-trade/story?id=135833861"],
+        ["Carney says his nation is 'at war' with U.S. — NPR, 22 Aug", "https://www.npr.org/2026/08/22/nx-s1-5941584/us-canada-tariffs"]
+      ]
+    },
+    {
+      date: "Tuesday, 28 July",
+      headline: "The FCC adds every foreign-produced advanced robotic device to the Covered List, barring new imports",
+      tags: [{ t: "Flagged · permanent watch", k: "t-flag" }, { t: "Trade", k: "t-trade" }],
+      flagged: true,
+      rx: { left: null, right: null },
+      noise: 1, then: 4,
+      verdict: "In force now",
+      outcome: [
+        "This is the single largest item on the page and it generated almost no public argument in either direction. Effective 28 July, any mobile ground robot over about 4.4 pounds that navigates on its own and carries sensors and connectivity — humanoids, quadrupeds, warehouse AMRs, and by the plain text of the rule robot vacuums and autonomous lawnmowers — cannot obtain the FCC equipment authorisation required to be imported, marketed or sold in the United States if it is foreign-produced.",
+        "Devices authorised before 28 July keep working and keep receiving security and compatibility updates through at least 1 January 2029. New models need a Conditional Approval routed through the Department of War.",
+        "The part almost nobody reported is the pattern: this is the third time in under eight months that an entire product category has been added by origin — foreign drones in December 2025, foreign consumer routers in March 2026, foreign robotics in July 2026. Any single one is a trade story. Three in eight months is an industrial policy, executed through an equipment-authorisation database rather than a bill, and it is reshaping a market with no floor vote and no news cycle.",
+        "Flagged for permanent tracking."
+      ],
+      sources: [
+        ["FCC FAQs on Covered List updates: robotics and power inverters — FCC.gov", "https://www.fcc.gov/covered-list-faqs-robots-inverters"],
+        ["FCC Covered List bans new foreign mobile robots in US — IEEE Spectrum", "https://spectrum.ieee.org/fcc-covered-list-mobile-robots"],
+        ["FCC adds all foreign-produced advanced robotic devices to the Covered List — Sidley", "https://www.sidley.com/en/insights/newsupdates/2026/08/fcc-adds-all-foreign-produced-advanced-robotic-devices-to-the-covered-list"],
+        ["Five things to know — K&L Gates", "https://www.klgates.com/thought-leadership/FCC-Adds-Foreign-Produced-Advanced-Robotic-Devices-to-the-Covered-List-8-3-2026"]
+      ]
+    },
+    {
+      date: "Friday, 20 February",
+      headline: "The Supreme Court holds 6–3 that the president cannot impose tariffs under emergency powers",
+      tags: [{ t: "Supreme Court · traced", k: "t-scotus" }, { t: "Trade", k: "t-trade" }],
+      rx: {
+        left: "Celebrated in February as the most significant judicial check on presidential power in decades — the taxing power returned to Congress.",
+        right: "Called judicial overreach into the president's foreign affairs authority, and a gift to countries that had been extracting concessions for years."
+      },
+      noise: 4, then: 3,
+      verdict: "Won on paper, rebuilt in practice",
+      outcome: [
+        "Included here because it is what the Supreme Court watch is for: a decision that settles a furor from a year earlier, arriving long after everyone stopped waiting for it.",
+        "The Court held that the International Emergency Economic Powers Act does not authorise tariffs, because the tariff power is a branch of the taxing power reserved to Congress. Every IEEPA tariff terminated at midnight on 24 February. On its own terms this was a real and permanent constitutional ruling.",
+        "And then: by August the tariff programme is substantially rebuilt on other statutes. The Commerce Department is expanding Section 232 duties on steel, aluminium and copper, and the 50% Canadian tariffs that took effect this weekend rest on separate proclamations, untouched by the ruling. The Court also never reached the refund question, so who gets money back is still open.",
+        "The honest summary is that the constitutional principle held and the tariffs came back through a different door. Neither February headline — the celebration or the catastrophe — survives contact with August."
+      ],
+      sources: [
+        ["Supreme Court strikes down IEEPA tariffs — Holland & Knight", "https://www.hklaw.com/en/insights/publications/2026/02/supreme-court-strikes-down-ieepa-tariffs"],
+        ["US terminates IEEPA-based tariffs following Supreme Court decision — White & Case", "https://www.whitecase.com/insight-alert/united-states-terminates-ieepa-based-tariffs-following-supreme-court-decision"],
+        ["Potential refunds: Supreme Court overturns IEEPA tariffs — Norton Rose Fulbright", "https://www.nortonrosefulbright.com/en/knowledge/publications/20f2de87/potential-refunds-us-supreme-court-overturns-ieepa-tariffs"]
       ]
     },
     {
       date: "Sunday, 9 August",
       headline: "Netanyahu rejects Trump's 15-point Gaza plan, refusing withdrawal until Hamas disarms first",
-      reaction: "Reported as the collapse of the peace process and a personal humiliation for Trump, who had reportedly threatened to walk away without a clear yes. Both the \"Trump got played\" and the \"Israel stands firm\" versions went wide the same afternoon.",
-      noise: 4,
-      change: 2,
+      tags: [],
+      rx: {
+        left: "Reported as the collapse of the peace push and as evidence that Netanyahu is unconstrained by Washington.",
+        right: "Reported as Israel refusing to trade a withdrawal for promises from a terror group — and, more quietly, as Trump being strung along by an ally."
+      },
+      noise: 4, then: 2,
       verdict: "Still unsettled",
       outcome: [
-        "It was not a collapse. On 18 August, Jared Kushner met Netanyahu and came away publicly optimistic; the two agreed that Hamas's disarmament should begin with a weapons handover supervised by an American general. Talks are ongoing.",
+        "It was not a collapse. On 18 August Jared Kushner met Netanyahu and came away publicly optimistic; the two agreed that disarmament should begin with a Hamas weapons handover supervised by an American general.",
         "Nor was it a breakthrough. The day after Kushner left, Israeli strikes killed at least ten people, and Netanyahu has said progress is \"problematic\" ahead of Israeli elections — he is squeezed between Washington and his own coalition. Qatar and Egypt now publicly blame Israel for the stall.",
-        "Two weeks of certainty in both directions, and the honest answer is that it is unresolved and moving slowly."
+        "Two weeks of certainty in both directions, and the accurate answer is that it is unresolved and moving slowly."
       ],
       sources: [
         ["Israel rejects Trump's 15-point plan for Gaza — NBC News", "https://www.nbcnews.com/world/israel/israel-rejects-trumps-15-point-plan-gaza-pm-benjamin-netanyahu-says-rcna591555"],
-        ["Kushner optimistic about Gaza ceasefire plan after meeting Netanyahu — NPR, 18 Aug", "https://www.npr.org/2026/08/18/nx-s1-5935512/kushner-optimistic-about-gaza-ceasefire-plan-after-meeting-with-netanyahu"],
-        ["Israel's deadly Gaza strikes cast doubt on ceasefire progress — Washington Post, 19 Aug", "https://www.washingtonpost.com/world/2026/08/19/gaza-israel-war-kushner-talks-trump-netanyahu/eea06114-9bd0-11f1-9cc4-2dc9b46e2d5c_story.html"]
+        ["Kushner optimistic after meeting Netanyahu — NPR, 18 Aug", "https://www.npr.org/2026/08/18/nx-s1-5935512/kushner-optimistic-about-gaza-ceasefire-plan-after-meeting-with-netanyahu"],
+        ["Deadly Gaza strikes cast doubt on ceasefire progress — Washington Post, 19 Aug", "https://www.washingtonpost.com/world/2026/08/19/gaza-israel-war-kushner-talks-trump-netanyahu/eea06114-9bd0-11f1-9cc4-2dc9b46e2d5c_story.html"]
+      ]
+    },
+    {
+      date: "Early August",
+      headline: "Carlson hosts Massie, Greene and other MAGA dissidents at his Maine lodge amid 2028 talk",
+      tags: [],
+      rx: {
+        left: "Covered lightly, mostly as schadenfreude about a coalition cracking.",
+        right: "Large inside the coalition and genuinely contested. Greene posted from the meeting that the movement had backed Trump because he promised no more foreign wars, and that \"he's betrayed us all.\""
+      },
+      noise: 3, then: 3,
+      verdict: "This one grew",
+      outcome: [
+        "The rare item on this page that got bigger. On 21–22 August Trump responded with a lengthy Truth Social post branding Carlson, Greene and Massie \"LOSERS ALL\" and predicting Carlson's audience would keep shrinking. Greene answered that she wished she had never supported him. Carlson has said he intends to help build a third party rather than keep backing the GOP.",
+        "Worth keeping because it corrects the app's own bias. Two weeks is usually long enough for a story to evaporate, but not always — intra-coalition fights over a succession tend to compound rather than fade, because the participants have a reason to keep the fight alive that outrage cycles lack.",
+        "A reader who waited two weeks understood this story better than someone who read it on day one, which is the actual claim this app makes. Waiting is not the same as ignoring."
+      ],
+      sources: [
+        ["Trump erupts on Tucker Carlson and two 'Republican traitors' — WND, 21 Aug", "https://www.wnd.com/2026/08/three-losers-pocketful-change-trump-erupts-tucker-carlson/"],
+        ["\"I wish I had never supported him\": MTG fires back — Salon, 22 Aug", "https://www.salon.com/2026/08/22/i-wish-i-had-never-supported-him-mtg-fires-back-after-trumps-attack-on-maga-losers/"],
+        ["Trump obliterated Tucker, MTG and Massie last night — Townhall, 22 Aug", "https://townhall.com/news/mattvespa/2026/08/22/trump-obliterated-tucker-mtg-and-thomas-massie-last-night-heres-the-post-n2681714"]
       ]
     },
     {
       date: "Week of 10 August",
       headline: "More than 50 spouses and parents of active-duty U.S. troops have been detained in the immigration crackdown",
-      reaction: "An AP investigation that landed hard across the spectrum, because it was hard to spin. More than 60 Democratic lawmakers signed an open letter to the Defense and Homeland Security secretaries. Several individual cases went viral, including a soldier who halted a deployment after her husband was detained.",
-      noise: 3,
-      change: 1,
+      tags: [],
+      rx: {
+        left: "An AP investigation that hit hard and was difficult to spin. More than 60 Democratic lawmakers signed an open letter to the defence and homeland security secretaries; several individual cases went viral.",
+        right: null
+      },
+      noise: 3, then: 1,
       verdict: "Policy intact",
       outcome: [
-        "Individual outcomes improved. A judge ordered the detained husband released; at least one other military spouse has been released and returned home. Attention demonstrably helped specific families.",
-        "The policy did not move at all. The rule that generated the detentions — that military service alone does not exempt someone from immigration consequences, reversing decades of practice under both parties — remains in force. At least six family members have already been deported and others are still in custody. The letter from Congress produced no change.",
+        "Individual outcomes improved. A judge ordered the release of a detained husband whose wife had halted a deployment; at least one other military spouse was released and returned home. Attention demonstrably helped specific families.",
+        "The policy did not move. The rule that produced the detentions — that military service alone does not exempt someone from immigration consequences, reversing decades of practice under both parties — remains in force. At least six family members have already been deported and others remain in custody. The letter from Congress produced no change.",
         "This is the most common shape of an outrage story: real, verified, genuinely bad, and structurally untouched two weeks later. The anger rescued a few people and left the machine running."
       ],
       sources: [
         ["AP Exclusive: crackdown has detained more than 50 military spouses and parents — El Paso Matters", "https://elpasomatters.org/2026/08/05/trump-ice-detains-50-military-spouses-parents-rolls-back-immigration-protections/"],
-        ["Dozens of military family members detained by ICE. Democrats demand changes.", "https://www.ms.now/news/ice-detains-military-spouses-parents"]
-      ]
-    },
-    {
-      date: "Saturday, 8 August",
-      headline: "Senate confirms Todd Blanche as Attorney General, 50–49",
-      reaction: "Roughly one news cycle. A weekend vote, a predictable party-line result, some commentary about the president's former personal defense lawyer running the Justice Department, and then the week moved on to the ballroom and the vaccine order.",
-      noise: 2,
-      change: 4,
-      verdict: "Permanent",
-      outcome: [
-        "He is the Attorney General. He was still the Attorney General fourteen days later, and there is no appeal, no stay, and no second vote. Only Collins and Murkowski broke ranks; the margin was one.",
-        "Nothing on this page will shape more of the next three years than this did, and it generated less heat than a ballroom. Every legal fight in the stories above — the vaccine exemption lawsuits, the clearance revocations, the immigration policy — runs through the department he now leads.",
-        "This is the inverse case, and it is why the app shows both bars. The stories that get the most fury are frequently the ones already headed for a stay, a court, or a shelf. The ones that quietly stick tend to be procedural, boring, and scheduled for a Saturday."
-      ],
-      sources: [
-        ["Senate confirms Todd Blanche as attorney general after weeks of uncertainty — NBC News", "https://www.nbcnews.com/politics/justice-department/senate-confirms-todd-blanche-attorney-general-weeks-uncertainty-rcna591457"],
-        ["Senate votes to confirm Todd Blanche as attorney general — NPR, 8 Aug", "https://www.npr.org/2026/08/08/g-s1-137631/senate-confirms-todd-blanche-attorney-general"]
+        ["Dozens of military family members detained by ICE — MS NOW", "https://www.ms.now/news/ice-detains-military-spouses-parents"]
       ]
     },
     {
       date: "Tuesday, 11 August",
       headline: "Former Air Force Secretary Frank Kendall vows to sue after the Pentagon strips his security clearance",
-      reaction: "A live CNN interview, a defiant quote, and a day of \"he's fighting back\" coverage. The revocation followed claims he disclosed sensitive information about the Qatari-gifted jet now serving as Air Force One — which he denies.",
-      noise: 2,
-      change: 1,
+      tags: [],
+      rx: {
+        left: "A day of \"he's fighting back\" coverage, cited as proof of retaliation against critics of the administration.",
+        right: "Framed as overdue accountability for a Biden-era official accused of disclosing sensitive details about the aircraft now serving as Air Force One."
+      },
+      noise: 2, then: 1,
       verdict: "Folded into a slower case",
       outcome: [
-        "He did sue, sort of. By 17 August he had joined an existing multi-plaintiff suit brought on behalf of people whose clearances were revoked without due process since January 2025, represented by attorney Mark Zaid.",
+        "He did sue, after a fashion. By 17 August he had joined an existing multi-plaintiff suit brought on behalf of people whose clearances were revoked without due process since January 2025, represented by attorney Mark Zaid.",
         "That is a quieter thing than the headline implied. It is not his case, there is no ruling, and his clearance is still revoked. Realistically this resolves in a year or more, in a filing nobody covers.",
-        "\"Vows to sue\" is one of the most reliable two-week fizzles in news. It is a statement of intent reported as an event."
+        "\"Vows to sue\" is among the most reliable two-week fizzles in news. It is a statement of intent reported as an event."
       ],
       sources: [
-        ["Pentagon strips security clearance from ex-Air Force Secretary Frank Kendall — Washington Post", "https://www.washingtonpost.com/national-security/2026/08/08/pentagon-strips-security-clearance-ex-air-force-secretary-frank-kendall/"],
-        ["Former Air Force secretary to join others in lawsuit to regain security clearance — Military Times, 17 Aug", "https://www.militarytimes.com/news/pentagon-congress/2026/08/17/former-air-force-secretary-to-join-others-in-lawsuit-against-white-house-to-regain-security-clearance/"]
+        ["Pentagon strips security clearance from ex-Air Force Secretary — Washington Post", "https://www.washingtonpost.com/national-security/2026/08/08/pentagon-strips-security-clearance-ex-air-force-secretary-frank-kendall/"],
+        ["Former Air Force secretary to join lawsuit to regain clearance — Military Times, 17 Aug", "https://www.militarytimes.com/news/pentagon-congress/2026/08/17/former-air-force-secretary-to-join-others-in-lawsuit-against-white-house-to-regain-security-clearance/"]
+      ]
+    },
+    {
+      date: "Saturday, 8 August",
+      headline: "Senate confirms Todd Blanche as Attorney General, 50–49",
+      tags: [],
+      rx: {
+        left: "One cycle of alarm about the president's former personal defence lawyer taking over the Justice Department, then the week moved on.",
+        right: "A brief victory lap over a confirmation fight won by a single vote after weeks of uncertainty, then the week moved on."
+      },
+      noise: 2, then: 4,
+      verdict: "Permanent",
+      outcome: [
+        "He is the Attorney General. He was still the Attorney General fourteen days later, and there is no appeal, no stay and no second vote. Only Collins and Murkowski broke ranks; the margin was one.",
+        "Nothing else on this page will shape more of the next three years, and it generated less heat than a ballroom. Every legal fight above runs through the department he now leads — the vaccine exemption suits, the clearance revocations, the immigration policy, and the decision on whether to act on that Fauci contempt referral.",
+        "This is the inverse case, and it is why both bars are shown. Stories that draw the most fury are frequently the ones already headed for a stay, a court, or a shelf. The ones that stick tend to be procedural, boring, and scheduled for a Saturday."
+      ],
+      sources: [
+        ["Senate confirms Todd Blanche as attorney general — NBC News", "https://www.nbcnews.com/politics/justice-department/senate-confirms-todd-blanche-attorney-general-weeks-uncertainty-rcna591457"],
+        ["Senate votes to confirm Todd Blanche — NPR, 8 Aug", "https://www.npr.org/2026/08/08/g-s1-137631/senate-confirms-todd-blanche-attorney-general"]
       ]
     }
   ];
 
-  const NOISE_WORDS = { 1: "A murmur", 2: "One cycle", 3: "Loud", 4: "Deafening" };
-  const CHANGE_WORDS = { 1: "Nothing yet", 2: "Some motion", 3: "Real shift", 4: "Permanent" };
+  // Age of each story at this edition, in source order. Most are the T-minus-14
+  // window; the two standing-watch items are deliberately older.
+  const AGO = [
+    "14 days ago", "14 days ago", "14 days ago", "14 days ago",
+    "27 days ago", "6 months ago", "15 days ago", "~2 weeks ago",
+    "14 days ago", "13 days ago", "16 days ago"
+  ];
+
+  const NOISE_WORDS = { 1: "Near silence", 2: "One cycle", 3: "Loud", 4: "Deafening" };
+  const THEN_WORDS = { 1: "Nothing yet", 2: "Some motion", 3: "Real shift", 4: "Permanent" };
 
   const fmt = (d) => d.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
   document.getElementById("today").textContent = fmt(TODAY);
   document.getElementById("edition").textContent = fmt(EDITION);
+  document.getElementById("count").textContent = STORIES.length;
 
-  const bars = (n) =>
-    [1, 2, 3, 4].map((i) => '<i class="' + (i <= n ? "on" : "") + '"></i>').join("");
+  const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const bars = (n) => [1, 2, 3, 4].map((i) => '<i class="' + (i <= n ? "on" : "") + '"></i>').join("");
 
-  const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  document.getElementById("n-right").textContent = STORIES.filter((s) => s.rx.right).length + " covered";
+  document.getElementById("n-left").textContent = STORIES.filter((s) => s.rx.left).length + " covered";
+  document.getElementById("n-both").textContent = STORIES.length + " stories";
 
-  document.getElementById("stories").innerHTML = STORIES.map((s, i) => `
-    <article class="story" id="s${i}">
-      <div class="story-top">
-        <div class="dateline">
-          <span>${esc(s.date)}</span>
-          <span class="ago">14 days ago</span>
-        </div>
-        <h2>${esc(s.headline)}</h2>
-        <p class="reaction">${esc(s.reaction)}</p>
-        <div class="meters">
-          <div>
-            <div class="meter-label"><span>Noise then</span><b>${NOISE_WORDS[s.noise]}</b></div>
-            <div class="bars m-noise">${bars(s.noise)}</div>
+  let lens = "both";
+  try { lens = localStorage.getItem("andthen.lens") || "both"; } catch (e) { /* private mode */ }
+  if (!["left", "right", "both"].includes(lens)) lens = "both";
+
+  const GAP = {
+    right: "This barely reached right-leaning feeds.",
+    left: "This barely reached left-leaning feeds."
+  };
+
+  function reactionBlock(s) {
+    const side = (which) => {
+      const label = which === "right" ? "In right-leaning coverage" : "In left-leaning coverage";
+      if (!s.rx[which]) {
+        return '<div class="rx gap"><span class="rx-lab">' + label + '</span><p>' + GAP[which] + "</p></div>";
+      }
+      return '<div class="rx"><span class="rx-lab">' + label + "</span><p>" + esc(s.rx[which]) + "</p></div>";
+    };
+
+    if (!s.rx.left && !s.rx.right) {
+      return '<div class="rx gap"><span class="rx-lab">Coverage</span><p>Carried by the trade press. Almost nowhere else, on either side.</p></div>';
+    }
+    if (lens === "both") return side("right") + side("left");
+    return side(lens);
+  }
+
+  function render() {
+    document.getElementById("stories").innerHTML = STORIES.map((s, i) => `
+      <article class="story${s.flagged ? " flagged" : ""}" id="s${i}">
+        <div class="story-top">
+          ${s.tags.length ? '<div class="tags">' + s.tags.map((t) => '<span class="tag ' + t.k + '">' + esc(t.t) + "</span>").join("") + "</div>" : ""}
+          <div class="dateline">
+            <span>${esc(s.date)}</span>
+            <span class="ago">${AGO[i]}</span>
           </div>
-          <div>
-            <div class="meter-label"><span>Changed since</span><b>${CHANGE_WORDS[s.change]}</b></div>
-            <div class="bars m-change">${bars(s.change)}</div>
+          <h2>${esc(s.headline)}</h2>
+          <div class="reactions">${reactionBlock(s)}</div>
+          <div class="meters">
+            <div class="m-lab m-lab-1">
+              <span class="m-name">Noise then</span>
+              <span class="m-val">${NOISE_WORDS[s.noise]}</span>
+            </div>
+            <div class="m-lab m-lab-2">
+              <span class="m-name branded">And then . . .?</span>
+              <span class="m-val">${THEN_WORDS[s.then]}</span>
+            </div>
+            <div class="bars m-noise m-bar-1">${bars(s.noise)}</div>
+            <div class="bars m-then m-bar-2">${bars(s.then)}</div>
           </div>
         </div>
-      </div>
 
-      <button class="reveal" aria-expanded="false" aria-controls="o${i}" data-i="${i}">
-        <span>And then . . .?</span>
-        <span class="chev" data-chev>Reveal</span>
-      </button>
+        <button class="reveal" aria-expanded="false" aria-controls="o${i}">
+          <span>And then . . .?</span>
+          <span class="chev" data-chev>Reveal</span>
+        </button>
 
-      <div class="outcome" id="o${i}">
-        <div class="outcome-inner">
-          <div class="outcome-pad">
-            <span class="verdict">${esc(s.verdict)}</span>
-            ${s.outcome.map((p) => "<p>" + esc(p) + "</p>").join("")}
-            <div class="sources">
-              <span class="sources-h">What this is based on</span>
-              ${s.sources.map(([t, u]) => '<a href="' + u + '" target="_blank" rel="noopener noreferrer">' + esc(t) + "</a>").join("")}
+        <div class="outcome" id="o${i}">
+          <div class="outcome-inner">
+            <div class="outcome-pad">
+              <span class="verdict">${esc(s.verdict)}</span>
+              ${s.outcome.map((p) => "<p>" + esc(p) + "</p>").join("")}
+              <div class="sources">
+                <span class="sources-h">What this is based on</span>
+                ${s.sources.map(([t, u]) => '<a href="' + u + '" target="_blank" rel="noopener noreferrer">' + esc(t) + "</a>").join("")}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </article>
-  `).join("");
+      </article>
+    `).join("");
+  }
+
+  document.querySelectorAll(".lens button").forEach((b) => {
+    b.addEventListener("click", () => {
+      lens = b.dataset.lens;
+      try { localStorage.setItem("andthen.lens", lens); } catch (e) { /* private mode */ }
+      document.querySelectorAll(".lens button").forEach((x) =>
+        x.setAttribute("aria-pressed", String(x.dataset.lens === lens))
+      );
+      render();
+    });
+  });
+
+  document.querySelectorAll(".lens button").forEach((x) =>
+    x.setAttribute("aria-pressed", String(x.dataset.lens === lens))
+  );
 
   document.getElementById("stories").addEventListener("click", (e) => {
     const btn = e.target.closest(".reveal");
@@ -683,4 +877,6 @@
     btn.setAttribute("aria-expanded", String(open));
     btn.querySelector("[data-chev]").textContent = open ? "Hide" : "Reveal";
   });
+
+  render();
 </script>
