@@ -5,12 +5,11 @@
   "type": "module",
   "description": "The news from two weeks ago, with what actually came of it.",
   "scripts": {
+    "brief": "node pipeline/brief.mjs",
+    "preflight": "node pipeline/preflight.mjs",
+    "finish": "node pipeline/finish.mjs",
     "build": "node tools/build-standalone.mjs",
-    "edition": "node pipeline/build-edition.mjs",
     "validate": "node tools/validate-edition.mjs"
-  },
-  "dependencies": {
-    "@anthropic-ai/sdk": "^0.72.0"
   },
   "engines": { "node": ">=20" }
 }

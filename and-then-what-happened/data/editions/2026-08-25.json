@@ -1,0 +1,170 @@
+{
+  "edition": "2026-08-25",
+  "newsDate": "2026-08-11",
+  "compiledAt": "2026-08-25",
+  "note": "A day of loud alarms. Two weeks later, one of them turned out to be much worse than reported, two turned out to be nothing, and the quietest one is now in front of a jury.",
+  "stories": [
+    {
+      "id": "trump-decoy-plane",
+      "kicker": "Washington",
+      "headline": "Trump was secretly moved off Air Force One in Turkey over an Iranian assassination threat",
+      "then": "Reporting revealed that the president had been moved by catering truck onto an unmarked C-32A in Ankara, flying to a base in the UK while Air Force One served as a decoy carrying the White House press corps, who were told to keep their window shades down. Officials described a fresh Iranian plot, possibly involving a shoulder-fired missile aimed at the plane as it departed.",
+      "noise": 5,
+      "verdict": "fizzled",
+      "thenWhat": "It took about twenty-four hours for the story to change shape. The Washington Post reported on August 12 that the CIA had only \"low confidence\" in the Iranian threat, which had been passed along by Israel rather than developed by U.S. intelligence. Trump confirmed the swap publicly the same day. In the two weeks since, no plot has been described in any more detail, no arrests or charges have been announced, and no official has restated the threat. The most cinematic story of the day is now a disputed intelligence report that nobody has mentioned again.",
+      "sources": [
+        {
+          "label": "Washington Post (Aug 10)",
+          "url": "https://www.washingtonpost.com/national-security/2026/08/10/trump-flew-secrecy-amid-iran-threat-air-force-one-became-decoy/"
+        },
+        {
+          "label": "Washington Post (Aug 12)",
+          "url": "https://www.washingtonpost.com/national-security/2026/08/12/cia-had-low-confidence-iranian-threat-before-trump-switched-planes-turkey/"
+        },
+        {
+          "label": "NBC News",
+          "url": "https://www.nbcnews.com/politics/donald-trump/president-says-security-threat-spurred-secret-plane-swap-turkey-rcna592053"
+        },
+        {
+          "label": "TIME (Aug 12)",
+          "url": "https://time.com/article/2026/08/12/trump-plane-switch-turkey-iranian-threat-secret-service-decoy/"
+        }
+      ]
+    },
+    {
+      "id": "colombia-earthquake",
+      "kicker": "Disasters",
+      "headline": "More than 160 dead after a 7.4 earthquake in Colombia, with rescuers unable to reach the epicenter",
+      "then": "The quake struck the northwestern department of Chocó on August 10, collapsing hundreds of buildings. By the 11th the confirmed toll had passed 200 and rescue teams still could not reach the worst-hit areas.",
+      "noise": 4,
+      "verdict": "escalated",
+      "thenWhat": "The toll roughly doubled after the cameras left. As of August 22 it stands at 329 dead, more than 4,600 injured and 247 still missing — Colombia's deadliest earthquake since 1999 — with 314,751 people affected across 481 municipalities in 16 of the country's 32 departments, 31,183 homes destroyed and 171,273 damaged. The detail that reframes the coverage is where the dead were. Only 14 of the 329 died in Chocó, the department everyone was trying to reach; 184 died in Valle del Cauca and 108 in Risaralda, in and around Cali and Pereira. The story on the 11th was that rescuers could not get to the epicenter. The casualties were largely somewhere else, in cities that were reachable the whole time.",
+      "sources": [
+        {
+          "label": "CNN (Aug 11)",
+          "url": "https://www.cnn.com/2026/08/11/world/live-news/colombia-earthquake-latest"
+        },
+        {
+          "label": "Tech Times (Aug 17)",
+          "url": "https://www.techtimes.com/articles/324690/20260817/colombia-earthquake-294-dead-recovery-tests-new-president-conflict-torn-choco.htm"
+        },
+        {
+          "label": "MercoPress (Aug 22)",
+          "url": "https://en.mercopress.com/2026/08/22/colombia-s-earthquake-toll-rises-to-329-dead-and-more-than-300-000-affected"
+        },
+        {
+          "label": "TASS",
+          "url": "https://tass.com/emergencies/2176337"
+        }
+      ]
+    },
+    {
+      "id": "social-media-section-230",
+      "kicker": "The Courts",
+      "headline": "Appeals court lets thousands of social media addiction lawsuits proceed",
+      "then": "The Ninth Circuit rejected Meta, Google, TikTok and Snap's argument that Section 230 shielded them from claims that their products were designed to be addictive, holding that the statute \"merely provides a defense to liability — not immunity from suit.\" More than 3,000 cases brought by schools, cities, states and families were cleared to move forward. The court also refused Meta's request to delay an imminent trial.",
+      "noise": 2,
+      "verdict": "landed",
+      "thenWhat": "The trial Meta tried to postpone is now underway. Opening statements began August 18 in federal court in Oakland, with a bipartisan group of 29 states led by California, Colorado, Kentucky and New Jersey arguing that Meta illegally collected children's data and designed its platforms to keep young users hooked. A deputy California attorney general told the jury the business model was to \"hook the users, hold them for as long as they can, harvest their data, and then hide the truth from the public.\" Former Meta engineer Arturo Béjar testified as the states' first witness. The trial is expected to run about seven weeks. This got a fraction of the attention the plane story got, and it is the one that will still matter next year.",
+      "sources": [
+        {
+          "label": "NBC News (Aug 10)",
+          "url": "https://www.nbcnews.com/tech/tech-news/tech-companies-must-face-lawsuits-social-media-addiction-court-ruling-rcna591780"
+        },
+        {
+          "label": "The Hill",
+          "url": "https://thehill.com/homenews/6021367-social-media-safety-lawsuits-proceed/"
+        },
+        {
+          "label": "NPR (Aug 18)",
+          "url": "https://www.npr.org/2026/08/18/nx-s1-5935458/meta-child-safety-social-media-addiction-trial-opening"
+        },
+        {
+          "label": "Al Jazeera (Aug 18)",
+          "url": "https://www.aljazeera.com/economy/2026/8/18/landmark-trial-on-metas-impact-on-childrens-mental-health-begins-in-us"
+        }
+      ]
+    },
+    {
+      "id": "greenland-drilling",
+      "kicker": "The Arctic",
+      "headline": "A Trump-linked oil company is preparing to drill in Greenland without permission",
+      "then": "Greenland Energy, a Texas firm whose chairman Larry Swets is close to the president, had landed drilling equipment on Greenland's east coast while Trump renewed his threats to take the territory. A Danish tugboat delivered a barge carrying an excavator and camp equipment to Nerlerit Inaat on July 29 without approval from the Mineral Resources Authority, and Greenland's Ministry of Industry and Mineral Resources issued a formal rebuke the next day saying the company \"did not have the necessary approvals.\"",
+      "noise": 3,
+      "verdict": "fizzled",
+      "thenWhat": "The drilling is off for this season, and the reason is a calendar rather than a confrontation. Greenland's mineral ministry confirmed the company cannot receive a drilling permit before November 8 at the earliest. Because the site sits in a Ramsar-designated wetland where drilling is restricted to the winter months, and heavy equipment can only be barged in while the fjord is ice-free in summer, a November permit arrives too late to be used. By August 13 the company had announced a delay, and its shareholder letter narrows the 2026–27 winter program from two exploration wells to one, still pending approvals it does not have. The equipment that was reported as an incursion is now overwintering on a beach.",
+      "sources": [
+        {
+          "label": "Tech Times (Aug 10)",
+          "url": "https://www.techtimes.com/articles/323857/20260810/greenland-energy-told-investors-permits-were-track-government-source-said-otherwise.htm"
+        },
+        {
+          "label": "Democracy Now! (Aug 11)",
+          "url": "https://www.democracynow.org/2026/8/11/headlines/trump_linked_oil_company_preparing_to_drill_in_greenland"
+        },
+        {
+          "label": "CNBC (Aug 13)",
+          "url": "https://www.cnbc.com/2026/08/13/greenland-energy-oil-drilling-trump.html"
+        },
+        {
+          "label": "Shareholder letter",
+          "url": "https://www.prnewswire.com/news-releases/greenland-energy-company-issues-shareholder-letter-providing-update-with-greenlandic-authorities-and-regulators-and-preparations-occurring-at-the-jameson-land-basin-302844700.html"
+        }
+      ]
+    },
+    {
+      "id": "visa-revocations",
+      "kicker": "Immigration",
+      "headline": "State Department says it has revoked more than 175,000 visas",
+      "then": "The department announced the total for foreign nationals it said had violated visa terms, committed crimes, called for violence against Americans, defrauded people, or endangered national security — with law enforcement encounters, DUI, assault, theft and drug offenses named as the leading causes. More than 6,000 of the revocations were student visas.",
+      "noise": 3,
+      "verdict": "landed",
+      "thenWhat": "The 175,000 figure is a tally of actions already taken, and none of it has been undone. Where it is being fought is the student slice. A higher-education group's challenge to the mass revocation of international student visas survived the government's motion to dismiss in federal court in Boston, with Judge Patti Saris letting most of the complaint proceed, and on August 18 academic and educator groups filed a further suit in the same district against a DHS policy capping how long foreign students and scholars may remain — arguing it was adopted in violation of the Administrative Procedure Act. So the number stands, and about 6,000 of it is in active litigation. The detail worth carrying forward is the rate rather than the total: State's own numbers describe more than 10,000 revocations a month during 2026, against roughly 8,000 across all of 2025. It was reported as a milestone. It is closer to a run rate.",
+      "sources": [
+        {
+          "label": "State Department",
+          "url": "https://www.state.gov/releases/office-of-the-spokesperson/2026/08/state-department-revokes-more-than-175000-visas/"
+        },
+        {
+          "label": "Washington Post",
+          "url": "https://www.washingtonpost.com/immigration/2026/08/10/state-department-says-it-has-revoked-more-than-175000-visas-under-trump/"
+        },
+        {
+          "label": "STAT (Aug 18)",
+          "url": "https://www.statnews.com/2026/08/18/dhs-sued-over-visa-time-limit-for-foreign-students/"
+        },
+        {
+          "label": "Bloomberg Law",
+          "url": "https://news.bloomberglaw.com/daily-labor-report/lawsuit-over-trump-student-visa-revocations-survives-dismissal"
+        }
+      ]
+    },
+    {
+      "id": "assad-death-sentence",
+      "kicker": "The World",
+      "headline": "Syrian court sentences Assad to death in absentia",
+      "then": "The Fourth Criminal Court in Damascus sentenced Bashar al-Assad, his brother Maher, and several former officials to death after convicting them of war crimes, crimes against humanity, murder, extrajudicial killings, and the detention and torture of children — the first sentences against the family since five decades of Assad rule ended.",
+      "noise": 3,
+      "verdict": "nothing-yet",
+      "thenWhat": "Assad remains in Moscow, where he and his brother received asylum after fleeing in December 2024, and nothing about that has changed. Russia has not agreed to extradite him. Foreign Minister Sergey Lavrov has said the question of trying Assad \"was closed long ago\" and that asylum was granted \"for purely humanitarian reasons\"; Kremlin spokesman Dmitry Peskov has declined to comment on reported extradition talks. Analysts put the chance of extradition at close to zero, and some argue the in-absentia sentence makes it harder rather than easier. The verdict was real and the sentence is real. Its effect on where Assad actually is has so far been none.",
+      "sources": [
+        {
+          "label": "NPR (Aug 11)",
+          "url": "https://www.npr.org/2026/08/11/g-s1-138166/syria-assad-sentenced-to-death"
+        },
+        {
+          "label": "Al Jazeera (Aug 11)",
+          "url": "https://www.aljazeera.com/video/newsfeed/2026/8/11/syrian-court-sentences-bashar-al-assad-to-death-in-absentia"
+        },
+        {
+          "label": "The New Arab",
+          "url": "https://www.newarab.com/analysis/what-impact-does-assads-sentence-have-russia-extradition"
+        },
+        {
+          "label": "Washington Examiner",
+          "url": "https://www.washingtonexaminer.com/news/world/4683198/syria-death-sentence-bashar-assad-strain-relationship-russia/"
+        }
+      ]
+    }
+  ]
+}
