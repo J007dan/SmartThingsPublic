@@ -141,6 +141,13 @@
       <button data-replay="stage-a" data-cls="run">Replay</button>
       <span class="timing">1.32s · ease-out · once</span>
     </div>
+    <div class="thesis" style="margin-top:1.25rem">
+      <p><b>Rationed, not automatic.</b> A launch animation is charming on day one and friction on day thirty.
+         The full sequence runs only when there is something new to mark — a first visit, an edition not yet seen,
+         or a gap of more than twelve hours. Every other open gets a 340ms settle instead, and a reduced-motion
+         request gets neither. This is live in the app: the rule is checked against local storage on load, and a
+         browser that refuses storage is treated as a first visit rather than erroring.</p>
+    </div>
   </section>
 
   <section>
@@ -235,7 +242,8 @@
     <table>
       <thead><tr><th>Surface</th><th>Call</th><th>Why</th></tr></thead>
       <tbody>
-        <tr><td>Launch screen</td><td class="yes">Yes</td><td>Once per session, 1.3s, finite. Teaches the premise wordlessly.</td></tr>
+        <tr><td>Launch screen</td><td class="yes">Yes</td><td>1.32s, finite. Teaches the premise wordlessly.</td></tr>
+        <tr><td>Repeat open</td><td class="yes">Abbreviated</td><td>340ms settle, no sequence. Full run returns on a new edition or after twelve hours.</td></tr>
         <tr><td>Reveal tap</td><td class="yes">Keep as is</td><td>The existing height transition already supplies the beat. Animating the mark here would gild it.</td></tr>
         <tr><td>Share / about card</td><td class="yes">Yes</td><td>The route 03 mark assembling. Seen once, carries the idea alone.</td></tr>
         <tr><td>Story feed</td><td class="no">No</td><td>Scroll-triggered card reveals are engagement mechanics wearing a design costume.</td></tr>

@@ -2,49 +2,49 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400;1,6..72,500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400;1,6..72,500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 
 <style>
   :root {
-    --ground: #EDEFF2; --ground-deep: #E4E8ED; --surface: #F8F9FB; --mark-bg: #FFFFFF;
-    --edge: #D3D9E0; --edge-soft: #E1E6EC;
-    --ink: #1B2430; --ink-soft: #47535F; --ink-mute: #6E7A87;
-    --ember: #B8462F; --ember-dim: #DFC9C2;
-    --teal: #3D6F80; --teal-dim: #C4D3D8;
+    --ground: #F4F4F2; --ground-deep: #EBEBE7; --surface: #FFFFFF; --mark-bg: #FFFFFF;
+    --edge: #DEDEDA; --edge-soft: #E8E8E4;
+    --ink: #1A1D20; --ink-soft: #3F454C; --ink-mute: #5A6578;
+    --accent: #B9381E; --accent-soft: #E6D2CC;
+    --second: #0B5FA0; --second-soft: #CFDCE8;
     --gold: #7A5F26; --gold-bg: #EFE7D4; --gold-edge: #C7B183;
     /* chart-only marks: the UI teal reads as grey as a data mark, so data uses its own validated pair */
-    --mark-from: #B8462F; --mark-to: #0B6E9C; --mark-rule: #C3CBD4;
-    --shadow: 0 1px 2px rgba(27,36,48,.06), 0 8px 24px -16px rgba(27,36,48,.28);
-    --veil: rgba(237,239,242,.9);
+    --mark-from: #B9381E; --mark-to: #0B5FA0; --mark-rule: #C9C9C4;
+    --shadow: 0 1px 2px rgba(26,29,32,.05), 0 8px 24px -16px rgba(26,29,32,.26);
+    --veil: rgba(244,244,242,.9);
     --display: "Newsreader", "Iowan Old Style", Georgia, serif;
-    --ui: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --brand: "Playfair Display", Georgia, "Times New Roman", serif;
+    --ui: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, sans-serif;
     --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
   }
 
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --ground: #14181E; --ground-deep: #0F1319; --surface: #1C222A; --mark-bg: #232B34;
-      --edge: #2C343E; --edge-soft: #262D36;
-      --ink: #E4E8ED; --ink-soft: #B3BCC6; --ink-mute: #808D9A;
-      --ember: #E0714E; --ember-dim: #4A3229;
-      --teal: #79AEBE; --teal-dim: #26383E;
+      --ground: #141618; --ground-deep: #0F1113; --surface: #1C1F22; --mark-bg: #23272B;
+      --edge: #2C3034; --edge-soft: #24282B;
+      --ink: #ECECE8; --ink-soft: #B9C0C8; --ink-mute: #98A2B3;
+      --accent: #E0563A; --accent-soft: #4A2C22;
+      --second: #3F97D6; --second-soft: #1E3446;
       --gold: #D9BC77; --gold-bg: #2E2718; --gold-edge: #5C4C28;
-    --mark-from: #D25A38; --mark-to: #3C9CBD; --mark-rule: #39434E;
-      --mark-from: #D25A38; --mark-to: #3C9CBD; --mark-rule: #39434E;
+    --mark-from: #E0563A; --mark-to: #3F97D6; --mark-rule: #39434E;
       --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
-      --veil: rgba(20,24,30,.9);
+      --veil: rgba(20,22,24,.9);
     }
   }
 
   :root[data-theme="dark"] {
-    --ground: #14181E; --ground-deep: #0F1319; --surface: #1C222A; --mark-bg: #232B34;
-    --edge: #2C343E; --edge-soft: #262D36;
-    --ink: #E4E8ED; --ink-soft: #B3BCC6; --ink-mute: #808D9A;
-    --ember: #E0714E; --ember-dim: #4A3229;
-    --teal: #79AEBE; --teal-dim: #26383E;
+    --ground: #141618; --ground-deep: #0F1113; --surface: #1C1F22; --mark-bg: #23272B;
+    --edge: #2C3034; --edge-soft: #24282B;
+    --ink: #ECECE8; --ink-soft: #B9C0C8; --ink-mute: #98A2B3;
+    --accent: #E0563A; --accent-soft: #4A2C22;
+    --second: #3F97D6; --second-soft: #1E3446;
     --gold: #D9BC77; --gold-bg: #2E2718; --gold-edge: #5C4C28;
     --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
-    --veil: rgba(20,24,30,.9);
+    --veil: rgba(20,22,24,.9);
   }
 
   * { box-sizing: border-box; }
@@ -59,39 +59,34 @@
 
   /* ---- masthead ---- */
   .masthead { padding: 2.2rem 0 1.3rem; }
-  .lockup { display: flex; align-items: center; gap: .8rem; }
-  .appmark { width: 46px; height: 46px; flex-shrink: 0; display: block; }
+  .lockup { display: flex; flex-direction: column; align-items: flex-start; gap: .6rem; }
+
+  .appmark { width: min(228px, 70%); height: auto; display: block; overflow: visible; }
+  .tk { transform-box: fill-box; transform-origin: center; }
+  .launch-full .tk { opacity: 0; transform: scaleY(.15); animation: tickIn .3s cubic-bezier(.22,.7,.3,1) forwards; animation-delay: calc(var(--i) * 40ms); }
+  .launch-full .tk-z { animation-duration: .42s; }
+  @keyframes tickIn { to { opacity: 1; transform: scaleY(1); } }
 
   .wordmark {
-    font-family: var(--display); font-weight: 400;
-    font-size: clamp(2.05rem, 10.5vw, 2.7rem);
-    line-height: .95; letter-spacing: -.021em; margin: 0; color: var(--ink);
-    display: flex; align-items: baseline; gap: .2em;
+    font-family: var(--ui); font-weight: 600;
+    font-size: clamp(1.85rem, 9vw, 2.45rem);
+    line-height: 1; letter-spacing: -.035em; margin: 0; color: var(--ink);
+    display: flex; align-items: baseline; gap: .1em;
   }
-  .wordmark .wm-and { font-style: italic; font-weight: 300; color: var(--ink-soft); }
-  .wordmark .wm-then { font-weight: 500; }
+  .wm-dots { display: inline-flex; align-items: baseline; gap: .09em; margin-left: .16em; }
+  .wm-dots i { display: block; width: .155em; height: .155em; background: var(--ink-mute); }
+  .wm-dots i:nth-child(1) { opacity: .45; }
+  .wm-dots i:nth-child(2) { opacity: .72; }
+  .wm-dots i:nth-child(3) { background: var(--ink); opacity: 1; }
+  .wm-q { font-family: var(--brand); font-weight: 500; color: var(--accent); font-size: 1.12em; margin-left: .14em; }
 
-  .wm-trail {
-    display: inline-flex; align-items: center; gap: .16em;
-    position: relative; padding: 0 .1em; transform: translateY(-.12em);
-  }
-  .wm-trail::before {
-    content: ""; position: absolute; left: 0; right: 0; top: 50%;
-    height: 1px; background: var(--ink-mute); opacity: .35;
-  }
-  .wm-trail i {
-    position: relative; display: block; width: .115em; height: .115em; border-radius: 50%;
-    background: var(--ink); box-shadow: 0 0 0 .055em var(--ground);
-    opacity: 0; animation: settle .45s ease forwards;
-  }
-  .wm-trail i:nth-child(1) { animation-delay: .2s; }
-  .wm-trail i:nth-child(2) { animation-delay: .42s; }
-  .wm-trail i:nth-child(3) { animation-delay: .64s; }
-  .wordmark .wm-q {
-    color: var(--ember); font-weight: 500; font-style: italic;
-    opacity: 0; animation: settle .45s ease forwards .92s;
-  }
-  @keyframes settle { from { opacity: 0; transform: translateY(.2em); } to { opacity: 1; transform: none; } }
+  .launch-full .wm-word, .launch-full .wm-dots { opacity: 0; animation: riseIn .45s cubic-bezier(.2,.7,.3,1) forwards .78s; }
+  .launch-full .wm-q { opacity: 0; animation: riseIn .45s cubic-bezier(.2,.7,.3,1) forwards .98s; }
+  @keyframes riseIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+
+  /* a repeat open on an edition already seen gets no sequence, only a short settle */
+  .launch-brief .appmark, .launch-brief .wordmark { animation: settleIn .34s ease forwards; }
+  @keyframes settleIn { from { opacity: 0; } to { opacity: 1; } }
 
   .strap { font-size: .9rem; color: var(--ink-soft); margin: 1rem 0 0; max-width: 31rem; }
 
@@ -112,7 +107,7 @@
   .editions button strong { font-size: .84rem; font-weight: 600; line-height: 1.2; }
   .editions button small { font-family: var(--mono); font-size: .58rem; letter-spacing: .06em; text-transform: uppercase; }
   .editions button[aria-pressed="true"] { border-color: var(--ink-mute); color: var(--ink); background: var(--mark-bg); }
-  .editions button:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
+  .editions button:focus-visible { outline: 2px solid var(--second); outline-offset: 1px; }
 
   .edmeta {
     display: flex; flex-wrap: wrap; gap: .3rem .9rem; align-items: baseline; margin-top: .85rem;
@@ -144,7 +139,7 @@
   }
   .lens button small { font-family: var(--mono); font-size: .58rem; letter-spacing: .05em; opacity: .75; font-weight: 400; }
   .lens button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: var(--shadow); }
-  .lens button:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
+  .lens button:focus-visible { outline: 2px solid var(--second); outline-offset: 1px; }
 
   /* ---- standing watches ---- */
   .watches { margin-top: 2.4rem; border: 1px solid var(--edge); border-radius: 5px; background: var(--surface); overflow: hidden; }
@@ -163,7 +158,7 @@
     padding: .18rem .4rem; border-radius: 2px; white-space: nowrap; flex-shrink: 0;
   }
   .st-live { background: var(--gold-bg); color: var(--gold); }
-  .st-open { background: var(--teal-dim); color: var(--teal); }
+  .st-open { background: var(--second-soft); color: var(--second); }
   .watch p { margin: .35rem 0 0; font-size: .82rem; line-height: 1.55; color: var(--ink-soft); }
 
   /* ---- legend ---- */
@@ -174,8 +169,8 @@
   }
   .legend div { display: flex; align-items: center; gap: .4rem; }
   .legend i { width: .58rem; height: .58rem; border-radius: 2px; display: block; }
-  .legend .k-noise { background: var(--ember); }
-  .legend .k-then { background: var(--teal); }
+  .legend .k-noise { background: var(--accent); }
+  .legend .k-then { background: var(--second); }
   .legend b { font-weight: 400; color: var(--ink-mute); opacity: .8; letter-spacing: .04em; }
   .legend div { flex-wrap: wrap; }
   .legend em { font-family: var(--display); font-style: italic; text-transform: none; letter-spacing: 0; font-size: .82rem; }
@@ -193,7 +188,7 @@
     color: var(--ink-mute); background: var(--ground-deep);
   }
   .tag.t-flag { background: var(--gold-bg); color: var(--gold); border-color: var(--gold-edge); font-weight: 500; }
-  .tag.t-scotus, .tag.t-trade { background: var(--teal-dim); color: var(--teal); border-color: transparent; }
+  .tag.t-scotus, .tag.t-trade { background: var(--second-soft); color: var(--second); border-color: transparent; }
 
   .dateline {
     font-family: var(--mono); font-size: .66rem; letter-spacing: .07em; text-transform: uppercase;
@@ -226,25 +221,25 @@
   .m-bar-1 { grid-area: 2 / 1; } .m-bar-2 { grid-area: 2 / 2; }
   .m-lab { align-self: end; display: flex; flex-direction: column; gap: .12rem; }
   .m-name { font-family: var(--mono); font-size: .6rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-mute); line-height: 1.3; }
-  .m-name.branded { font-family: var(--display); font-style: italic; font-size: .92rem; text-transform: none; letter-spacing: 0; color: var(--ink-soft); font-weight: 400; }
+  .m-name.branded { font-family: var(--brand); font-style: italic; font-size: .92rem; text-transform: none; letter-spacing: 0; color: var(--ink-soft); font-weight: 400; }
   .m-val { font-size: .74rem; font-weight: 600; color: var(--ink); line-height: 1.25; }
   .bars { display: flex; gap: 3px; align-items: center; }
   .bars i { display: block; height: 7px; flex: 1; border-radius: 1.5px; }
-  .m-noise i { background: var(--ember-dim); }
-  .m-noise i.on { background: var(--ember); }
-  .m-then i { background: var(--teal-dim); }
-  .m-then i.on { background: var(--teal); }
+  .m-noise i { background: var(--accent-soft); }
+  .m-noise i.on { background: var(--accent); }
+  .m-then i { background: var(--second-soft); }
+  .m-then i.on { background: var(--second); }
 
   /* ---- reveal ---- */
   .reveal {
     width: 100%; border: 0; border-top: 1px solid var(--edge-soft); background: transparent;
-    color: var(--ink); font-family: var(--display); font-style: italic; font-size: 1.05rem;
+    color: var(--ink); font-family: var(--brand); font-style: italic; font-size: 1.02rem;
     padding: .9rem 1.1rem; text-align: left; cursor: pointer;
     display: flex; align-items: center; justify-content: space-between; gap: 1rem;
     transition: background .18s ease;
   }
   .reveal:hover { background: var(--ground-deep); }
-  .reveal:focus-visible { outline: 2px solid var(--teal); outline-offset: -2px; }
+  .reveal:focus-visible { outline: 2px solid var(--second); outline-offset: -2px; }
   .reveal .chev {
     font-family: var(--ui); font-style: normal; font-size: .68rem; color: var(--ink-mute);
     letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0;
@@ -279,7 +274,7 @@
   .prec-steps li:last-child { padding-bottom: 0; }
   .prec-steps li::before {
     content: ""; position: absolute; left: -1.24rem; top: .38rem; width: 6px; height: 6px;
-    border-radius: 50%; background: var(--teal); box-shadow: 0 0 0 3px var(--ground-deep);
+    border-radius: 50%; background: var(--second); box-shadow: 0 0 0 3px var(--ground-deep);
   }
   .prec-when { font-family: var(--mono); font-size: .61rem; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-mute); display: block; }
   .prec-what { font-size: .84rem; line-height: 1.5; color: var(--ink-soft); }
@@ -329,11 +324,11 @@
   .sources { margin-top: 1.1rem; padding-top: .8rem; border-top: 1px solid var(--edge); display: flex; flex-direction: column; gap: .42rem; }
   .sources-h { font-family: var(--mono); font-size: .61rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-mute); }
   .sources a {
-    color: var(--teal); font-size: .82rem; text-decoration: none;
-    border-bottom: 1px solid var(--teal-dim); align-self: flex-start; line-height: 1.4;
+    color: var(--second); font-size: .82rem; text-decoration: none;
+    border-bottom: 1px solid var(--second-soft); align-self: flex-start; line-height: 1.4;
   }
-  .sources a:hover { border-bottom-color: var(--teal); }
-  .sources a:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+  .sources a:hover { border-bottom-color: var(--second); }
+  .sources a:focus-visible { outline: 2px solid var(--second); outline-offset: 2px; }
 
   /* ---- coda ---- */
   .coda { margin-top: 2.4rem; padding-top: 1.5rem; border-top: 1px solid var(--edge); }
@@ -410,10 +405,10 @@
     color: var(--ink-mute); display: flex; gap: .9rem; flex-wrap: wrap;
   }
   .led-dates b { color: var(--ink-soft); font-weight: 500; }
-  .led-item.is-hit { border-left-color: var(--teal); }
-  .led-item.is-miss { border-left-color: var(--ember); }
-  .led-status.s-hit { background: var(--teal-dim); color: var(--teal); }
-  .led-status.s-miss { background: var(--ember-dim); color: var(--ember); }
+  .led-item.is-hit { border-left-color: var(--second); }
+  .led-item.is-miss { border-left-color: var(--accent); }
+  .led-status.s-hit { background: var(--second-soft); color: var(--second); }
+  .led-status.s-miss { background: var(--accent-soft); color: var(--accent); }
   .led-what { font-size: .8rem; line-height: 1.5; color: var(--ink-soft); margin: .4rem 0 0; }
   .led-empty {
     padding: .9rem 1rem; border: 1px dashed var(--edge); border-radius: 3px;
@@ -480,7 +475,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
-    .wm-trail i, .wordmark .wm-q { opacity: 1; }
+    .tk, .wm-word, .wm-dots, .wm-q { opacity: 1 !important; transform: none !important; animation: none !important; }
   }
 </style>
 
@@ -488,16 +483,24 @@
 
   <header class="masthead">
     <div class="lockup">
-      <svg class="appmark" viewBox="0 0 48 48" aria-hidden="true">
-        <rect x="1" y="1" width="46" height="46" rx="11.5" fill="var(--mark-bg)" stroke="var(--edge)" stroke-width="1.5"/>
-        <line x1="10" y1="29" x2="27" y2="29" stroke="var(--ink-mute)" stroke-width="1.1" opacity=".4"/>
-        <circle cx="11.5" cy="29" r="2.15" fill="var(--ink)" opacity=".32"/>
-        <circle cx="18" cy="29" r="2.15" fill="var(--ink)" opacity=".62"/>
-        <circle cx="24.5" cy="29" r="2.15" fill="var(--ink)"/>
-        <text x="30" y="35.5" font-family="Newsreader, Georgia, serif" font-style="italic" font-weight="500" font-size="23" fill="var(--ember)">?</text>
+      <svg class="appmark" viewBox="-112 -26 224 52" role="img" aria-label="And then — a fourteen day timeline">
+          <line class="tk tk-a" style="--i:0" x1="-100.00" y1="-11" x2="-100.00" y2="11" stroke="var(--ink)" stroke-width="2.6" stroke-linecap="round"/>
+          <line class="tk" style="--i:1" x1="-84.62" y1="-4" x2="-84.62" y2="4" stroke="var(--ink-mute)" stroke-width="1.4" stroke-linecap="round" opacity=".45"/>
+          <line class="tk" style="--i:2" x1="-69.23" y1="-4" x2="-69.23" y2="4" stroke="var(--ink-mute)" stroke-width="1.4" stroke-linecap="round" opacity=".45"/>
+          <line class="tk" style="--i:3" x1="-53.85" y1="-4" x2="-53.85" y2="4" stroke="var(--ink-mute)" stroke-width="1.4" stroke-linecap="round" opacity=".45"/>
+          <line class="tk" style="--i:4" x1="-38.46" y1="-4" x2="-38.46" y2="4" stroke="var(--ink-mute)" stroke-width="1.4" stroke-linecap="round" opacity=".45"/>
+          <line class="tk" style="--i:5" x1="-23.08" y1="-4" x2="-23.08" y2="4" stroke="var(--ink-mute)" stroke-width="1.4" stroke-linecap="round" opacity=".45"/>
+          <line class="tk" style="--i:6" x1="-7.69" y1="-4" x2="-7.69" y2="4" stroke="var(--ink-mute)" stroke-width="1.4" stroke-linecap="round" opacity=".45"/>
+          <line class="tk" style="--i:7" x1="7.69" y1="-4" x2="7.69" y2="4" stroke="var(--ink-mute)" stroke-width="1.4" stroke-linecap="round" opacity=".45"/>
+          <line class="tk" style="--i:8" x1="23.08" y1="-4" x2="23.08" y2="4" stroke="var(--ink-mute)" stroke-width="1.4" stroke-linecap="round" opacity=".45"/>
+          <line class="tk" style="--i:9" x1="38.46" y1="-4" x2="38.46" y2="4" stroke="var(--ink-mute)" stroke-width="1.4" stroke-linecap="round" opacity=".45"/>
+          <line class="tk" style="--i:10" x1="53.85" y1="-4" x2="53.85" y2="4" stroke="var(--ink-mute)" stroke-width="1.4" stroke-linecap="round" opacity=".45"/>
+          <line class="tk" style="--i:11" x1="69.23" y1="-4" x2="69.23" y2="4" stroke="var(--ink-mute)" stroke-width="1.4" stroke-linecap="round" opacity=".45"/>
+          <line class="tk" style="--i:12" x1="84.62" y1="-4" x2="84.62" y2="4" stroke="var(--ink-mute)" stroke-width="1.4" stroke-linecap="round" opacity=".45"/>
+          <line class="tk tk-z" style="--i:13" x1="100.00" y1="-11" x2="100.00" y2="11" stroke="var(--accent)" stroke-width="2.6" stroke-linecap="round"/>
       </svg>
       <h1 class="wordmark">
-        <span class="wm-and">And</span><span class="wm-then">then</span><span class="wm-trail"><i></i><i></i><i></i></span><span class="wm-q">?</span>
+        <span class="wm-word">And then</span><span class="wm-dots"><i></i><i></i><i></i></span><span class="wm-q">?</span>
       </h1>
     </div>
 
@@ -1486,6 +1489,34 @@ const LEDGER = {
     btn.setAttribute("aria-expanded", String(open));
     btn.querySelector("[data-chev]").textContent = open ? "Hide" : "Reveal";
   });
+
+
+  /* Launch sequence, rationed.
+     A 1.3s animation is charming on day one and friction on day thirty, so it runs
+     in full only when there is something new to mark: a first visit, an edition not
+     yet seen, or a gap of more than twelve hours. Every other open gets a short
+     settle, and a reduced-motion request gets neither. */
+  (function launch() {
+    var el = document.querySelector(".masthead");
+    if (!el) return;
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    var FULL_AFTER = 12 * 60 * 60 * 1000;
+    var now = Date.now(), lastTs = 0, lastEd = null;
+    try {
+      lastTs = parseInt(localStorage.getItem("andthen.lastLaunch") || "0", 10) || 0;
+      lastEd = localStorage.getItem("andthen.lastEditionSeen");
+    } catch (e) { /* storage unavailable — treat as a first visit */ }
+
+    var freshEdition = lastEd !== edId;
+    var full = !lastTs || freshEdition || (now - lastTs) > FULL_AFTER;
+    el.classList.add(full ? "launch-full" : "launch-brief");
+
+    try {
+      localStorage.setItem("andthen.lastLaunch", String(now));
+      localStorage.setItem("andthen.lastEditionSeen", edId);
+    } catch (e) { /* nothing to remember by */ }
+  })();
 
   syncPressed();
   render();
