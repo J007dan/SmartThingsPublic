@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="And then …?">
+  <rect width="64" height="64" rx="14" fill="#F4F4F2"/>
+  <line x1="20" y1="20" x2="20" y2="44" stroke="#1A1D20" stroke-width="4.5" stroke-linecap="round"/>
+  <line x1="32" y1="27.5" x2="32" y2="36.5" stroke="#5A6578" stroke-width="3" stroke-linecap="round" opacity=".5"/>
+  <line x1="44" y1="20" x2="44" y2="44" stroke="#B9381E" stroke-width="4.5" stroke-linecap="round"/>
+</svg>
