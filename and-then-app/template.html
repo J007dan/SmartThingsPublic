@@ -116,6 +116,16 @@
   }
   .edmeta b { font-weight: 500; color: var(--ink); }
 
+  .stale {
+    margin-top: .8rem; padding: .7rem .85rem; border-radius: 4px;
+    border: 1px solid var(--gold-edge); background: var(--gold-bg);
+    font-size: .82rem; line-height: 1.55; color: var(--ink);
+  }
+  .stale b {
+    display: block; font-family: var(--mono); font-size: .6rem; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: .3rem; font-weight: 500;
+  }
+
   /* ---- lens ---- */
   .lensbar {
     position: sticky; top: 0; z-index: 20; background: var(--veil);
@@ -513,9 +523,12 @@
     <div class="editions" role="group" aria-label="Choose an edition" id="editions"></div>
 
     <div class="edmeta">
-      <span>Resolved <b id="today">—</b></span>
+      <span>Today <b id="today">—</b></span>
+      <span>Researched <b id="built">—</b></span>
       <span><b id="count">—</b> stories</span>
     </div>
+
+    <div class="stale" id="stale" hidden></div>
   </header>
 
   <div class="lensbar">
@@ -645,11 +658,18 @@
     </div>
 
     <div class="notice">
-      <b>Prototype notes</b>
+      <b>How this page stays current</b>
       <p>
-        Every story, date, reaction, precedent and outcome here is real and sourced — researched
-        by hand on 24 August 2026. Content lives in a separate data file from the view, so the
-        shipping pipeline can emit it directly.
+        Every story, date, reaction, precedent and outcome here is real and sourced. A scheduled
+        job runs each morning: it researches the headlines from exactly fourteen days earlier,
+        resolves what came of each one, runs the standing watches, scores any prediction that has
+        come due, and republishes this page at the same address.
+      </p>
+      <p>
+        The page cannot refresh itself when you open it — nothing in a browser can go and do that
+        reporting. So it reports its own age instead. If the daily run has not happened, a notice
+        at the top says how far out of date the outcomes are, because presenting a stale edition
+        as today's would be the exact failure this app exists to correct.
       </p>
       <p>
         The lens control deliberately uses no red and no blue. Colour-coding the sides would
@@ -663,7 +683,12 @@
 <script>
 /*__DATA__*/
 
-  const TODAY = new Date(2026, 7, 24);
+  // The real current date, so the page can tell the truth about its own age.
+  const TODAY = new Date();
+  const BUILT = (function () {
+    const p = String(typeof BUILT_ON === "string" ? BUILT_ON : "").split("-").map(Number);
+    return p.length === 3 && p.every((n) => !isNaN(n)) ? new Date(p[0], p[1] - 1, p[2]) : null;
+  })();
   // Three levels, not four. An even scale forces a lean; the cost is agonising
   // between adjacent tiers. The middle here is a real category — it moved but
   // has not settled — never a shrug.
@@ -677,8 +702,26 @@
   const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   const bars = (n) => [1, 2, 3].map((i) => '<i class="' + (i <= n ? "on" : "") + '"></i>').join("");
 
-  document.getElementById("today").textContent =
-    TODAY.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+  const fmtDate = (d) => d.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+  document.getElementById("today").textContent = fmtDate(TODAY);
+  document.getElementById("built").textContent = BUILT ? fmtDate(BUILT) : "unknown";
+
+  /* A daily refresh republishes this page with a new edition. If that has not
+     happened, say so plainly — presenting a fortnight-old edition as today's
+     would be the exact failure this app exists to correct. */
+  (function freshness() {
+    const el = document.getElementById("stale");
+    if (!el || !BUILT) return;
+    const day = 864e5;
+    const midnight = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+    const days = Math.round((midnight(TODAY) - midnight(BUILT)) / day);
+    if (days < 1) return;                       // researched today, or clock skew
+    const n = days === 1 ? "a day" : days + " days";
+    el.hidden = false;
+    el.innerHTML = '<b>Not today\u2019s edition</b>' +
+      "The research behind this page was done " + n + " ago, so the outcomes below are " +
+      n + " out of date. The daily refresh has not run since then.";
+  })();
 
   let lens = "both";
   let edId = EDITIONS[0].id;

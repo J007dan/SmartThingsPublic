@@ -536,3 +536,8 @@ const LEDGER = {
   ],
   scored: []
 };
+
+/* The date this edition's research was actually done. The daily refresh rewrites
+   it. The page compares it to the real current date and says so when it drifts,
+   rather than presenting stale reporting as today's. */
+const BUILT_ON = "2026-08-24";
